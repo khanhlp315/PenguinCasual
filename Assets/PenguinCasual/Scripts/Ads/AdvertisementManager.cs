@@ -21,7 +21,7 @@ namespace Ads
 
         void Awake( )
         {
-
+            DontDestroyOnLoad(this.gameObject);
         }
 
         private void Start()
