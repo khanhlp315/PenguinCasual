@@ -1,0 +1,132 @@
+
+title_anim.png
+size: 1967,912
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Cpen_body
+  rotate: false
+  xy: 2, 9
+  size: 467, 292
+  orig: 2050, 2734
+  offset: 1493, 1190
+  index: -1
+Cpen_dowun_mouth
+  rotate: true
+  xy: 1896, 152
+  size: 76, 38
+  orig: 2050, 2734
+  offset: 1485, 1559
+  index: -1
+Cpen_head
+  rotate: false
+  xy: 471, 71
+  size: 401, 201
+  orig: 2050, 2734
+  offset: 1499, 1444
+  index: -1
+Cpen_leg
+  rotate: true
+  xy: 1858, 95
+  size: 133, 36
+  orig: 2050, 2734
+  offset: 1519, 1179
+  index: -1
+Cpen_shadow
+  rotate: false
+  xy: 555, 274
+  size: 699, 309
+  orig: 2050, 2734
+  offset: 1351, 1060
+  index: -1
+Cpen_up_mouth
+  rotate: false
+  xy: 1855, 667
+  size: 90, 35
+  orig: 2050, 2734
+  offset: 1488, 1567
+  index: -1
+Cpen_wing
+  rotate: false
+  xy: 1670, 47
+  size: 129, 181
+  orig: 2050, 2734
+  offset: 1681, 1251
+  index: -1
+fish
+  rotate: false
+  xy: 1249, 2
+  size: 297, 226
+  orig: 2050, 2734
+  offset: 968, 1728
+  index: -1
+fish_g
+  rotate: false
+  xy: 1256, 230
+  size: 699, 353
+  orig: 699, 355
+  offset: 0, 0
+  index: -1
+fish_shadow
+  rotate: false
+  xy: 874, 52
+  size: 373, 220
+  orig: 2050, 2734
+  offset: 909, 1115
+  index: -1
+pen_body
+  rotate: false
+  xy: 2, 303
+  size: 551, 607
+  orig: 2050, 2734
+  offset: 200, 1203
+  index: -1
+pen_dowun_mouth
+  rotate: true
+  xy: 1801, 64
+  size: 164, 55
+  orig: 2050, 2734
+  offset: 654, 1960
+  index: -1
+pen_head
+  rotate: false
+  xy: 1383, 599
+  size: 470, 311
+  orig: 2050, 2734
+  offset: 276, 1736
+  index: -1
+pen_leg
+  rotate: false
+  xy: 643, 34
+  size: 176, 35
+  orig: 2050, 2734
+  offset: 561, 1190
+  index: -1
+pen_shadow
+  rotate: false
+  xy: 555, 585
+  size: 826, 325
+  orig: 2050, 2734
+  offset: 51, 1046
+  index: -1
+pen_up_mouth
+  rotate: false
+  xy: 471, 14
+  size: 170, 55
+  orig: 2050, 2734
+  offset: 641, 1967
+  index: -1
+pen_wing1
+  rotate: false
+  xy: 1548, 29
+  size: 120, 199
+  orig: 2050, 2734
+  offset: 397, 1568
+  index: -1
+pen_wing2
+  rotate: false
+  xy: 1855, 704
+  size: 110, 206
+  orig: 2050, 2734
+  offset: 399, 1427
+  index: -1
