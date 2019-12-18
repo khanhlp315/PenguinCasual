@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Ads.Data;
+using Penguin.Ads.Data;
 using UnityEngine;
 
-namespace Ads.Settings
+namespace Penguin.Ads.Settings
 {
     [System.Serializable]
     [CreateAssetMenu(menuName="Database/Advertisement Config" , fileName="AdConfig")]

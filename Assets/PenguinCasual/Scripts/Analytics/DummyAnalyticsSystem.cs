@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Analytics
+namespace Penguin.Analytics
 {
     public class DummyAnalyticsSystem : IAnalyticSystem
     {

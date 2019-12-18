@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HomeScene : MonoBehaviour
+namespace Penguin.Scenes
 {
-    public void GoToGameScene()
+    public class HomeScene : MonoBehaviour
     {
-        SceneManager.LoadScene("GameScene");
-    }
-    public void GoToSettingsScene()
-    {
-        SceneManager.LoadScene("SettingsScene");
-        
-    }
-    public void GoToLeaderBoardScene()
-    {
-        SceneManager.LoadScene("RankingScene");
-    }
-    public void GoToCharacterScene()
-    {
-        SceneManager.LoadScene("CharacterScene");
+        public void GoToGameScene()
+        {
+            SceneManager.LoadScene("GameScene");
+        }
+
+        public void GoToSettingsScene()
+        {
+            SceneManager.LoadScene("SettingsScene");
+
+        }
+
+        public void GoToLeaderBoardScene()
+        {
+            SceneManager.LoadScene("RankingScene");
+        }
+
+        public void GoToCharacterScene()
+        {
+            SceneManager.LoadScene("CharacterScene");
+        }
     }
 }

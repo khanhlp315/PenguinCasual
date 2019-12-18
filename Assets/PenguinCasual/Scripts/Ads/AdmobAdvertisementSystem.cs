@@ -1,8 +1,8 @@
 using GoogleMobileAds.Api;
 using UnityEngine;
-using AdPosition = Ads.Data.AdPosition;
+using AdPosition = Penguin.Ads.Data.AdPosition;
 
-namespace Ads
+namespace Penguin.Ads
 {
     public class AdmobAdvertisementSystem : IAdvertisement 
     {
@@ -22,7 +22,7 @@ namespace Ads
             MobileAds.Initialize(initStatus => { });
         }
 
-        public void LoadNormalBanner(string adsId, AdPosition pos)
+        public void LoadNormalBanner(string adsId, Data.AdPosition pos)
         {
             _normalBannerAd?.Destroy();
             
@@ -33,7 +33,7 @@ namespace Ads
                 size = AdSize.Banner;
             }
             
-            _normalBannerAd = new BannerView(adsId, size, pos == AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
+            _normalBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _normalBannerAd.OnAdLoaded += (sender, e) => {
                 _isNormalBannerAdLoaded = true;
                 _isNormalBannerAdShow = true;
@@ -67,7 +67,7 @@ namespace Ads
             _normalBannerAd?.Hide();
         }
 
-        public void LoadEndGameBanner(string adsId, AdPosition pos)
+        public void LoadEndGameBanner(string adsId, Data.AdPosition pos)
         {
             _endGameBannerAd?.Destroy();
             
@@ -78,7 +78,7 @@ namespace Ads
                 size = AdSize.Banner;
             }
             
-            _endGameBannerAd = new BannerView(adsId, size, pos == AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
+            _endGameBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _endGameBannerAd.OnAdLoaded += (sender, e) => {
                 _isEndGameBannerAdLoaded = true;
                 Callback?.OnEndGameBannerAdLoaded();

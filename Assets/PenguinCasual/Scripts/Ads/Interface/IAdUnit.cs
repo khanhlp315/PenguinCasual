@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Ads.Data;
+using Penguin.Ads.Data;
 
-namespace Ads.Interface
+namespace Penguin.Ads.Interface
 {
     public interface IAdUnit {
         string Provider { get; }

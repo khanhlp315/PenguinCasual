@@ -4,48 +4,57 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SettingsScene : MonoBehaviour
+namespace Penguin.Scenes
 {
-    private InputField _nameInputField;
-    public void GoToHomeScene()
+    public class SettingsScene : MonoBehaviour
     {
-        SceneManager.LoadScene("HomeScene");
-    }
+        [SerializeField]
+        private InputField _nameInputField;
 
-    public void TurnOnSound()
-    {
-        //TODO: Implement Turn on sound
-    }
-    public void TurnOffSound()
-    {
-        //TODO: Implement Turn on sound
-    }
+        [SerializeField] private GameObject _termsDialog;
+        [SerializeField] private GameObject _licenseDialog;
     
-    public void OpenRequest()
-    {
-        //TODO: show license
-    }
-    
-    public void OpenTerms()
-    {
-        //TODO: show license
-    }
-    
-    public void OpenPolicy()
-    {
-        Application.OpenURL("https://my.cybird.ne.jp/sp-inq/agreement");
-    }
-    
-    public void OpenLicense()
-    {
-        //TODO: show license
-    }
 
-    public void ChangeName()
-    {
-        if (_nameInputField.text.Length >= 6)
+        public void GoToHomeScene()
         {
-            Debug.Log(_nameInputField.text);
+            SceneManager.LoadScene("HomeScene");
         }
-    }
+
+        public void TurnOnSound()
+        {
+            //TODO: Implement Turn on sound
+        }
+        public void TurnOffSound()
+        {
+            //TODO: Implement Turn on sound
+        }
+    
+        public void OpenRequest()
+        {
+            Application.OpenURL("https://jp.research.net/r/L22BJJW");
+        }
+    
+        public void OpenTerms()
+        {
+            _termsDialog.gameObject.SetActive(true);
+        }
+    
+        public void OpenPolicy()
+        {
+            Application.OpenURL("https://my.cybird.ne.jp/sp-inq/agreement");
+        }
+    
+        public void OpenLicense()
+        {
+            _licenseDialog.gameObject.SetActive(true);
+        }
+
+        public void ChangeName()
+        {
+            if (_nameInputField.text.Length >= 6)
+            {
+                Debug.Log(_nameInputField.text);
+            }
+        }
+    }    
 }

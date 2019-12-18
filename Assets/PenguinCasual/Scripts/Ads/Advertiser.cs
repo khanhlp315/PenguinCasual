@@ -1,4 +1,4 @@
-namespace Ads
+namespace Penguin.Ads
 {
     public static class Advertiser
     {

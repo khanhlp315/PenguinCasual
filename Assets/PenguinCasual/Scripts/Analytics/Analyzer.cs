@@ -1,4 +1,4 @@
-namespace Analytics
+namespace Penguin.Analytics
 {
     public class Analyzer
     {

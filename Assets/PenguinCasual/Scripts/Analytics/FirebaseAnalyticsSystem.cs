@@ -1,6 +1,6 @@
 using Firebase.Analytics;
 
-namespace Analytics
+namespace Penguin.Analytics
 {
     public class FirebaseAnalyticsSystem : IAnalyticSystem 
     {

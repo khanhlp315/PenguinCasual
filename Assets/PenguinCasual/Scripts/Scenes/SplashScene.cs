@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SplashScene : MonoBehaviour
+namespace Penguin.Scenes
 {
-    void Start()
+    public class SplashScene : MonoBehaviour
     {
-        StartCoroutine(GoToHomeScreen());
-    }
+        void Start()
+        {
+            StartCoroutine(GoToHomeScreen());
+        }
 
-    // Update is called once per frame
-    IEnumerator GoToHomeScreen()
-    {
-        yield return new WaitForSeconds(3.0f);
-        SceneManager.LoadScene("HomeScene");
-        yield return null;
+        // Update is called once per frame
+        IEnumerator GoToHomeScreen()
+        {
+            yield return new WaitForSeconds(3.0f);
+            SceneManager.LoadScene("HomeScene");
+            yield return null;
+        }
     }
 }

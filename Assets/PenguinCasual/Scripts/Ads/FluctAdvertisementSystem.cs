@@ -1,8 +1,8 @@
 using Fluct;
 using UnityEngine;
-using AdPosition = Ads.Data.AdPosition;
+using AdPosition = Penguin.Ads.Data.AdPosition;
 
-namespace Ads
+namespace Penguin.Ads
 {
     public class FluctAdvertisementSystem: IAdvertisement
     {
@@ -15,7 +15,7 @@ namespace Ads
         {
         }
 
-        public void LoadNormalBanner(string adsId, AdPosition pos)
+        public void LoadNormalBanner(string adsId, Data.AdPosition pos)
         {
             
         }
@@ -30,7 +30,7 @@ namespace Ads
         {
         }
 
-        public void LoadEndGameBanner(string adsId, AdPosition pos)
+        public void LoadEndGameBanner(string adsId, Data.AdPosition pos)
         {
             
         }

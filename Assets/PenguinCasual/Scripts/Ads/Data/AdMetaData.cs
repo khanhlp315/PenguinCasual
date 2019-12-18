@@ -1,4 +1,4 @@
-namespace Ads.Data
+namespace Penguin.Ads.Data
 {
     [System.Serializable]
     public enum AdPosition

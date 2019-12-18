@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Analytics
+namespace Penguin.Analytics
 {
     public class AnalyticsParameter
     {

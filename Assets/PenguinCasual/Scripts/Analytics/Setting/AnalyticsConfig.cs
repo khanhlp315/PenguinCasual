@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Analytics.Setting
+namespace Penguin.Analytics.Setting
 {
     [System.Serializable]
     [CreateAssetMenu(menuName="Database/Analytics Config" , fileName="AnalyticsConfig")]

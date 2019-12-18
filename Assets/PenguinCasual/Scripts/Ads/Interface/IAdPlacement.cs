@@ -1,4 +1,4 @@
-namespace Ads.Interface
+namespace Penguin.Ads.Interface
 {
     public interface IAdPlacement 
     {

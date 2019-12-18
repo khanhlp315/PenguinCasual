@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Ads.Interface;
+using Penguin.Ads.Interface;
 using UnityEngine;
 
-namespace Ads.Data
+namespace Penguin.Ads.Data
 {
     [System.Serializable]
     public class AdUnit : IAdUnit 

@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Ads.Data;
-using Ads.Settings;
+using Penguin.Ads.Data;
+using Penguin.Ads.Settings;
 using UnityEngine;
-using AdPosition = Ads.Data.AdPosition;
+using AdPosition = Penguin.Ads.Data.AdPosition;
 
-namespace Ads
+namespace Penguin.Ads
 {
     public interface IAdvertisement
     {
-        void LoadNormalBanner (string adsId, AdPosition pos);
+        void LoadNormalBanner (string adsId, Data.AdPosition pos);
         bool IsNormalBannerReady { get; }
         bool IsNormalBannerShowing { get; }
         void ShowNormalBanner( );
         void HideNormalBanner( );
         
-        void LoadEndGameBanner (string adsId, AdPosition pos);
+        void LoadEndGameBanner (string adsId, Data.AdPosition pos);
         bool IsEndGameBannerReady { get; }
         bool IsEndGameBannerShowing { get; }
         void ShowEndGameBanner( );

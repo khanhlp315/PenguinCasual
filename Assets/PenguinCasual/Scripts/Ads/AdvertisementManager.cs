@@ -1,7 +1,7 @@
-using Ads.Settings;
+using Penguin.Ads.Settings;
 using UnityEngine;
 
-namespace Ads
+namespace Penguin.Ads
 {
     public class AdvertisementManager : MonoBehaviour
     {
