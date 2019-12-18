@@ -6,3 +6,5 @@ Temp/
 obj/
 Logs/
 .vs
+*.DS_Store
+.vscode
