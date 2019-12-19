@@ -289,13 +289,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045260915}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.20346895, y: -0, z: -0, w: 0.97908145}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.480001, y: 0, z: 0}
 --- !u!114 &1045260919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _platform: {fileID: 2143953812}
-  _droppingSpeed: 1
+  _droppingSpeed: 10
 --- !u!1001 &1113113576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -431,7 +431,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6009b3e7ba0fc44389f0b8fc5d20eeaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pedestalePrefabs:
+  - {fileID: 7539210968902734440, guid: 863de0dd19292459a81e22090064ac93, type: 3}
   _unitToAngleRotation: 720
+  _heightPerPedestalLayer: 2
   _propInstance: {fileID: 1762778616}
 --- !u!4 &2143953813
 Transform:
