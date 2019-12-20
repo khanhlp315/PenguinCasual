@@ -8,7 +8,8 @@ namespace Penguin
     {
         None,
         Pedestal_01,
-        Wall
+        DeadZone_01,
+        Wall_01
     }
 
     public class Pedestal : MonoBehaviour
