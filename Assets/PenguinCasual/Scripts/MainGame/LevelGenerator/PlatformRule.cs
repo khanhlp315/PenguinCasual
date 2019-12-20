@@ -14,6 +14,7 @@ namespace Penguin
         public List<PedestalInfo> GetPedestalInfos(int level)
         {
             List<PedestalInfo> _pedestalInfos = new List<PedestalInfo>();
+
             int randomNone = Random.Range(0, 6);
             for (int i = 0; i < 7; i++)
             {
