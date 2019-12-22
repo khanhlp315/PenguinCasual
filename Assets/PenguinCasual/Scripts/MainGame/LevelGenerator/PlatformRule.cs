@@ -13,6 +13,9 @@ namespace Penguin
     {
         public List<PedestalInfo> GetPedestalInfos(int level)
         {
+            if (level == 0)
+                return GetFirstLevelPedestalInfo();
+
             List<PedestalInfo> pedestalInfos = new List<PedestalInfo>();
             List<int> slots = new List<int> {0, 1, 2, 3, 4, 5, 6};
 
@@ -42,6 +45,22 @@ namespace Penguin
             if (numWall > 0)
             {
                 pedestalInfos.Add(new PedestalInfo(PedestalType.Wall_01, Random.Range(0, 6)));
+            }
+
+            return pedestalInfos;
+        }
+
+        private List<PedestalInfo> GetFirstLevelPedestalInfo()
+        {
+            List<PedestalInfo> pedestalInfos = new List<PedestalInfo>();
+            List<int> slots = new List<int> { 0, 1, 2, 3, 4, 5, 6 };
+
+            int randomSlot = Random.Range(0, slots.Count - 1);
+            slots.RemoveAt(randomSlot);
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                pedestalInfos.Add(new PedestalInfo(PedestalType.Pedestal_01, slots[i]));
             }
 
             return pedestalInfos;

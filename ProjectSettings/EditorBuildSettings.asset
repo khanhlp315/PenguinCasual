@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PenguinCasual/Scenes/RankingScene.unity
     guid: 6308068a4f2ed440887924585bb66edc
+  - enabled: 1
+    path: Assets/PenguinCasual/Scenes/PlatformTestScene.unity
+    guid: cd3d074e5716a495e8278d4e21f5a8b7
   m_configObjects: {}

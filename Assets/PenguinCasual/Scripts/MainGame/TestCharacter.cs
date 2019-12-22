@@ -13,6 +13,8 @@ namespace Penguin
         [SerializeField] private float _gravity;
         private float _velocity;
 
+        private bool _isDead;
+
         private void OnTriggerEnter(Collider other)
         {
             Pedestal pedestal = other.GetComponent<Pedestal>();
@@ -24,6 +26,9 @@ namespace Penguin
 
         void Update()
         {
+            if (_isDead)
+                return;
+
             _velocity -= _gravity * Time.deltaTime;
             _velocity = Mathf.Max(_velocity, _maxDroppingVelocity);
 
@@ -40,6 +45,7 @@ namespace Penguin
         public void Die()
         {
             // TODO:
+            _isDead = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Penguin
 {
@@ -8,6 +9,7 @@ namespace Penguin
     {
         [SerializeField] TestCharacter _character;
         [SerializeField] Platform _platform;
+        [SerializeField] GameObject _endGamePanel;
 
         void Awake()
         {
@@ -32,11 +34,25 @@ namespace Penguin
             else if (pedestal.type == PedestalType.DeadZone_01)
             {
                 Debug.Log("Dead by touching deadzone");
+                ProcessEndGame();
             }
             else if (pedestal.type == PedestalType.Wall_01)
             {
                 Debug.Log("Dead by touching wall");
+                ProcessEndGame();
             }
+        }
+
+        void ProcessEndGame()
+        {
+            _character.Die();
+            _endGamePanel.SetActive(true);
+            _platform.UnregisterEvent();
+        }
+
+        public void OnRestartGame()
+        {
+            SceneManager.LoadScene("PlatformTestScene");
         }
     }
 }

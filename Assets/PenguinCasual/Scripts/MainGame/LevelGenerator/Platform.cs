@@ -63,6 +63,16 @@ namespace Penguin
             AddNewPedestales();
         }
 
+        private void OnDestroy()
+        {
+            EventHub.Unbind<EventTouchMoved>(OnTouchMoved);
+        }
+
+        public void UnregisterEvent()
+        {
+            EventHub.Unbind<EventTouchMoved>(OnTouchMoved);
+        }
+
         void OnTouchMoved(EventTouchMoved e)
         {
             Camera cam = Camera.main;
