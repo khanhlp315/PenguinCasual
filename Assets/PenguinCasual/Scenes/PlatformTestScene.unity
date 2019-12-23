@@ -702,6 +702,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 967493168787139648}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1158758881 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+    type: 3}
+  m_PrefabInstance: {fileID: 967493168787139648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1158758886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,6 +723,7 @@ MonoBehaviour:
   _maxDroppingVelocity: -15
   _jumpVelocity: 8
   _gravity: 20
+  _collider: {fileID: 1158758881}
 --- !u!1 &1277723623
 GameObject:
   m_ObjectHideFlags: 0
@@ -1287,6 +1294,11 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.28
       objectReference: {fileID: 0}
+    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5335745581076211782, guid: b58090fdc8b294cae92b3742bcd3c045,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -1295,12 +1307,13 @@ PrefabInstance:
     - target: {fileID: 5335745581076211782, guid: b58090fdc8b294cae92b3742bcd3c045,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5335745581076211782, guid: b58090fdc8b294cae92b3742bcd3c045,
         type: 3}
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5335745581076211782, guid: b58090fdc8b294cae92b3742bcd3c045, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b58090fdc8b294cae92b3742bcd3c045, type: 3}

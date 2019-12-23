@@ -11,18 +11,11 @@ namespace Penguin
         [SerializeField] private float _maxDroppingVelocity;
         [SerializeField] private float _jumpVelocity;
         [SerializeField] private float _gravity;
+        [SerializeField] private BoxCollider _collider;
+        RaycastHit[] _rayCastHits = new RaycastHit[5];
         private float _velocity;
 
         private bool _isDead;
-
-        private void OnTriggerEnter(Collider other)
-        {
-            Pedestal pedestal = other.GetComponent<Pedestal>();
-            if (pedestal != null)
-            {
-                OnCollideWithPedestal?.Invoke(pedestal);
-            }
-        }
 
         void Update()
         {
@@ -31,10 +24,23 @@ namespace Penguin
 
             _velocity -= _gravity * Time.deltaTime;
             _velocity = Mathf.Max(_velocity, _maxDroppingVelocity);
+            float moveDistance = _velocity * Time.deltaTime;
+
+            int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center, _collider.size / 2, Vector3.down, _rayCastHits, Quaternion.identity, Mathf.Abs(moveDistance));
 
             Vector3 position = transform.position;
-            position.y += _velocity * Time.deltaTime;
+            position.y += moveDistance;
             transform.position = position;
+
+            
+            for (int i = 0; i < totalHit; i++)
+            {
+                Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
+                if (pedestal != null)
+                {
+                    OnCollideWithPedestal?.Invoke(pedestal);
+                }
+            }
         }
 
         public void Jump()
