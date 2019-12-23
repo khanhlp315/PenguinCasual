@@ -51,7 +51,7 @@ namespace Penguin
                 return;
 
             Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Vector2 touchPos = touch.position;
 
             if (touch.phase == TouchPhase.Began)
             {
