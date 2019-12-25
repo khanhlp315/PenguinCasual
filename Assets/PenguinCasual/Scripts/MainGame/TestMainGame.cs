@@ -27,7 +27,9 @@ namespace Penguin
             if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
                 return;
 
-            if (pedestal.type == PedestalType.Pedestal_01)
+            if (pedestal.type == PedestalType.Pedestal_01 ||
+                pedestal.type == PedestalType.Pedestal_01_1_Fish ||
+                pedestal.type == PedestalType.Pedestal_01_3_Fish)
             {
                 _character.Jump();
             }

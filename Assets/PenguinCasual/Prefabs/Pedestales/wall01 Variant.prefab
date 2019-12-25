@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &5471636119936797671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3258683930901113696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 612417b29b61a40b5acdd38b121db00d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 3
 --- !u!64 &4409569163753864319
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -27,6 +14,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 3208232096268088403, guid: ee00f0c76246b48848741fe4a75573e9, type: 3}
+--- !u!114 &5471636119936797671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258683930901113696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 612417b29b61a40b5acdd38b121db00d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 5
 --- !u!1001 &6780387850537742953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37,7 +37,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: ee00f0c76246b48848741fe4a75573e9,
         type: 3}
       propertyPath: m_Name
-      value: wall01
+      value: wall01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ee00f0c76246b48848741fe4a75573e9,
         type: 3}

@@ -57,7 +57,7 @@ namespace Penguin
 
             _pedestalPool = new PedestalPool(this.transform, _pedestalePrefabs);
             _pedestalLayers = new List<PedestalLayer>();
-            _testPlatformRule = new TestPlarformRule();
+            _testPlatformRule = new FinalPlatformRule();
 
             RecycleOldPedestales();
             AddNewPedestales();
