@@ -38,24 +38,33 @@ namespace Penguin
             StartCoroutine(_Fall());
         }
 
+
+        // TODO: need to clean up
         private IEnumerator _Fall()
         {
             float animationTime = 0.75f;
             Vector3 downward = -transform.forward;
             downward = Quaternion.Euler(0f, 360f/14f, 0) * downward;
-            Vector3 deltaPos = downward.normalized * 6;
-            deltaPos.y = -10;
+            Vector3 deltaPos = downward.normalized * 7;
+            deltaPos.y = -8;
+
+            Vector3 perpendicularAxis = Quaternion.Euler(0f, 90f, 0) * downward;
 
             deltaPos = deltaPos / animationTime;
-            // Quaternion.
+
             float time = 0f;
             while (time <= animationTime)
             {
                 time += Time.deltaTime;
 
+                // Update position
                 Vector3 position = transform.position;
                 position += deltaPos * Time.deltaTime;
                 transform.position = position;
+
+                // Update rotation
+                Vector3 centerPoint = GetComponent<MeshRenderer>().bounds.center;
+                transform.RotateAround(centerPoint, perpendicularAxis, 360f * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 
