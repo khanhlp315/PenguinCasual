@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,12 @@ namespace Penguin
         [SerializeField]
         private Vector3 _backgroundPosition;
 
+        [SerializeField]
         private GameObject _background;
+
+        [Header("-----------UI--------------")]
+        [SerializeField]
+        private TextMeshProUGUI _labelScore;
 
         private CoreGameModel _coreGameModel;
 
@@ -55,6 +61,37 @@ namespace Penguin
                     }
                 }
             }
+            RegisterEvent();
+        }
+
+        private void OnDestroy()
+        {
+            UnRegisterEvent();
+        }
+
+        /// <summary>
+        /// Register event for update Views
+        /// </summary>
+        private void RegisterEvent()
+        {
+            EventHub.Bind<EventUpdateScore>(OnScoreUpdate);
+        }
+
+        /// <summary>
+        /// Unregister events
+        /// </summary>
+        private void UnRegisterEvent()
+        {
+            EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
+        }
+
+        /// <summary>
+        /// Receiver from event hub to update label score
+        /// </summary>
+        /// <param name="eventData"></param>
+        private void OnScoreUpdate(EventUpdateScore eventData)
+        {
+            _labelScore.text = eventData.score.ToString();
         }
 
         private SkinSetting.SkinData GetSkinById(string skinId)

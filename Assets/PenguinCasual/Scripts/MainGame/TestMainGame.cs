@@ -7,18 +7,33 @@ namespace Penguin
 {
     public class TestMainGame : MonoBehaviour
     {
+        [SerializeField] ScoreSetting _scoreSetting;
+
         [SerializeField] Character _character;
         [SerializeField] Platform _platform;
         [SerializeField] GameObject _endGamePanel;
 
+        private IScoreCaculator _scoreCaculator;
+
+        private int _lastPassLayer = -1;
+
         void Awake()
         {
             _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
+            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
+
+            _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
+            _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
         }
 
         void Update()
         {
             _platform.UpdatePenguinPosition(_character.transform.position);
+
+            if (_scoreCaculator != null)
+            {
+                _scoreCaculator.Update(Time.deltaTime);
+            }
         }
 
         void OnPlayerCollideWithPedestal(Pedestal pedestal)
@@ -50,6 +65,16 @@ namespace Penguin
             _character.OnDie();
             _endGamePanel.SetActive(true);
             _platform.UnregisterEvent();
+        }
+
+        void OnCharacterPassLayer(EventCharacterPassLayer eventData)
+        {
+            _scoreCaculator.OnPassingLayer(eventData.layer);
+        }
+
+        private void OnScoreUpdate(long score)
+        {
+            EventHub.Emit<EventUpdateScore>(new EventUpdateScore(score));
         }
 
         public void OnRestartGame()
