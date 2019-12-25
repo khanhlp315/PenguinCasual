@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 namespace Penguin
 {
@@ -13,16 +12,6 @@ namespace Penguin
         Pedestal_01_3_Fish,
         DeadZone_01,
         Wall_01
-    }
-
-    public struct EventPedestalDestroy : IEvent
-    {
-        public EventPedestalDestroy(Pedestal pedestal)
-        {
-            this.pedestal = pedestal;
-        }
-
-        public Pedestal pedestal;
     }
 
     public class Pedestal : MonoBehaviour

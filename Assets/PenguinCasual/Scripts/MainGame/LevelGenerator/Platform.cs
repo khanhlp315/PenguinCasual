@@ -106,6 +106,8 @@ namespace Penguin
                     {
                         pedestal.Fall();
                     }
+
+                    EventHub.Emit(new EventCharacterPassLayer(layer));
                 }
 
                 break;
