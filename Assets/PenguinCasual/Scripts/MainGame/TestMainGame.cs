@@ -39,8 +39,8 @@ namespace Penguin
         void OnPlayerCollideWithPedestal(Pedestal pedestal)
         {
             // If character is in middle air, and player rotate the platform and causes collision, this threshold will prevent the character bounce back
-            if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
-                return;
+            // if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
+            //     return;
 
             if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||

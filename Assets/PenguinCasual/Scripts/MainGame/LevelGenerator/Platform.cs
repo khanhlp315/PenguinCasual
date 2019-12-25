@@ -99,7 +99,7 @@ namespace Penguin
                 if (layer.hasDestroy)
                     continue;
                 
-                if (position.y < layer.height - 0.2f)
+                if (position.y < layer.height - 0.5f)
                 {
                     layer.hasDestroy = true;
                     foreach (var pedestal in layer.pedestales)
