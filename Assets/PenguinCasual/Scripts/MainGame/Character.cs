@@ -80,12 +80,10 @@ namespace Penguin
                 for (int i = 0; i < totalHit; i++)
                 {
                     Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
-                    if (pedestal != null)
-                    {
-                        OnCollideWithPedestal?.Invoke(pedestal);
-                    }
+                    if (pedestal == null || !pedestal.Active)
+                        continue;
 
-
+                    OnCollideWithPedestal?.Invoke(pedestal);
 
                     if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
                     {

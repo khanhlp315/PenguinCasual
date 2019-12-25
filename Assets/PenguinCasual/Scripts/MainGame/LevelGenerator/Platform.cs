@@ -18,6 +18,7 @@ namespace Penguin
         public List<Pedestal> pedestales;
         public int level;
         public float height;
+        public bool hasDestroy;
     }
 
     public class Platform : MonoBehaviour
@@ -40,6 +41,7 @@ namespace Penguin
         void Awake()
         {
             EventHub.Bind<EventTouchMoved>(OnTouchMoved, true);
+            EventHub.Bind<EventPedestalDestroy>(OnPedestalDestroyed);
             
             MeshRenderer propMeshRenderer = _propInstance.GetComponent<MeshRenderer>();
             _propHeight = propMeshRenderer.bounds.size.y;
@@ -66,11 +68,13 @@ namespace Penguin
         private void OnDestroy()
         {
             EventHub.Unbind<EventTouchMoved>(OnTouchMoved);
+
         }
 
         public void UnregisterEvent()
         {
             EventHub.Unbind<EventTouchMoved>(OnTouchMoved);
+            EventHub.Unbind<EventPedestalDestroy>(OnPedestalDestroyed);
         }
 
         void OnTouchMoved(EventTouchMoved e)
@@ -90,6 +94,23 @@ namespace Penguin
 
         void CheckPropAndRecyclePedestales(Vector3 position)
         {
+            foreach (var layer in _pedestalLayers)
+            {
+                if (layer.hasDestroy)
+                    continue;
+                
+                if (position.y < layer.height - 0.2f)
+                {
+                    layer.hasDestroy = true;
+                    foreach (var pedestal in layer.pedestales)
+                    {
+                        pedestal.Fall();
+                    }
+                }
+
+                break;
+            }
+
             float centerBotPropY = _propBottomHeight + _propHeight / 2;
             if (position.y < centerBotPropY)
             {
@@ -112,13 +133,18 @@ namespace Penguin
             var willBeRemovedLayers = _pedestalLayers.FindAll(layer => layer.height > propTopHeight);
             foreach (var layer in willBeRemovedLayers)
             {
-                foreach (var pedestal in layer.pedestales)
-                {
-                    _pedestalPool.Return(pedestal);
-                }
+                // foreach (var pedestal in layer.pedestales)
+                // {
+                //     _pedestalPool.Return(pedestal);
+                // }
 
                 _pedestalLayers.Remove(layer);
             }
+        }
+
+        void OnPedestalDestroyed(EventPedestalDestroy e)
+        {
+            _pedestalPool.Return(e.pedestal);
         }
 
         void AddNewPedestales()
@@ -143,6 +169,7 @@ namespace Penguin
                 layer.pedestales = new List<Pedestal>();
                 layer.height = pedestalHeight;
                 layer.level = pedestalLevel;
+                layer.hasDestroy = false;
                 _pedestalLayers.Add(layer);
 
                 foreach (var pedestalInfo in layer.pedestalLayers)
