@@ -1194,6 +1194,8 @@ MonoBehaviour:
   - {fileID: 7539210968902734440, guid: 863de0dd19292459a81e22090064ac93, type: 3}
   - {fileID: 7101157850838583470, guid: 4d99c8983812245b6b770b4b5af07c36, type: 3}
   - {fileID: 5471636119936797671, guid: fa8703fc1cbff4b83858ecf26318d1f4, type: 3}
+  - {fileID: 4356870023776603747, guid: cbd11e3568a444ce1a1677b4f0f1d729, type: 3}
+  - {fileID: -2504462030816896305, guid: 0cc8e5c8df8f24e4b8f07ec82689d60f, type: 3}
   _unitToAngleRotation: 400
   _heightPerPedestalLayer: 3
   _propInstance: {fileID: 1762778616}
@@ -1223,6 +1225,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TestCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8689303254746200324, guid: b58090fdc8b294cae92b3742bcd3c045,
         type: 3}
@@ -1277,26 +1299,6 @@ PrefabInstance:
     - target: {fileID: 8689303254746200324, guid: b58090fdc8b294cae92b3742bcd3c045,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.47
-      objectReference: {fileID: 0}
-    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 7914038840925019994, guid: b58090fdc8b294cae92b3742bcd3c045,
-        type: 3}
-      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5335745581076211782, guid: b58090fdc8b294cae92b3742bcd3c045,
