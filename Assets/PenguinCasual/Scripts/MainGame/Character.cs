@@ -31,6 +31,7 @@ namespace Penguin
 
         RaycastHit[] _rayCastHits = new RaycastHit[5];
         private float _velocity;
+        private LayerMask _defaultLayerMask;
 
         private CharacterState _state;
 
@@ -50,6 +51,11 @@ namespace Penguin
 
         #region [ Methods ]
 
+        void Awake()
+        {
+            _defaultLayerMask = LayerMask.GetMask("Default");
+        }
+
         void Update()
         {
             if (State == CharacterState.Dead)
@@ -58,22 +64,37 @@ namespace Penguin
             _velocity -= _gravity * Time.deltaTime;
             _velocity = Mathf.Max(_velocity, _maxDroppingVelocity);
             float moveDistance = _velocity * Time.deltaTime;
-
-            int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center, _collider.size / 2, Vector3.down, _rayCastHits, Quaternion.identity, Mathf.Abs(moveDistance));
+            int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center, 
+                                                    _collider.size / 2, 
+                                                    Vector3.down,
+                                                    _rayCastHits, 
+                                                    Quaternion.identity, 
+                                                    moveDistance < 0 ? Mathf.Abs(moveDistance) : 0,
+                                                    _defaultLayerMask);
 
             Vector3 position = transform.position;
             position.y += moveDistance;
-            transform.position = position;
-
-
-            for (int i = 0; i < totalHit; i++)
+            
+            if (totalHit > 0)
             {
-                Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
-                if (pedestal != null)
+                for (int i = 0; i < totalHit; i++)
                 {
-                    OnCollideWithPedestal?.Invoke(pedestal);
+                    Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
+                    if (pedestal != null)
+                    {
+                        OnCollideWithPedestal?.Invoke(pedestal);
+                    }
+
+
+
+                    if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
+                    {
+                        position.y = _rayCastHits[i].point.y;
+                    }
                 }
             }
+
+            transform.position = position;
         }
 
         public void Jump()

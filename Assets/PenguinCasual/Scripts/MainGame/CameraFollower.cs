@@ -6,7 +6,7 @@ namespace Penguin
 {
     public class CameraFollower : MonoBehaviour
     {
-        [SerializeField] TestCharacter _player;
+        [SerializeField] Character _player;
         [SerializeField] float _playerOffset;
         float _lowestPosition = float.MaxValue;
 

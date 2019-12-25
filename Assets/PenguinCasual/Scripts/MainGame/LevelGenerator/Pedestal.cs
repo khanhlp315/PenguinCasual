@@ -17,6 +17,29 @@ namespace Penguin
     public class Pedestal : MonoBehaviour
     {
         public PedestalType type;
+        private bool _active = true;
+
+        public bool Active
+        {
+            get
+            {
+                return _active;
+            }
+            set
+            {
+                _active = value;
+            }
+        }
+
+        public void Fall()
+        {
+
+        }
+
+        private IEnumerator _Fall()
+        {
+            yield return null;
+        }
     }    
 }
 

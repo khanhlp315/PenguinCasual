@@ -7,7 +7,7 @@ namespace Penguin
 {
     public class TestMainGame : MonoBehaviour
     {
-        [SerializeField] TestCharacter _character;
+        [SerializeField] Character _character;
         [SerializeField] Platform _platform;
         [SerializeField] GameObject _endGamePanel;
 
@@ -47,7 +47,7 @@ namespace Penguin
 
         void ProcessEndGame()
         {
-            _character.Die();
+            _character.OnDie();
             _endGamePanel.SetActive(true);
             _platform.UnregisterEvent();
         }
