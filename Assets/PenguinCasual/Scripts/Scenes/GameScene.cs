@@ -14,6 +14,8 @@ namespace Penguin
         [Header("-------------Game Setting------------")]
         [SerializeField]
         private SkinSetting _skinSetting;
+        [SerializeField]
+        private GameSetting _gameSetting;
 
         [Header("------------Character---------------")]
         [SerializeField]
@@ -29,8 +31,15 @@ namespace Penguin
         [Header("-----------UI--------------")]
         [SerializeField]
         private TextMeshProUGUI _labelScore;
+        [SerializeField]
+        private TextMeshProUGUI _labelCountdown;
+        [SerializeField]
+        private TextMeshProUGUI _labelWarning;
 
         private CoreGameModel _coreGameModel;
+
+        private bool _isGameStart;
+        private float _countDownDuration;
 
         private void Start()
         {
@@ -63,11 +72,27 @@ namespace Penguin
             }
 
             RegisterEvent();
+
+            StartCoroutine(WaitAndStartGame());
         }
 
         private void OnDestroy()
         {
             UnRegisterEvent();
+        }
+
+        private void Update()
+        {
+            if (_isGameStart)
+            {
+                _countDownDuration -= Time.deltaTime;
+                _labelCountdown.text = Mathf.RoundToInt(_countDownDuration).ToString();
+                if (_countDownDuration <= 0)
+                {
+                    _isGameStart = false;
+                    EventHub.Emit<EventTimeout>();
+                }
+            }
         }
 
         /// <summary>
@@ -86,6 +111,26 @@ namespace Penguin
             EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
         }
 
+        private IEnumerator WaitAndStartGame()
+        {
+            _countDownDuration = _gameSetting != null ? _gameSetting.RoundDuration : 60;
+
+            _labelWarning.gameObject.SetActive(true);
+            _labelWarning.text = "Ready";
+            _labelCountdown.text = _countDownDuration.ToString();
+
+            yield return new WaitForSeconds(2);
+
+            _labelWarning.text = "Go!";
+
+            yield return new WaitForSeconds(1);
+
+            _labelWarning.gameObject.SetActive(false);
+
+            _isGameStart = true;
+            EventHub.Emit<EventStartGame>();
+        }
+
         /// <summary>
         /// Receiver from event hub to update label score
         /// </summary>
@@ -93,6 +138,15 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _labelScore.text = eventData.score.ToString();
+        }
+
+        /// <summary>
+        /// Receiver from event hub to update game duration
+        /// </summary>
+        /// <param name="increase"></param>
+        private void OnTimeUpdate(float increase)
+        {
+            _countDownDuration += increase;
         }
 
         private SkinSetting.SkinData GetSkinById(string skinId)

@@ -7,6 +7,11 @@ namespace Penguin
     [CreateAssetMenu(fileName = "GameSetting", menuName = "Penguin/Settings/Game Setting", order = 10)]
     public class GameSetting : ScriptableObject
     {
+        [Header("General")]
+		public int RoundDuration;
+        public int SquidBonusDuration;
+        public int WatchAdBonusDuration;
+
         [Header("Platform")]
         public float distancePerPedestalLayer;
         public float unitToAngleRotation;

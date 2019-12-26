@@ -22,6 +22,7 @@ namespace Penguin
         {
             _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
             EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer, true);
+            EventHub.Bind<EventStartGame>(OnWaitForStartGame);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
@@ -31,18 +32,17 @@ namespace Penguin
             _cameraFollower.Setup(_gameSetting);
             _character.Setup(_gameSetting);
 
-            StartCoroutine(WaitForStartGame());
+
         }
 
         void OnDestroy()
         {
             EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Unbind<EventStartGame>(OnWaitForStartGame);
         }
 
-        private IEnumerator WaitForStartGame()
+        private void OnWaitForStartGame(EventStartGame e)
         {
-            yield return new WaitForSeconds(0.5f);
-            
             _isGameStart = true;
             _platform.CanInteract = true;
         }

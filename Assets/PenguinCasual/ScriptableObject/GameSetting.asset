@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6900fc4480bc4ae2b808ec1689355ac, type: 3}
   m_Name: GameSetting
   m_EditorClassIdentifier: 
+  RoundDuration: 60
+  SquidBonusDuration: 3
+  WatchAdBonusDuration: 30
   distancePerPedestalLayer: 3
   unitToAngleRotation: 400
   pedestalStartPosition: -4
