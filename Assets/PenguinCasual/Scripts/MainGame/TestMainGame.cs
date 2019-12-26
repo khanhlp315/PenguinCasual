@@ -48,16 +48,19 @@ namespace Penguin
                 _scoreCaculator.OnLandingLayer(pedestal);
             }
 
+            if (_scoreCaculator.HasActiveCombo)
+            {
+                //TODO destroy pedestal layer ?
+                _character.Jump();
+
+                return;
+            }
+
             if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
             {
                 _character.Jump();
-
-                if (_scoreCaculator.HasActiveCombo)
-                {
-                    //TODO destroy pedestal layer ?
-                }
             }
             else if (pedestal.type == PedestalType.DeadZone_01)
             {
