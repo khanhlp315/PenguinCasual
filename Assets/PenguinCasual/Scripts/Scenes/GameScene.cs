@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Penguin
@@ -35,11 +36,23 @@ namespace Penguin
         private TextMeshProUGUI _labelCountdown;
         [SerializeField]
         private TextMeshProUGUI _labelWarning;
+        [SerializeField]
+        private Image _countdownFillRing;
+        [SerializeField]
+        private GameObject _endGamePanel;
 
         private CoreGameModel _coreGameModel;
 
         private bool _isGameStart;
         private float _countDownDuration;
+
+        public int RoundDuration
+        {
+            get
+            {
+                return _gameSetting != null ? _gameSetting.RoundDuration : 60;
+            }
+        }
 
         private void Start()
         {
@@ -87,6 +100,7 @@ namespace Penguin
             {
                 _countDownDuration -= Time.deltaTime;
                 _labelCountdown.text = Mathf.RoundToInt(_countDownDuration).ToString();
+                _countdownFillRing.fillAmount = _countDownDuration / RoundDuration;
                 if (_countDownDuration <= 0)
                 {
                     _isGameStart = false;
@@ -101,6 +115,7 @@ namespace Penguin
         private void RegisterEvent()
         {
             EventHub.Bind<EventUpdateScore>(OnScoreUpdate);
+            EventHub.Bind<EventEndGame>(OnEndGame);
         }
 
         /// <summary>
@@ -109,11 +124,12 @@ namespace Penguin
         private void UnRegisterEvent()
         {
             EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
+            EventHub.Unbind<EventEndGame>(OnEndGame);
         }
 
         private IEnumerator WaitAndStartGame()
         {
-            _countDownDuration = _gameSetting != null ? _gameSetting.RoundDuration : 60;
+            _countDownDuration = RoundDuration;
 
             _labelWarning.gameObject.SetActive(true);
             _labelWarning.text = "Ready";
@@ -147,6 +163,17 @@ namespace Penguin
         private void OnTimeUpdate(float increase)
         {
             _countDownDuration += increase;
+        }
+
+        private void OnEndGame(EventEndGame eventData)
+        {
+            _isGameStart = false;
+            _endGamePanel.SetActive(true);
+        }
+
+        public void OnRestartGame()
+        {
+            SceneManager.LoadScene("PlatformTestScene");
         }
 
         private SkinSetting.SkinData GetSkinById(string skinId)
