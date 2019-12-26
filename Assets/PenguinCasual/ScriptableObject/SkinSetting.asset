@@ -32,7 +32,7 @@ MonoBehaviour:
     levelReqire: 1
     scoreRequire: 0
   - id: background1
-    prefabModel: {fileID: 6556894562167284008, guid: d9f37f7381a27466bbd0f38abd7df94e,
+    prefabModel: {fileID: 160785575762151607, guid: ba9afcb2969e14b0394f2cceadd29d24,
       type: 3}
     unlockType: 0
     iapProductId: 
@@ -41,7 +41,7 @@ MonoBehaviour:
     levelReqire: 1
     scoreRequire: 0
   - id: background2
-    prefabModel: {fileID: 8317676187357618313, guid: 32d309de80e58423b9a80569ca107d6c,
+    prefabModel: {fileID: 7261502849670703666, guid: 29b49f3419e194fe8a57f161c5facc46,
       type: 3}
     unlockType: 0
     iapProductId: 
@@ -50,7 +50,7 @@ MonoBehaviour:
     levelReqire: 1
     scoreRequire: 0
   - id: background3
-    prefabModel: {fileID: 5986084265147993285, guid: 653a712d6903c4d49a4325eba000ab6d,
+    prefabModel: {fileID: 2731377715709460275, guid: b830b460e30454bb2ad74afdc8b02f4e,
       type: 3}
     unlockType: 0
     iapProductId: 
@@ -59,7 +59,7 @@ MonoBehaviour:
     levelReqire: 1
     scoreRequire: 0
   - id: background4
-    prefabModel: {fileID: 3070708915793489738, guid: 00582502e282d4c34a661e8cf0bc9ef5,
+    prefabModel: {fileID: 3769213146979470585, guid: f2ec52d3f0cf94155955e8d0694ecb8b,
       type: 3}
     unlockType: 0
     iapProductId: 
@@ -68,7 +68,7 @@ MonoBehaviour:
     levelReqire: 1
     scoreRequire: 0
   - id: background5
-    prefabModel: {fileID: 6634092444399698754, guid: d1d4182b78fb84ccc8992d1c01576b4e,
+    prefabModel: {fileID: 3882747305401980249, guid: 78e20712689e148619bae64d9517cd79,
       type: 3}
     unlockType: 0
     iapProductId: 

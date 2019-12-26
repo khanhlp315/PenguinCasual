@@ -57,7 +57,7 @@ namespace Penguin
                         }
 
                         _background = GameObject.Instantiate(skinData.prefabModel);
-                        _background.transform.position = _backgroundPosition;
+                        _background.transform.localPosition = _backgroundPosition;
                     }
                 }
             }
