@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace Penguin
 {
@@ -18,11 +15,14 @@ namespace Penguin
 
         private bool _isGameStart = false;
 
+        private bool _isTimeOut = false;
+
         void Awake()
         {
             _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
             EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer, true);
             EventHub.Bind<EventStartGame>(OnWaitForStartGame);
+            EventHub.Bind<EventTimeout>(OnTimeout);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
@@ -39,6 +39,7 @@ namespace Penguin
         {
             EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
             EventHub.Unbind<EventStartGame>(OnWaitForStartGame);
+            EventHub.Unbind<EventTimeout>(OnTimeout);
         }
 
         private void OnWaitForStartGame(EventStartGame e)
@@ -61,6 +62,12 @@ namespace Penguin
 
         private void OnPlayerCollideWithPedestal(Pedestal pedestal)
         {
+            if (_isTimeOut)
+            {
+                ProcessEndGame(false);
+                return;
+            }
+
             bool shouldReturn = false;
             if (_scoreCaculator.HasActiveCombo)
             {
@@ -83,25 +90,30 @@ namespace Penguin
             else if (pedestal.type == PedestalType.DeadZone_01)
             {
                 Debug.Log("Dead by touching deadzone");
-                ProcessEndGame();
+                ProcessEndGame(true);
             }
             else if (pedestal.type == PedestalType.Wall_01)
             {
                 Debug.Log("Dead by touching wall");
-                ProcessEndGame();
+                ProcessEndGame(true);
             }
         }
 
-        void ProcessEndGame()
+        void ProcessEndGame(bool endGameByDead)
         {
             _character.OnDie();
-            _endGamePanel.SetActive(true);
             _platform.UnregisterEvent();
+            EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
         }
 
         void OnCharacterPassLayer(EventCharacterPassLayer eventData)
         {
             _scoreCaculator.OnPassingLayer(eventData.layer);
+        }
+
+        void OnTimeout(EventTimeout eventData)
+        {
+            _isTimeOut = true;
         }
 
         private void OnComboActive()
@@ -112,11 +124,6 @@ namespace Penguin
         private void OnScoreUpdate(long score)
         {
             EventHub.Emit<EventUpdateScore>(new EventUpdateScore(score));
-        }
-
-        public void OnRestartGame()
-        {
-            SceneManager.LoadScene("PlatformTestScene");
         }
     }
 }
