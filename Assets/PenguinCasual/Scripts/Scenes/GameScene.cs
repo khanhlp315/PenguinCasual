@@ -139,6 +139,15 @@ namespace Penguin
             _labelScore.text = eventData.score.ToString();
         }
 
+        /// <summary>
+        /// Receiver from event hub to update game duration
+        /// </summary>
+        /// <param name="increase"></param>
+        private void OnTimeUpdate(float increase)
+        {
+            _countDownDuration += increase;
+        }
+
         private SkinSetting.SkinData GetSkinById(string skinId)
         {
             return _skinSetting != null ? _skinSetting.GetSkinById(skinId) : null;

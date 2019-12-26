@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: GameSetting
   m_EditorClassIdentifier: 
   RoundDuration: 60
+  SquidBonusDuration: 3
+  WatchAdBonusDuration: 30
