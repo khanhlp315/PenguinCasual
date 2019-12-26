@@ -20,41 +20,38 @@ namespace Penguin
         void Awake()
         {
             _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
-            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer, true);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
             _scoreCaculator.OnComboActive += OnComboActive;
         }
 
+        void OnDestroy()
+        {
+            EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
+        }
+
         void Update()
         {
             _platform.UpdatePenguinPosition(_character.transform.position);
-
-            if (_scoreCaculator != null)
-            {
-                _scoreCaculator.Update(Time.deltaTime);
-            }
+            _scoreCaculator.Update(Time.deltaTime);
         }
 
         void OnPlayerCollideWithPedestal(Pedestal pedestal)
         {
-            // If character is in middle air, and player rotate the platform and causes collision, this threshold will prevent the character bounce back
-            // if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
-            //     return;
-
-            if (_scoreCaculator != null)
-            {
-                _scoreCaculator.OnLandingLayer(pedestal);
-            }
-
+            bool shouldReturn = false;
             if (_scoreCaculator.HasActiveCombo)
             {
-                //TODO destroy pedestal layer ?
+                _platform.DestroyNextLayer();
                 _character.Jump();
-
-                return;
+                shouldReturn = true;
             }
+
+            _scoreCaculator.OnLandingLayer(pedestal);
+
+            if (shouldReturn)
+                return;
 
             if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||

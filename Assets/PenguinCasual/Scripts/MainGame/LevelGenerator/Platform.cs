@@ -92,25 +92,33 @@ namespace Penguin
             return PedestalType.None;
         }
 
-        void CheckPropAndRecyclePedestales(Vector3 position)
+        public void DestroyNextLayer()
         {
-            foreach (var layer in _pedestalLayers)
+            PedestalLayer nextLayer = GetNextPedestalLayer();
+            if (nextLayer != null)
             {
-                if (layer.hasDestroy)
-                    continue;
-                
-                if (position.y < layer.height - 0.5f)
+                nextLayer.hasDestroy = true;
+                foreach (var pedestal in nextLayer.pedestales)
                 {
-                    layer.hasDestroy = true;
-                    foreach (var pedestal in layer.pedestales)
-                    {
-                        pedestal.Fall();
-                    }
-
-                    EventHub.Emit(new EventCharacterPassLayer(layer));
+                    pedestal.Fall();
                 }
 
-                break;
+                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
+            }
+        }
+
+        void CheckPropAndRecyclePedestales(Vector3 position)
+        {
+            PedestalLayer nextLayer = GetNextPedestalLayer();
+            if (nextLayer != null && position.y < nextLayer.height - 0.5f)
+            {
+                nextLayer.hasDestroy = true;
+                foreach (var pedestal in nextLayer.pedestales)
+                {
+                    pedestal.Fall();
+                }
+
+                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
             }
 
             float centerBotPropY = _propBottomHeight + _propHeight / 2;
@@ -135,11 +143,6 @@ namespace Penguin
             var willBeRemovedLayers = _pedestalLayers.FindAll(layer => layer.height > propTopHeight);
             foreach (var layer in willBeRemovedLayers)
             {
-                // foreach (var pedestal in layer.pedestales)
-                // {
-                //     _pedestalPool.Return(pedestal);
-                // }
-
                 _pedestalLayers.Remove(layer);
             }
         }
@@ -181,6 +184,19 @@ namespace Penguin
                     layer.pedestales.Add(pedestal);
                 }
             }
+        }
+
+        PedestalLayer GetNextPedestalLayer()
+        {
+            foreach (var layer in _pedestalLayers)
+            {
+                if (layer.hasDestroy)
+                    continue;
+
+                return layer;
+            }
+
+            return null;
         }
     }
 }
