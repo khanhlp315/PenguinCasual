@@ -6,16 +6,28 @@ namespace Penguin
 {
     public class CameraFollower : MonoBehaviour
     {
-        [SerializeField] Character _player;
-        [SerializeField] float _playerOffset;
-        float _lowestPosition = float.MaxValue;
+        [SerializeField] private Character _player;
+        
+        private GameSetting _gameSetting;
+        private float _lowestPosition = float.MaxValue;
 
-        void Update()
+        public void Setup(GameSetting gameSetting)
         {
-            float newLowestPosition = _player.transform.position.y + _playerOffset;
-            if (_lowestPosition > newLowestPosition)
+            _gameSetting = gameSetting;
+            SetPositionY(gameSetting.cameraStartPosition);
+        }
+
+        public void CustomUpdate()
+        {
+            float newLowestPosition = _player.transform.position.y + _gameSetting.characterOffsetWithCamera;
+            SetPositionY(newLowestPosition);
+        }
+
+        private void SetPositionY(float posY)
+        {
+            if (_lowestPosition > posY)
             {
-                _lowestPosition = newLowestPosition;
+                _lowestPosition = posY;
                 Vector3 position = transform.position;
                 position.y = _lowestPosition;
                 transform.position = position;

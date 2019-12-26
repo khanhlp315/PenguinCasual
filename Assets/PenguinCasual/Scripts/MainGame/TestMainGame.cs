@@ -7,54 +7,72 @@ namespace Penguin
 {
     public class TestMainGame : MonoBehaviour
     {
+        [SerializeField] GameSetting _gameSetting;
+        [SerializeField] CameraFollower _cameraFollower;
         [SerializeField] ScoreSetting _scoreSetting;
-
         [SerializeField] Character _character;
         [SerializeField] Platform _platform;
         [SerializeField] GameObject _endGamePanel;
 
         private IScoreCaculator _scoreCaculator;
 
-        private int _lastPassLayer = -1;
+        private bool _isGameStart = false;
 
         void Awake()
         {
             _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
-            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer, true);
+            EventHub.Bind<EventStartGame>(OnWaitForStartGame);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
             _scoreCaculator.OnComboActive += OnComboActive;
+
+            _platform.Setup(_gameSetting);
+            _cameraFollower.Setup(_gameSetting);
+            _character.Setup(_gameSetting);
+
+
         }
 
-        void Update()
+        void OnDestroy()
         {
+            EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Unbind<EventStartGame>(OnWaitForStartGame);
+        }
+
+        private void OnWaitForStartGame(EventStartGame e)
+        {
+            _isGameStart = true;
+            _platform.CanInteract = true;
+        }
+
+        private void Update()
+        {
+            if (!_isGameStart)
+                return;
+
+            _character.CustomUpdate();
+            _cameraFollower.CustomUpdate();
+
             _platform.UpdatePenguinPosition(_character.transform.position);
-
-            if (_scoreCaculator != null)
-            {
-                _scoreCaculator.Update(Time.deltaTime);
-            }
+            _scoreCaculator.Update(Time.deltaTime);
         }
 
-        void OnPlayerCollideWithPedestal(Pedestal pedestal)
+        private void OnPlayerCollideWithPedestal(Pedestal pedestal)
         {
-            // If character is in middle air, and player rotate the platform and causes collision, this threshold will prevent the character bounce back
-            // if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
-            //     return;
-
-            if (_scoreCaculator != null)
-            {
-                _scoreCaculator.OnLandingLayer(pedestal);
-            }
-
+            bool shouldReturn = false;
             if (_scoreCaculator.HasActiveCombo)
             {
-                //TODO destroy pedestal layer ?
+                _platform.DestroyNextLayer();
                 _character.Jump();
-
-                return;
+                shouldReturn = true;
             }
+
+            _scoreCaculator.OnLandingLayer(pedestal);
+
+            if (shouldReturn)
+                return;
 
             if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||
@@ -88,7 +106,7 @@ namespace Penguin
 
         private void OnComboActive()
         {
-            //TODO active character combo effect
+            //TODO: active character combo effect
         }
 
         private void OnScoreUpdate(long score)

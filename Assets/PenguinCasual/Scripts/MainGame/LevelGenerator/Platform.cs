@@ -23,13 +23,13 @@ namespace Penguin
 
     public class Platform : MonoBehaviour
     {
-        const float kAnglePerSlot = 360f/7f;
+        private const float kAnglePerSlot = 360f/7f;
 
-        [SerializeField] List<Pedestal> _pedestalePrefabs;
-        [SerializeField] float _unitToAngleRotation;
-        [SerializeField] float _heightPerPedestalLayer;
-        [SerializeField] Transform _propInstance;
-        List<Transform> _props;
+        [SerializeField] private List<Pedestal> _pedestalePrefabs;
+        [SerializeField] private Transform _propInstance;
+        
+        private List<Transform> _props;
+        private GameSetting _gameSetting;
         float _propHeight;
         float _propBottomHeight;
         float _platformAngle;
@@ -37,12 +37,20 @@ namespace Penguin
         PedestalPool _pedestalPool;
         List<PedestalLayer> _pedestalLayers;
         PlatformRule _platformRule;
+        private bool _canInteract;
+        public bool CanInteract
+        {
+            get { return _canInteract; }
+            set { _canInteract = value; }
+        }
 
-        void Awake()
+        public void Setup(GameSetting gameSetting)
         {
             EventHub.Bind<EventTouchMoved>(OnTouchMoved, true);
             EventHub.Bind<EventPedestalDestroy>(OnPedestalDestroyed);
-            
+
+            _canInteract = false;
+
             MeshRenderer propMeshRenderer = _propInstance.GetComponent<MeshRenderer>();
             _propHeight = propMeshRenderer.bounds.size.y;
             _propBottomHeight = -_propHeight * 2;
@@ -61,14 +69,14 @@ namespace Penguin
             _pedestalLayers = new List<PedestalLayer>();
             _platformRule = new SimplePlatformRule();
 
+            _gameSetting = gameSetting;
             RecycleOldPedestales();
             AddNewPedestales();
         }
 
         private void OnDestroy()
         {
-            EventHub.Unbind<EventTouchMoved>(OnTouchMoved);
-
+            UnregisterEvent();
         }
 
         public void UnregisterEvent()
@@ -79,9 +87,12 @@ namespace Penguin
 
         void OnTouchMoved(EventTouchMoved e)
         {
+            if (!_canInteract)
+                return;
+
             Camera cam = Camera.main;
             float xMove = e.deltaPos.x / Camera.main.pixelWidth;
-            float rotateAngle = xMove * _unitToAngleRotation;
+            float rotateAngle = xMove * _gameSetting.unitToAngleRotation;
             _platformAngle -= rotateAngle;
             transform.rotation = Quaternion.Euler(0f, _platformAngle, 0f);
         }
@@ -92,25 +103,33 @@ namespace Penguin
             return PedestalType.None;
         }
 
-        void CheckPropAndRecyclePedestales(Vector3 position)
+        public void DestroyNextLayer()
         {
-            foreach (var layer in _pedestalLayers)
+            PedestalLayer nextLayer = GetNextPedestalLayer();
+            if (nextLayer != null)
             {
-                if (layer.hasDestroy)
-                    continue;
-                
-                if (position.y < layer.height - 0.5f)
+                nextLayer.hasDestroy = true;
+                foreach (var pedestal in nextLayer.pedestales)
                 {
-                    layer.hasDestroy = true;
-                    foreach (var pedestal in layer.pedestales)
-                    {
-                        pedestal.Fall();
-                    }
-
-                    EventHub.Emit(new EventCharacterPassLayer(layer));
+                    pedestal.Fall();
                 }
 
-                break;
+                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
+            }
+        }
+
+        void CheckPropAndRecyclePedestales(Vector3 position)
+        {
+            PedestalLayer nextLayer = GetNextPedestalLayer();
+            if (nextLayer != null && position.y < nextLayer.height - 0.5f)
+            {
+                nextLayer.hasDestroy = true;
+                foreach (var pedestal in nextLayer.pedestales)
+                {
+                    pedestal.Fall();
+                }
+
+                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
             }
 
             float centerBotPropY = _propBottomHeight + _propHeight / 2;
@@ -135,11 +154,6 @@ namespace Penguin
             var willBeRemovedLayers = _pedestalLayers.FindAll(layer => layer.height > propTopHeight);
             foreach (var layer in willBeRemovedLayers)
             {
-                // foreach (var pedestal in layer.pedestales)
-                // {
-                //     _pedestalPool.Return(pedestal);
-                // }
-
                 _pedestalLayers.Remove(layer);
             }
         }
@@ -152,7 +166,7 @@ namespace Penguin
         void AddNewPedestales()
         {
             int lastLevel = -1;
-            float lastPedestalHeight = 0;
+            float lastPedestalHeight = _gameSetting.pedestalStartPosition + _gameSetting.distancePerPedestalLayer;
             if (_pedestalLayers.Count > 0)
             {
                 lastLevel = _pedestalLayers[_pedestalLayers.Count - 1].level;
@@ -163,7 +177,7 @@ namespace Penguin
             int pedestalLevel = lastLevel;
             while (pedestalHeight > _propBottomHeight)
             {
-                pedestalHeight -= _heightPerPedestalLayer;
+                pedestalHeight -= _gameSetting.distancePerPedestalLayer;
                 pedestalLevel += 1;
 
                 PedestalLayer layer = new PedestalLayer();
@@ -181,6 +195,19 @@ namespace Penguin
                     layer.pedestales.Add(pedestal);
                 }
             }
+        }
+
+        PedestalLayer GetNextPedestalLayer()
+        {
+            foreach (var layer in _pedestalLayers)
+            {
+                if (layer.hasDestroy)
+                    continue;
+
+                return layer;
+            }
+
+            return null;
         }
     }
 }
