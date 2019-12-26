@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Penguin.Scenes.RankingScene
+namespace Penguin.UI
 {
     public class RankingItemController : MonoBehaviour
     {
