@@ -7,15 +7,16 @@ namespace Penguin
 {
     public class TestMainGame : MonoBehaviour
     {
+        [SerializeField] GameSetting _gameSetting;
+        [SerializeField] CameraFollower _cameraFollower;
         [SerializeField] ScoreSetting _scoreSetting;
-
         [SerializeField] Character _character;
         [SerializeField] Platform _platform;
         [SerializeField] GameObject _endGamePanel;
 
         private IScoreCaculator _scoreCaculator;
 
-        private int _lastPassLayer = -1;
+        private bool _isGameStart = false;
 
         void Awake()
         {
@@ -25,6 +26,12 @@ namespace Penguin
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
             _scoreCaculator.OnComboActive += OnComboActive;
+
+            _platform.Setup(_gameSetting);
+            _cameraFollower.Setup(_gameSetting);
+            _character.Setup(_gameSetting);
+
+            StartCoroutine(WaitForStartGame());
         }
 
         void OnDestroy()
@@ -32,13 +39,27 @@ namespace Penguin
             EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
         }
 
-        void Update()
+        private IEnumerator WaitForStartGame()
         {
+            yield return new WaitForSeconds(0.5f);
+            
+            _isGameStart = true;
+            _platform.CanInteract = true;
+        }
+
+        private void Update()
+        {
+            if (!_isGameStart)
+                return;
+
+            _character.CustomUpdate();
+            _cameraFollower.CustomUpdate();
+
             _platform.UpdatePenguinPosition(_character.transform.position);
             _scoreCaculator.Update(Time.deltaTime);
         }
 
-        void OnPlayerCollideWithPedestal(Pedestal pedestal)
+        private void OnPlayerCollideWithPedestal(Pedestal pedestal)
         {
             bool shouldReturn = false;
             if (_scoreCaculator.HasActiveCombo)
@@ -85,7 +106,7 @@ namespace Penguin
 
         private void OnComboActive()
         {
-            //TODO active character combo effect
+            //TODO: active character combo effect
         }
 
         private void OnScoreUpdate(long score)

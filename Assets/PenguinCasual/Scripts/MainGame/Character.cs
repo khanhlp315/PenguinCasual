@@ -19,22 +19,15 @@ namespace Penguin
     {
         #region [ Fields ]
         public Action<Pedestal> OnCollideWithPedestal;
-
         [SerializeField] private GameObject _model;
-
-        [Header("-------Actions---------")]
-        [SerializeField] private float _maxDroppingVelocity;
-        [SerializeField] private float _jumpVelocity;
-        [SerializeField] private float _gravity;
         [SerializeField] private BoxCollider _collider;
 
-
+        private GameSetting _gameSetting;
         RaycastHit[] _rayCastHits = new RaycastHit[5];
         private float _velocity;
         private LayerMask _defaultLayerMask;
 
         private CharacterState _state;
-
         public CharacterState State
         {
             get
@@ -50,19 +43,23 @@ namespace Penguin
         #endregion
 
         #region [ Methods ]
-
-        void Awake()
+        public void Setup(GameSetting gameSetting)
         {
+            _gameSetting = gameSetting;
             _defaultLayerMask = LayerMask.GetMask("Default");
+            
+            Vector3 startPos = transform.position;
+            startPos.y = gameSetting.characterStartPosition;
+            transform.position = startPos;
         }
 
-        void Update()
+        public void CustomUpdate()
         {
             if (State == CharacterState.Dead)
                 return;
 
-            _velocity -= _gravity * Time.deltaTime;
-            _velocity = Mathf.Max(_velocity, _maxDroppingVelocity);
+            _velocity -= _gameSetting.characterGravity * Time.deltaTime;
+            _velocity = Mathf.Max(_velocity, _gameSetting.characterMaxDroppingVelocity);
             float moveDistance = _velocity * Time.deltaTime;
             int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center, 
                                                     _collider.size / 2, 
@@ -97,7 +94,7 @@ namespace Penguin
 
         public void Jump()
         {
-            _velocity = _jumpVelocity;
+            _velocity = _gameSetting.characterJumpVelocity;
         }
 
         public void OnDie()

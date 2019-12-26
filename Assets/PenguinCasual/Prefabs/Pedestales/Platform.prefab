@@ -50,8 +50,6 @@ MonoBehaviour:
   - {fileID: 5471636119936797671, guid: fa8703fc1cbff4b83858ecf26318d1f4, type: 3}
   - {fileID: 4356870023776603747, guid: cbd11e3568a444ce1a1677b4f0f1d729, type: 3}
   - {fileID: -2504462030816896305, guid: 0cc8e5c8df8f24e4b8f07ec82689d60f, type: 3}
-  _unitToAngleRotation: 400
-  _heightPerPedestalLayer: 3
   _propInstance: {fileID: 3463694138957611223}
 --- !u!1001 &8460917593907293133
 PrefabInstance:
