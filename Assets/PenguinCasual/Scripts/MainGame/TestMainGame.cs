@@ -24,6 +24,7 @@ namespace Penguin
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
+            _scoreCaculator.OnComboActive += OnComboActive;
         }
 
         void Update()
@@ -42,11 +43,21 @@ namespace Penguin
             // if (_character.transform.position.y - pedestal.transform.position.y < -0.3f)
             //     return;
 
+            if (_scoreCaculator != null)
+            {
+                _scoreCaculator.OnLandingLayer(pedestal);
+            }
+
             if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
             {
                 _character.Jump();
+
+                if (_scoreCaculator.HasActiveCombo)
+                {
+                    //TODO destroy pedestal layer ?
+                }
             }
             else if (pedestal.type == PedestalType.DeadZone_01)
             {
@@ -70,6 +81,11 @@ namespace Penguin
         void OnCharacterPassLayer(EventCharacterPassLayer eventData)
         {
             _scoreCaculator.OnPassingLayer(eventData.layer);
+        }
+
+        private void OnComboActive()
+        {
+            //TODO active character combo effect
         }
 
         private void OnScoreUpdate(long score)

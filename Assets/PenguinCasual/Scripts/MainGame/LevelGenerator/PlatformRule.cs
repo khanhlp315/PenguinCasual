@@ -67,7 +67,7 @@ namespace Penguin
         }
     }
 
-    public class FinalPlatformRule : PlatformRule
+    public class SimplePlatformRule : PlatformRule
     {
         private readonly Dictionary<PedestalType, float> _floorPercentages = new Dictionary<PedestalType, float>()
         {
@@ -129,9 +129,13 @@ namespace Penguin
                 pedestalInfos.Add(new PedestalInfo(pedestalType, slots[i]));
             }
 
-            if (numWall > 0)
+            var wallSlot = new List<int>(slots);
+            for (int i = 0; i < numWall; i++)
             {
-                pedestalInfos.Add(new PedestalInfo(PedestalType.Wall_01, Random.Range(0, 6)));
+                int randomSlot = Random.Range(0, wallSlot.Count - 1);
+                pedestalInfos.Add(new PedestalInfo(PedestalType.Wall_01, wallSlot[randomSlot]));
+
+                wallSlot.Remove(randomSlot);
             }
 
             return pedestalInfos;

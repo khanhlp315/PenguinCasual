@@ -9,6 +9,8 @@ namespace Penguin
     {
         public int basicScore;
 
+        public int numFloorActiveCombo;
+
         [Header("-------Multiply------")]
 
         [Tooltip("The Multiply value in score calculation formular : BasicScore * Multiply + Increase")]
@@ -32,10 +34,6 @@ namespace Penguin
 
         [Tooltip("The Increase value in score calculation formular : BasicScore * Multiply + Increase")]
         public int floorTypeThreeFishIncrease;
-
-
-        [Header("---------Booster-----------")]
-        public int basicBoosterScore;
 
         public List<int> passingFloorMultiplies = new List<int>();
     }
