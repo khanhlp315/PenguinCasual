@@ -46,7 +46,6 @@ namespace Penguin.Network
             }
             if (requestBody != null)
             {
-                Debug.Log(requestBody);
                 var bodyRaw = Encoding.UTF8.GetBytes(requestBody);
                 request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
                 request.SetRequestHeader("Content-Type", "application/json");
@@ -119,7 +118,7 @@ namespace Penguin.Network
             yield return SendPostRequest("api/put/player", downloadHandler, $"{{\"nickname\": \"{nickname}\" }}");
         }
 
-        private IEnumerator GetTopPlayers()
+        public IEnumerator GetTopPlayers()
         {
             var downloadHandler = new DownloadHandlerBuffer();
             yield return SendPostRequest("api/get/player_top", downloadHandler);
