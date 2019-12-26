@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Penguin.Network;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +15,12 @@ namespace Penguin.Scenes
 
         [SerializeField] private GameObject _termsDialog;
         [SerializeField] private GameObject _licenseDialog;
-    
+
+        private void Start()
+        {
+            _nameInputField.text = NetworkCaller.Instance.PlayerData.Nickname;
+        }
+
 
         public void GoToHomeScene()
         {
@@ -51,9 +58,9 @@ namespace Penguin.Scenes
 
         public void ChangeName()
         {
-            if (_nameInputField.text.Length >= 6)
+            if (_nameInputField.text != "")
             {
-                Debug.Log(_nameInputField.text);
+                NetworkCaller.Instance.ChangeNickname(_nameInputField.text);
             }
         }
     }    
