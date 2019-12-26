@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aace86a197fc4dadbc59e7bc69f8325, type: 3}
   m_Name: ScoreSetting
   m_EditorClassIdentifier: 
-  basicScore: 13
+  basicScore: 425
+  numFloorActiveCombo: 2
   floorTypeNoFishMultiply: 1
   floorTypeOneFishMultiply: 10
   floorTypeThreeFishMultiply: 30
@@ -20,5 +21,4 @@ MonoBehaviour:
   floorTypeNoFishIncrease: 0
   floorTypeOneFishIncrease: 11
   floorTypeThreeFishIncrease: 33
-  basicBoosterScore: 425
   passingFloorMultiplies: 0b00000016000000210000002c0000003700000042000000

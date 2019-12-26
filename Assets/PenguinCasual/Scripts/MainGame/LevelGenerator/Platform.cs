@@ -36,7 +36,7 @@ namespace Penguin
 
         PedestalPool _pedestalPool;
         List<PedestalLayer> _pedestalLayers;
-        PlatformRule _testPlatformRule;
+        PlatformRule _platformRule;
 
         void Awake()
         {
@@ -59,7 +59,7 @@ namespace Penguin
 
             _pedestalPool = new PedestalPool(this.transform, _pedestalePrefabs);
             _pedestalLayers = new List<PedestalLayer>();
-            _testPlatformRule = new FinalPlatformRule();
+            _platformRule = new SimplePlatformRule();
 
             RecycleOldPedestales();
             AddNewPedestales();
@@ -167,7 +167,7 @@ namespace Penguin
                 pedestalLevel += 1;
 
                 PedestalLayer layer = new PedestalLayer();
-                layer.pedestalLayers = _testPlatformRule.GetPedestalInfos(pedestalLevel);
+                layer.pedestalLayers = _platformRule.GetPedestalInfos(pedestalLevel);
                 layer.pedestales = new List<Pedestal>();
                 layer.height = pedestalHeight;
                 layer.level = pedestalLevel;
