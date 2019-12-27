@@ -2,7 +2,7 @@
 
 namespace Penguin
 {
-    public class TestMainGame : MonoBehaviour
+    public class MainGameLogic : MonoBehaviour
     {
         [SerializeField] GameSetting _gameSetting;
         [SerializeField] CameraFollower _cameraFollower;
@@ -12,8 +12,6 @@ namespace Penguin
         [SerializeField] GameObject _endGamePanel;
 
         private IScoreCaculator _scoreCaculator;
-
-        private bool _isGameStart = false;
 
         private bool _isTimeOut = false;
 
@@ -44,15 +42,11 @@ namespace Penguin
 
         private void OnWaitForStartGame(EventStartGame e)
         {
-            _isGameStart = true;
             _platform.CanInteract = true;
         }
 
         private void Update()
         {
-            if (!_isGameStart)
-                return;
-
             _character.CustomUpdate();
             _cameraFollower.CustomUpdate();
 

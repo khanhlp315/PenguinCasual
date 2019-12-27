@@ -569,6 +569,8 @@ GameObject:
   m_Component:
   - component: {fileID: 552050534}
   - component: {fileID: 552050533}
+  - component: {fileID: 552050536}
+  - component: {fileID: 552050535}
   m_Layer: 0
   m_Name: GameScene
   m_TagString: Untagged
@@ -612,6 +614,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &552050535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552050532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dd553d6aa4c4581ac5a1411551eee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &552050536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552050532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bde976d12c7e480ab625cc285635b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
+  _cameraFollower: {fileID: 1045260920}
+  _scoreSetting: {fileID: 11400000, guid: 282c5443cf2bc4bbcac7a9bce4b3f823, type: 2}
+  _character: {fileID: 1487469152}
+  _platform: {fileID: 2143953812}
+  _endGamePanel: {fileID: 1277723623}
 --- !u!1 &806812638
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,8 +975,6 @@ GameObject:
   - component: {fileID: 1045260918}
   - component: {fileID: 1045260917}
   - component: {fileID: 1045260916}
-  - component: {fileID: 1045260919}
-  - component: {fileID: 1045260921}
   - component: {fileID: 1045260920}
   m_Layer: 0
   m_Name: Main Camera
@@ -1018,18 +1048,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 28, y: 0, z: 0}
---- !u!114 &1045260919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045260915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83dd553d6aa4c4581ac5a1411551eee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1045260920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,24 +1061,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1487469152}
---- !u!114 &1045260921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045260915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bde976d12c7e480ab625cc285635b9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
-  _cameraFollower: {fileID: 1045260920}
-  _scoreSetting: {fileID: 11400000, guid: 282c5443cf2bc4bbcac7a9bce4b3f823, type: 2}
-  _character: {fileID: 1487469152}
-  _platform: {fileID: 2143953812}
-  _endGamePanel: {fileID: 1277723623}
 --- !u!1 &1097487127
 GameObject:
   m_ObjectHideFlags: 0
