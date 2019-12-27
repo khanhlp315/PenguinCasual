@@ -11,6 +11,7 @@ namespace Penguin
 		public int RoundDuration;
         public int SquidBonusDuration;
         public int WatchAdBonusDuration;
+        public int powerUpBreakFloors;
 
         [Header("Platform")]
         public float distancePerPedestalLayer;

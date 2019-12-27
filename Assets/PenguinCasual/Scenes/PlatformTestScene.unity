@@ -2059,22 +2059,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform
       objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707766, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707761, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: _pedestalePrefabs.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707761, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: _pedestalePrefabs.Array.data[5]
-      value: 
-      objectReference: {fileID: -2504462030816896305, guid: 0cc8e5c8df8f24e4b8f07ec82689d60f,
-        type: 3}
     - target: {fileID: 8460917594652707760, guid: b810ce80dc84b42bc9079f1957ec783e,
         type: 3}
       propertyPath: m_LocalPosition.x

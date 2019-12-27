@@ -102,6 +102,11 @@ namespace Penguin
             State = CharacterState.Dead;
         }
 
+        public void ActivePowerup()
+        {
+            _velocity = _gameSetting.characterMaxDroppingVelocity;
+        }
+
         public void SetModel(GameObject characterModel)
         {
             if (_model != null)
