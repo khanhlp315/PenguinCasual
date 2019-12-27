@@ -47,7 +47,7 @@ namespace Penguin
         public void OnPassingLayer(PedestalLayer pedestalLayer)
         {
             _previousPedestalType = PedestalType.None;
-            foreach (var item in pedestalLayer.pedestalLayers)
+            foreach (var item in pedestalLayer.pedestalInfos)
             {
                 if (item.type != PedestalType.DeadZone_01 &&
                     item.type != PedestalType.Wall_01)

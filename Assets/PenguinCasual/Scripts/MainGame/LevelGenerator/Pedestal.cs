@@ -10,6 +10,7 @@ namespace Penguin
         Pedestal_01,
         Pedestal_01_1_Fish,
         Pedestal_01_3_Fish,
+        Pedestal_04_Powerup,
         DeadZone_01,
         Wall_01
     }

@@ -76,6 +76,8 @@ namespace Penguin
             { PedestalType.Pedestal_01_3_Fish , 0.2f }
         };
 
+        private readonly float _powerupPercentage = 0.3f;
+
         public List<PedestalInfo> GetPedestalInfos(int level)
         {
             if (level == 0)
@@ -109,17 +111,26 @@ namespace Penguin
             int numHole = Random.Range(0, int.MaxValue) % 3 + 1;
             int numDeadZone = Random.Range(0, int.MaxValue) % 2;
             int numWall = Random.Range(0, int.MaxValue) % 2;
+            int numPowerUp = Random.value < _powerupPercentage ? 1 : 0;
 
             for (int i = 0; i < numHole; i++)
             {
-                int randomSlot = Random.Range(0, slots.Count - 1);
+                int randomSlot = Random.Range(0, slots.Count);
                 slots.RemoveAt(randomSlot);
             }
 
             for (int i = 0; i < numDeadZone; i++)
             {
-                int randomSlot = Random.Range(0, slots.Count - 1);
+                int randomSlot = Random.Range(0, slots.Count);
                 pedestalInfos.Add(new PedestalInfo(PedestalType.DeadZone_01, slots[randomSlot]));
+
+                slots.RemoveAt(randomSlot);
+            }
+
+            for (int i = 0; i < numPowerUp; i++)
+            {
+                int randomSlot = Random.Range(0, slots.Count);
+                pedestalInfos.Add(new PedestalInfo(PedestalType.Pedestal_04_Powerup, slots[randomSlot]));
 
                 slots.RemoveAt(randomSlot);
             }
@@ -132,7 +143,7 @@ namespace Penguin
             var wallSlot = new List<int>(slots);
             for (int i = 0; i < numWall; i++)
             {
-                int randomSlot = Random.Range(0, wallSlot.Count - 1);
+                int randomSlot = Random.Range(0, wallSlot.Count);
                 pedestalInfos.Add(new PedestalInfo(PedestalType.Wall_01, wallSlot[randomSlot]));
 
                 wallSlot.Remove(randomSlot);

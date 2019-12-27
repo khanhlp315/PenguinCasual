@@ -14,7 +14,7 @@ namespace Penguin
 
     public class PedestalLayer
     {
-        public List<PedestalInfo> pedestalLayers;
+        public List<PedestalInfo> pedestalInfos;
         public List<Pedestal> pedestales;
         public int level;
         public float height;
@@ -181,14 +181,14 @@ namespace Penguin
                 pedestalLevel += 1;
 
                 PedestalLayer layer = new PedestalLayer();
-                layer.pedestalLayers = _platformRule.GetPedestalInfos(pedestalLevel);
+                layer.pedestalInfos = _platformRule.GetPedestalInfos(pedestalLevel);
                 layer.pedestales = new List<Pedestal>();
                 layer.height = pedestalHeight;
                 layer.level = pedestalLevel;
                 layer.hasDestroy = false;
                 _pedestalLayers.Add(layer);
 
-                foreach (var pedestalInfo in layer.pedestalLayers)
+                foreach (var pedestalInfo in layer.pedestalInfos)
                 {
                     Vector3 position = new Vector3(0f, pedestalHeight, 0f);
                     Pedestal pedestal = _pedestalPool.Instantiate(pedestalInfo.type, position, kAnglePerSlot * pedestalInfo.slot);

@@ -569,6 +569,8 @@ GameObject:
   m_Component:
   - component: {fileID: 552050534}
   - component: {fileID: 552050533}
+  - component: {fileID: 552050536}
+  - component: {fileID: 552050535}
   m_Layer: 0
   m_Name: GameScene
   m_TagString: Untagged
@@ -590,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skinSetting: {fileID: 11400000, guid: b3d1e0ac6d1ba476581d033024fbf914, type: 2}
   _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
+  _camera: {fileID: 1045260918}
   _mainCharacter: {fileID: 1487469152}
   _backgroundPosition: {x: 0, y: 0, z: 0}
   _background: {fileID: 1203836416}
@@ -598,6 +601,9 @@ MonoBehaviour:
   _labelWarning: {fileID: 2004245322}
   _countdownFillRing: {fileID: 1420414509}
   _endGamePanel: {fileID: 1277723623}
+  _fishEscapeEffectPrefabs:
+  - {fileID: 537567520540025211, guid: 9903277cf5dae475cbdd48f98e8349d3, type: 3}
+  - {fileID: 7287557835474348030, guid: de5572631b2bb4a43ad3439204982d80, type: 3}
 --- !u!4 &552050534
 Transform:
   m_ObjectHideFlags: 0
@@ -612,6 +618,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &552050535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552050532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83dd553d6aa4c4581ac5a1411551eee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &552050536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552050532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bde976d12c7e480ab625cc285635b9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
+  _cameraFollower: {fileID: 1045260920}
+  _scoreSetting: {fileID: 11400000, guid: 282c5443cf2bc4bbcac7a9bce4b3f823, type: 2}
+  _character: {fileID: 1487469152}
+  _platform: {fileID: 2143953812}
+  _endGamePanel: {fileID: 1277723623}
 --- !u!1 &806812638
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,8 +979,6 @@ GameObject:
   - component: {fileID: 1045260918}
   - component: {fileID: 1045260917}
   - component: {fileID: 1045260916}
-  - component: {fileID: 1045260919}
-  - component: {fileID: 1045260921}
   - component: {fileID: 1045260920}
   m_Layer: 0
   m_Name: Main Camera
@@ -1018,18 +1052,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 28, y: 0, z: 0}
---- !u!114 &1045260919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045260915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83dd553d6aa4c4581ac5a1411551eee5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1045260920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,24 +1065,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1487469152}
---- !u!114 &1045260921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045260915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bde976d12c7e480ab625cc285635b9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
-  _cameraFollower: {fileID: 1045260920}
-  _scoreSetting: {fileID: 11400000, guid: 282c5443cf2bc4bbcac7a9bce4b3f823, type: 2}
-  _character: {fileID: 1487469152}
-  _platform: {fileID: 2143953812}
-  _endGamePanel: {fileID: 1277723623}
 --- !u!1 &1097487127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,22 +2063,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform
       objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707766, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707761, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: _pedestalePrefabs.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8460917594652707761, guid: b810ce80dc84b42bc9079f1957ec783e,
-        type: 3}
-      propertyPath: _pedestalePrefabs.Array.data[5]
-      value: 
-      objectReference: {fileID: -2504462030816896305, guid: 0cc8e5c8df8f24e4b8f07ec82689d60f,
-        type: 3}
     - target: {fileID: 8460917594652707760, guid: b810ce80dc84b42bc9079f1957ec783e,
         type: 3}
       propertyPath: m_LocalPosition.x

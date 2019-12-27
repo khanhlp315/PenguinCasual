@@ -2,20 +2,19 @@
 
 namespace Penguin
 {
-    public class TestMainGame : MonoBehaviour
+    public class MainGameLogic : MonoBehaviour
     {
-        [SerializeField] GameSetting _gameSetting;
-        [SerializeField] CameraFollower _cameraFollower;
-        [SerializeField] ScoreSetting _scoreSetting;
-        [SerializeField] Character _character;
-        [SerializeField] Platform _platform;
-        [SerializeField] GameObject _endGamePanel;
+        [SerializeField] private GameSetting _gameSetting;
+        [SerializeField] private CameraFollower _cameraFollower;
+        [SerializeField] private ScoreSetting _scoreSetting;
+        [SerializeField] private Character _character;
+        [SerializeField] private Platform _platform;
+        [SerializeField] private GameObject _endGamePanel;
 
         private IScoreCaculator _scoreCaculator;
 
-        private bool _isGameStart = false;
-
         private bool _isTimeOut = false;
+        private int _remainPowerupBreakFloor = 0;
 
         void Awake()
         {
@@ -31,8 +30,6 @@ namespace Penguin
             _platform.Setup(_gameSetting);
             _cameraFollower.Setup(_gameSetting);
             _character.Setup(_gameSetting);
-
-
         }
 
         void OnDestroy()
@@ -44,15 +41,11 @@ namespace Penguin
 
         private void OnWaitForStartGame(EventStartGame e)
         {
-            _isGameStart = true;
             _platform.CanInteract = true;
         }
 
         private void Update()
         {
-            if (!_isGameStart)
-                return;
-
             _character.CustomUpdate();
             _cameraFollower.CustomUpdate();
 
@@ -65,6 +58,13 @@ namespace Penguin
             if (_isTimeOut)
             {
                 ProcessEndGame(false);
+                return;
+            }
+
+            if (_remainPowerupBreakFloor > 0)
+            {
+                _remainPowerupBreakFloor -= 1;
+                _platform.DestroyNextLayer();
                 return;
             }
 
@@ -86,6 +86,11 @@ namespace Penguin
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
             {
                 _character.Jump();
+            }
+            else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
+            {
+                _character.ActivePowerup();
+                _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
             }
             else if (pedestal.type == PedestalType.DeadZone_01)
             {
