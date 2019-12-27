@@ -26,12 +26,7 @@ namespace Penguin.Ads
         {
             _normalBannerAd?.Destroy();
             
-            var size = AdSize.SmartBanner;
-            if (Application.platform == RuntimePlatform.IPhonePlayer) {
-                size = AdSize.SmartBanner;
-            } else if (Application.platform == RuntimePlatform.Android) {
-                size = AdSize.Banner;
-            }
+            var size = AdSize.Banner;
             
             _normalBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _normalBannerAd.OnAdLoaded += (sender, e) => {
@@ -70,13 +65,8 @@ namespace Penguin.Ads
         public void LoadEndGameBanner(string adsId, Data.AdPosition pos)
         {
             _endGameBannerAd?.Destroy();
-            
-            var size = AdSize.SmartBanner;
-            if (Application.platform == RuntimePlatform.IPhonePlayer) {
-                size = AdSize.SmartBanner;
-            } else if (Application.platform == RuntimePlatform.Android) {
-                size = AdSize.Banner;
-            }
+
+            var size = AdSize.Banner;
             
             _endGameBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _endGameBannerAd.OnAdLoaded += (sender, e) => {
