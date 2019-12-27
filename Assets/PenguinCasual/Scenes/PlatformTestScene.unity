@@ -592,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skinSetting: {fileID: 11400000, guid: b3d1e0ac6d1ba476581d033024fbf914, type: 2}
   _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
+  _camera: {fileID: 1045260918}
   _mainCharacter: {fileID: 1487469152}
   _backgroundPosition: {x: 0, y: 0, z: 0}
   _background: {fileID: 1203836416}
@@ -600,6 +601,9 @@ MonoBehaviour:
   _labelWarning: {fileID: 2004245322}
   _countdownFillRing: {fileID: 1420414509}
   _endGamePanel: {fileID: 1277723623}
+  _fishEscapeEffectPrefabs:
+  - {fileID: 537567520540025211, guid: 9903277cf5dae475cbdd48f98e8349d3, type: 3}
+  - {fileID: 7287557835474348030, guid: de5572631b2bb4a43ad3439204982d80, type: 3}
 --- !u!4 &552050534
 Transform:
   m_ObjectHideFlags: 0

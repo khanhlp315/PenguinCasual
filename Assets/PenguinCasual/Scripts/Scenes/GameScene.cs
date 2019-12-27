@@ -20,6 +20,10 @@ namespace Penguin
 
         [Header("------------Character---------------")]
         [SerializeField]
+        private Transform _camera;
+
+        [Header("------------Character---------------")]
+        [SerializeField]
         private Character _mainCharacter;
 
         [Header("-----------Backgrounds-------------")]
@@ -40,11 +44,14 @@ namespace Penguin
         private Image _countdownFillRing;
         [SerializeField]
         private GameObject _endGamePanel;
+        [SerializeField]
+        private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
 
         private CoreGameModel _coreGameModel;
 
         private bool _isGameStart;
         private float _countDownDuration;
+        private GenericGOPool _fishEscapeEffectPool = new GenericGOPool();
 
         public int RoundDuration
         {
@@ -85,7 +92,7 @@ namespace Penguin
             }
 
             RegisterEvent();
-
+            InitPool();
             StartCoroutine(WaitAndStartGame());
         }
 
@@ -109,6 +116,14 @@ namespace Penguin
             }
         }
 
+        private void InitPool()
+        {
+            foreach (var prefab in _fishEscapeEffectPrefabs)
+            {
+                _fishEscapeEffectPool.RegisterPooledGO(prefab);
+            }
+        }
+
         /// <summary>
         /// Register event for update Views
         /// </summary>
@@ -116,6 +131,7 @@ namespace Penguin
         {
             EventHub.Bind<EventUpdateScore>(OnScoreUpdate);
             EventHub.Bind<EventEndGame>(OnEndGame);
+            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
         }
 
         /// <summary>
@@ -125,6 +141,7 @@ namespace Penguin
         {
             EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
             EventHub.Unbind<EventEndGame>(OnEndGame);
+            EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
         }
 
         private IEnumerator WaitAndStartGame()
@@ -174,6 +191,27 @@ namespace Penguin
         public void OnRestartGame()
         {
             SceneManager.LoadScene("PlatformTestScene");
+        }
+
+        public void OnCharacterPassLayer(EventCharacterPassLayer e)
+        {
+            PedestalType layerType = PedestalType.None;
+            foreach (var item in e.layer.pedestalInfos)
+            {
+                if (item.type == PedestalType.Pedestal_01_1_Fish ||
+                    item.type == PedestalType.Pedestal_01_3_Fish)
+                {
+                    layerType = item.type;
+                    break;
+                }
+            }
+
+            if (layerType == PedestalType.Pedestal_01_1_Fish || layerType == PedestalType.Pedestal_01_3_Fish)
+            {
+                Vector3 effectPosition = new Vector3(0f, e.layer.height + 0.3f, _mainCharacter.transform.position.z - 1);
+                var effect = _fishEscapeEffectPool.Instantiate(layerType, effectPosition, 0);
+                effect.transform.SetParent(_camera, true);
+            }
         }
 
         private SkinSetting.SkinData GetSkinById(string skinId)
