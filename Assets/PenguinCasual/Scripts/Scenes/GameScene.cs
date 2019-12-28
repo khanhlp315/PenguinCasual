@@ -195,10 +195,14 @@ namespace Penguin
 
         public void OnCharacterPassLayer(EventCharacterPassLayer e)
         {
+            if (e.hasPowerup || e.hasLayerDestroyed)
+                return;
+
             PedestalType layerType = PedestalType.None;
             foreach (var item in e.layer.pedestalInfos)
             {
-                if (item.type == PedestalType.Pedestal_01_1_Fish ||
+                if (item.type == PedestalType.Pedestal_01 ||
+                    item.type == PedestalType.Pedestal_01_1_Fish ||
                     item.type == PedestalType.Pedestal_01_3_Fish)
                 {
                     layerType = item.type;
@@ -206,7 +210,7 @@ namespace Penguin
                 }
             }
 
-            if (layerType == PedestalType.Pedestal_01_1_Fish || layerType == PedestalType.Pedestal_01_3_Fish)
+            if (layerType == PedestalType.Pedestal_01 || layerType == PedestalType.Pedestal_01_1_Fish || layerType == PedestalType.Pedestal_01_3_Fish)
             {
                 Vector3 effectPosition = new Vector3(0f, e.layer.height + 0.3f, _mainCharacter.transform.position.z - 1);
                 var effect = _fishEscapeEffectPool.Instantiate(layerType, effectPosition, 0);

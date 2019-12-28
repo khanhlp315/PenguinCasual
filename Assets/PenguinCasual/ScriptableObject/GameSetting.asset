@@ -16,6 +16,7 @@ MonoBehaviour:
   SquidBonusDuration: 3
   WatchAdBonusDuration: 30
   powerUpBreakFloors: 6
+  comboToBreakFloor: 2
   distancePerPedestalLayer: 3
   unitToAngleRotation: 400
   pedestalStartPosition: -4

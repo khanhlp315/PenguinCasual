@@ -15,11 +15,11 @@ namespace Penguin
 
         private bool _isTimeOut = false;
         private int _remainPowerupBreakFloor = 0;
+        private int _floorCombo = 0;
 
         void Awake()
         {
-            _character.OnCollideWithPedestal += OnPlayerCollideWithPedestal;
-            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer, true);
+            _character.OnCollideWithPedestal += OnCharacterCollideWithPedestal;
             EventHub.Bind<EventStartGame>(OnWaitForStartGame);
             EventHub.Bind<EventTimeout>(OnTimeout);
 
@@ -28,13 +28,13 @@ namespace Penguin
             _scoreCaculator.OnComboActive += OnComboActive;
 
             _platform.Setup(_gameSetting);
+            _platform.OnCharacterPassedThoughPedestalLayer += OnCharacterPassLayer;
             _cameraFollower.Setup(_gameSetting);
             _character.Setup(_gameSetting);
         }
 
         void OnDestroy()
         {
-            EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
             EventHub.Unbind<EventStartGame>(OnWaitForStartGame);
             EventHub.Unbind<EventTimeout>(OnTimeout);
         }
@@ -51,57 +51,65 @@ namespace Penguin
 
             _platform.UpdatePenguinPosition(_character.transform.position);
             _scoreCaculator.Update(Time.deltaTime);
-        }
 
-        private void OnPlayerCollideWithPedestal(Pedestal pedestal)
-        {
             if (_isTimeOut)
             {
                 ProcessEndGame(false);
                 return;
             }
+        }
 
-            if (_remainPowerupBreakFloor > 0)
+        private void OnCharacterCollideWithPedestal(Pedestal pedestal)
+        {
+            if (HasPowerUp())
             {
                 _remainPowerupBreakFloor -= 1;
-                _platform.DestroyNextLayer();
-                return;
-            }
+                _platform.ForceDestroyNextLayer();
 
-            bool shouldReturn = false;
-            if (_scoreCaculator.HasActiveCombo)
+                if (_remainPowerupBreakFloor == 0)
+                    _character.Jump();
+            }
+            else if (HasCombo())
             {
-                _platform.DestroyNextLayer();
-                _character.Jump();
-                shouldReturn = true;
+                // Special case, should give player powerup.
+                if (pedestal.type == PedestalType.Pedestal_04_Powerup)
+                {
+                    _character.ActivePowerup();
+                    _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
+                }
+                else
+                {
+                    _character.Jump();
+                    _platform.ForceDestroyNextLayer();
+                }
             }
-
-            _scoreCaculator.OnLandingLayer(pedestal);
-
-            if (shouldReturn)
-                return;
-
-            if (pedestal.type == PedestalType.Pedestal_01 ||
+            else
+            {
+                if (pedestal.type == PedestalType.Pedestal_01 ||
                 pedestal.type == PedestalType.Pedestal_01_1_Fish ||
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
-            {
-                _character.Jump();
+                {
+                    _character.Jump();
+                }
+                else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
+                {
+                    _character.ActivePowerup();
+                    _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
+                }
+                else if (pedestal.type == PedestalType.DeadZone_01)
+                {
+                    Debug.Log("Dead by touching deadzone");
+                    ProcessEndGame(true);
+                }
+                else if (pedestal.type == PedestalType.Wall_01)
+                {
+                    Debug.Log("Dead by touching wall");
+                    ProcessEndGame(true);
+                }
             }
-            else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
-            {
-                _character.ActivePowerup();
-                _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
-            }
-            else if (pedestal.type == PedestalType.DeadZone_01)
-            {
-                Debug.Log("Dead by touching deadzone");
-                ProcessEndGame(true);
-            }
-            else if (pedestal.type == PedestalType.Wall_01)
-            {
-                Debug.Log("Dead by touching wall");
-                ProcessEndGame(true);
-            }
+
+            _floorCombo = 0;
+            _scoreCaculator.OnLandingLayer(pedestal);
         }
 
         void ProcessEndGame(bool endGameByDead)
@@ -111,9 +119,23 @@ namespace Penguin
             EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
         }
 
-        void OnCharacterPassLayer(EventCharacterPassLayer eventData)
+        void OnCharacterPassLayer(PedestalLayer layer)
         {
-            _scoreCaculator.OnPassingLayer(eventData.layer);
+            if (!HasPowerUp() && !layer.hasDestroyed)
+            {
+                _floorCombo += 1;
+            }
+
+            var eventPlayerPassLayer = new EventCharacterPassLayer(layer);
+            eventPlayerPassLayer.hasCombo = HasCombo();
+            eventPlayerPassLayer.hasPowerup = HasPowerUp();
+            eventPlayerPassLayer.hasLayerDestroyed = layer.hasDestroyed;
+            EventHub.Emit(eventPlayerPassLayer);
+
+            if (!layer.hasDestroyed)
+                _platform.DestroyLayer(layer);
+
+            _scoreCaculator.OnPassingLayer(layer);
         }
 
         void OnTimeout(EventTimeout eventData)
@@ -124,6 +146,16 @@ namespace Penguin
         private void OnComboActive()
         {
             //TODO: active character combo effect
+        }
+
+        private bool HasPowerUp()
+        {
+            return _remainPowerupBreakFloor > 0;
+        }
+
+        private bool HasCombo()
+        {
+            return _floorCombo >= _gameSetting.comboToBreakFloor;
         }
 
         private void OnScoreUpdate(long score)

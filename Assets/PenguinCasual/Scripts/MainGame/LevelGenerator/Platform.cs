@@ -18,12 +18,15 @@ namespace Penguin
         public List<Pedestal> pedestales;
         public int level;
         public float height;
-        public bool hasDestroy;
+        public bool hasDestroyed;
+        public bool hasPassed;
     }
 
     public class Platform : MonoBehaviour
     {
         private const float kAnglePerSlot = 360f/7f;
+
+        public System.Action<PedestalLayer> OnCharacterPassedThoughPedestalLayer;
 
         [SerializeField] private List<Pedestal> _pedestalePrefabs;
         [SerializeField] private Transform _propInstance;
@@ -103,33 +106,34 @@ namespace Penguin
             return PedestalType.None;
         }
 
-        public void DestroyNextLayer()
+        public PedestalLayer ForceDestroyNextLayer()
         {
             PedestalLayer nextLayer = GetNextPedestalLayer();
             if (nextLayer != null)
             {
-                nextLayer.hasDestroy = true;
-                foreach (var pedestal in nextLayer.pedestales)
-                {
-                    pedestal.Fall();
-                }
+                DestroyLayer(nextLayer);
+            }
 
-                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
+            return nextLayer;
+        }
+        
+        public void DestroyLayer(PedestalLayer layer)
+        {
+            layer.hasDestroyed = true;
+
+            foreach (var pedestal in layer.pedestales)
+            {
+                pedestal.Fall();
             }
         }
 
         void CheckPropAndRecyclePedestales(Vector3 position)
         {
-            PedestalLayer nextLayer = GetNextPedestalLayer();
-            if (nextLayer != null && position.y < nextLayer.height - 0.5f)
+            PedestalLayer nextPassLayer = GetNextPassPedestalLayer();
+            if (nextPassLayer != null && position.y < nextPassLayer.height - 0.5f)
             {
-                nextLayer.hasDestroy = true;
-                foreach (var pedestal in nextLayer.pedestales)
-                {
-                    pedestal.Fall();
-                }
-
-                EventHub.Emit(new EventCharacterPassLayer(nextLayer));
+                nextPassLayer.hasPassed = true;
+                OnCharacterPassedThoughPedestalLayer?.Invoke(nextPassLayer);
             }
 
             float centerBotPropY = _propBottomHeight + _propHeight / 2;
@@ -185,7 +189,8 @@ namespace Penguin
                 layer.pedestales = new List<Pedestal>();
                 layer.height = pedestalHeight;
                 layer.level = pedestalLevel;
-                layer.hasDestroy = false;
+                layer.hasDestroyed = false;
+                layer.hasPassed = false;
                 _pedestalLayers.Add(layer);
 
                 foreach (var pedestalInfo in layer.pedestalInfos)
@@ -201,7 +206,20 @@ namespace Penguin
         {
             foreach (var layer in _pedestalLayers)
             {
-                if (layer.hasDestroy)
+                if (layer.hasDestroyed)
+                    continue;
+
+                return layer;
+            }
+
+            return null;
+        }
+
+        PedestalLayer GetNextPassPedestalLayer()
+        {
+            foreach (var layer in _pedestalLayers)
+            {
+                if (layer.hasPassed)
                     continue;
 
                 return layer;

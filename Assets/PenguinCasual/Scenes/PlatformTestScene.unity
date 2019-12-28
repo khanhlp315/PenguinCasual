@@ -604,6 +604,7 @@ MonoBehaviour:
   _fishEscapeEffectPrefabs:
   - {fileID: 537567520540025211, guid: 9903277cf5dae475cbdd48f98e8349d3, type: 3}
   - {fileID: 7287557835474348030, guid: de5572631b2bb4a43ad3439204982d80, type: 3}
+  - {fileID: 7287557835474348030, guid: eaa9eb374318545849a2f90ed2bba502, type: 3}
 --- !u!4 &552050534
 Transform:
   m_ObjectHideFlags: 0

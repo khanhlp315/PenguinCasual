@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a66961840b02b48d59697bfbb669ae70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectType: 2
+  _effectType: 1
   _groupFishLeft:
   - {fileID: 653005532897728310}
   _groupFishRight:
