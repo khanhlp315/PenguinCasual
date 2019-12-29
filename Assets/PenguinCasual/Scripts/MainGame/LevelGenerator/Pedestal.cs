@@ -12,12 +12,18 @@ namespace Penguin
         Pedestal_01_3_Fish,
         Pedestal_04_Powerup,
         DeadZone_01,
+        Squid_01,
         Wall_01
     }
 
     public class Pedestal : MonoBehaviour
     {
         public PedestalType type;
+
+        [SerializeField]
+        private MeshRenderer _meshRenderer;
+
+
         private bool _active = true;
 
         public bool Active
@@ -37,6 +43,12 @@ namespace Penguin
             _active = false;
             transform.SetParent(null, true);
             StartCoroutine(_Fall());
+        }
+
+        public void Destroy()
+        {
+            gameObject.SetActive(false);
+            EventHub.Emit(new EventPedestalDestroy(this));
         }
 
 
@@ -69,7 +81,7 @@ namespace Penguin
                 transform.position = position;
 
                 // Update rotation
-                Vector3 centerPoint = GetComponent<MeshRenderer>().bounds.center;
+                Vector3 centerPoint = _meshRenderer.bounds.center;
                 transform.RotateAround(centerPoint, perpendicularAxis, -245 * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }

@@ -8,9 +8,9 @@ namespace Penguin
     public class GameSetting : ScriptableObject
     {
         [Header("General")]
-		public int RoundDuration;
-        public int SquidBonusDuration;
-        public int WatchAdBonusDuration;
+		public int roundDuration;
+        public int squidBonusDuration;
+        public int watchAdBonusDuration;
         public int powerUpBreakFloors;
         public int comboToBreakFloor;
 

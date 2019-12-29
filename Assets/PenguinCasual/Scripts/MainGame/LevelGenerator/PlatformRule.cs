@@ -77,6 +77,7 @@ namespace Penguin
         };
 
         private readonly float _powerupPercentage = 0.3f;
+        private readonly float _squidPercentage = 0.2f;
 
         public List<PedestalInfo> GetPedestalInfos(int level)
         {
@@ -112,6 +113,7 @@ namespace Penguin
             int numDeadZone = Random.Range(0, int.MaxValue) % 2;
             int numWall = Random.Range(0, int.MaxValue) % 2;
             int numPowerUp = Random.value < _powerupPercentage ? 1 : 0;
+            int numSquid = Random.value < _squidPercentage ? 1 : 0;
 
             for (int i = 0; i < numHole; i++)
             {
@@ -133,6 +135,12 @@ namespace Penguin
                 pedestalInfos.Add(new PedestalInfo(PedestalType.Pedestal_04_Powerup, slots[randomSlot]));
 
                 slots.RemoveAt(randomSlot);
+            }
+
+            for (int i = 0; i < numSquid; i++)
+            {
+                int randomSlot = Random.Range(0, slots.Count);
+                pedestalInfos.Add(new PedestalInfo(PedestalType.Squid_01, slots[randomSlot]));
             }
 
             for (int i = 0; i < slots.Count; i++)

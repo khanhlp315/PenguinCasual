@@ -121,6 +121,7 @@ namespace Penguin
         {
             layer.hasDestroyed = true;
 
+            layer.pedestales.RemoveAll(p => !p.Active);
             foreach (var pedestal in layer.pedestales)
             {
                 pedestal.Fall();

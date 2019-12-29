@@ -2,6 +2,13 @@
 
 namespace Penguin
 {
+    enum GameState
+    {
+        Waiting,
+        Playing,
+        End
+    }
+
     public class MainGameLogic : MonoBehaviour
     {
         [SerializeField] private GameSetting _gameSetting;
@@ -13,19 +20,23 @@ namespace Penguin
 
         private IScoreCaculator _scoreCaculator;
 
-        private bool _isTimeOut = false;
+        private float _roundTime;
+        private GameState _gameState;
         private int _remainPowerupBreakFloor = 0;
         private int _floorCombo = 0;
 
         void Awake()
         {
             _character.OnCollideWithPedestal += OnCharacterCollideWithPedestal;
-            EventHub.Bind<EventStartGame>(OnWaitForStartGame);
-            EventHub.Bind<EventTimeout>(OnTimeout);
+            EventHub.Bind<EventStartGame>(OnStartGame);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
             _scoreCaculator.OnComboActive += OnComboActive;
+
+
+            _roundTime = _gameSetting.roundDuration;
+            _gameState = GameState.Waiting;
 
             _platform.Setup(_gameSetting);
             _platform.OnCharacterPassedThoughPedestalLayer += OnCharacterPassLayer;
@@ -35,13 +46,13 @@ namespace Penguin
 
         void OnDestroy()
         {
-            EventHub.Unbind<EventStartGame>(OnWaitForStartGame);
-            EventHub.Unbind<EventTimeout>(OnTimeout);
+            EventHub.Unbind<EventStartGame>(OnStartGame);
         }
 
-        private void OnWaitForStartGame(EventStartGame e)
+        private void OnStartGame(EventStartGame e)
         {
             _platform.CanInteract = true;
+            _gameState = GameState.Playing;
         }
 
         private void Update()
@@ -52,16 +63,32 @@ namespace Penguin
             _platform.UpdatePenguinPosition(_character.transform.position);
             _scoreCaculator.Update(Time.deltaTime);
 
-            if (_isTimeOut)
+            if (_gameState == GameState.Playing)
             {
-                ProcessEndGame(false);
-                return;
+                _roundTime -= Time.deltaTime;
+                if (_roundTime <= 0)
+                {
+                    ProcessEndGame(false);
+                }
+
+                EventHub.Emit(new EventGameTimeUpdate() {
+                    time = _roundTime
+                });
             }
         }
 
         private void OnCharacterCollideWithPedestal(Pedestal pedestal)
         {
-            if (HasPowerUp())
+            if (pedestal.type == PedestalType.Squid_01)
+            {
+                _roundTime += _gameSetting.squidBonusDuration;
+                pedestal.Destroy();
+                EventHub.Emit(new EventGameTimeUpdate() {
+                    time = _roundTime
+                });
+                return;
+            }
+            else if (HasPowerUp())
             {
                 _remainPowerupBreakFloor -= 1;
                 _platform.ForceDestroyNextLayer();
@@ -114,6 +141,7 @@ namespace Penguin
 
         void ProcessEndGame(bool endGameByDead)
         {
+            _gameState = GameState.End;
             _character.OnDie();
             _platform.UnregisterEvent();
             EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
@@ -136,11 +164,6 @@ namespace Penguin
                 _platform.DestroyLayer(layer);
 
             _scoreCaculator.OnPassingLayer(layer);
-        }
-
-        void OnTimeout(EventTimeout eventData)
-        {
-            _isTimeOut = true;
         }
 
         private void OnComboActive()

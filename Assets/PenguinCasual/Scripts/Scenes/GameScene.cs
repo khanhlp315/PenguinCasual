@@ -49,17 +49,7 @@ namespace Penguin
 
         private CoreGameModel _coreGameModel;
 
-        private bool _isGameStart;
-        private float _countDownDuration;
         private GenericGOPool _fishEscapeEffectPool = new GenericGOPool();
-
-        public int RoundDuration
-        {
-            get
-            {
-                return _gameSetting != null ? _gameSetting.RoundDuration : 60;
-            }
-        }
 
         private void Start()
         {
@@ -101,19 +91,10 @@ namespace Penguin
             UnRegisterEvent();
         }
 
-        private void Update()
+        private void OnGameTimeUpdate(EventGameTimeUpdate e)
         {
-            if (_isGameStart)
-            {
-                _countDownDuration -= Time.deltaTime;
-                _labelCountdown.text = Mathf.RoundToInt(_countDownDuration).ToString();
-                _countdownFillRing.fillAmount = _countDownDuration / RoundDuration;
-                if (_countDownDuration <= 0)
-                {
-                    _isGameStart = false;
-                    EventHub.Emit<EventTimeout>();
-                }
-            }
+            _labelCountdown.text = Mathf.RoundToInt(e.time).ToString();
+            _countdownFillRing.fillAmount = e.time / _gameSetting.roundDuration;
         }
 
         private void InitPool()
@@ -130,6 +111,7 @@ namespace Penguin
         private void RegisterEvent()
         {
             EventHub.Bind<EventUpdateScore>(OnScoreUpdate);
+            EventHub.Bind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Bind<EventEndGame>(OnEndGame);
             EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
         }
@@ -140,17 +122,16 @@ namespace Penguin
         private void UnRegisterEvent()
         {
             EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
+            EventHub.Unbind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Unbind<EventEndGame>(OnEndGame);
             EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
         }
 
         private IEnumerator WaitAndStartGame()
         {
-            _countDownDuration = RoundDuration;
-
             _labelWarning.gameObject.SetActive(true);
             _labelWarning.text = "Ready";
-            _labelCountdown.text = _countDownDuration.ToString();
+            _labelCountdown.text = _gameSetting.roundDuration.ToString();
 
             yield return new WaitForSeconds(2);
 
@@ -160,7 +141,6 @@ namespace Penguin
 
             _labelWarning.gameObject.SetActive(false);
 
-            _isGameStart = true;
             EventHub.Emit<EventStartGame>();
         }
 
@@ -173,18 +153,8 @@ namespace Penguin
             _labelScore.text = eventData.score.ToString();
         }
 
-        /// <summary>
-        /// Receiver from event hub to update game duration
-        /// </summary>
-        /// <param name="increase"></param>
-        private void OnTimeUpdate(float increase)
-        {
-            _countDownDuration += increase;
-        }
-
         private void OnEndGame(EventEndGame eventData)
         {
-            _isGameStart = false;
             _endGamePanel.SetActive(true);
         }
 
