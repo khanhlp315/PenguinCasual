@@ -38,6 +38,22 @@ namespace Penguin
             }
         }
 
+        public bool CanGoThrough
+        {
+            get
+            {
+                switch (type)
+                {
+                    case PedestalType.None:
+                    case PedestalType.Pedestal_04_Powerup:
+                    case PedestalType.Squid_01:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+
         public void Fall()
         {
             _active = false;
@@ -47,6 +63,7 @@ namespace Penguin
 
         public void Destroy()
         {
+            _active = false;
             gameObject.SetActive(false);
             EventHub.Emit(new EventPedestalDestroy(this));
         }

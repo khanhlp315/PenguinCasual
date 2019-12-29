@@ -27,7 +27,6 @@ namespace Penguin
 
         void Awake()
         {
-            _character.OnCollideWithPedestal += OnCharacterCollideWithPedestal;
             EventHub.Bind<EventStartGame>(OnStartGame);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
@@ -40,8 +39,12 @@ namespace Penguin
 
             _platform.Setup(_gameSetting);
             _platform.OnCharacterPassedThoughPedestalLayer += OnCharacterPassLayer;
+
             _cameraFollower.Setup(_gameSetting);
+            
             _character.Setup(_gameSetting);
+            _character.OnCollideWithPedestal += OnCharacterCollideWithPedestal;
+            _character.OnStuckInPedestal += OnCharacterStuckInPedestal;
         }
 
         void OnDestroy()
@@ -137,6 +140,40 @@ namespace Penguin
 
             _floorCombo = 0;
             _scoreCaculator.OnLandingLayer(pedestal);
+        }
+
+        void OnCharacterStuckInPedestal(Pedestal pedestal)
+        {
+            Debug.Log($"Detect character stuck in pedestal: lastAngle {_platform.LastAngle} - angle {_platform.Angle}");
+            
+            float diffAngle = _platform.Angle - _platform.LastAngle;
+
+            if (pedestal.type == PedestalType.Wall_01)
+            {
+                if (diffAngle > 0)
+                {
+                    float diff = pedestal.transform.eulerAngles.y + 14;
+                    _platform.SetAngle(_platform.Angle - diff, true);
+                }
+                else
+                {
+                    float diff = pedestal.transform.eulerAngles.y - 14;
+                    _platform.SetAngle(_platform.Angle - diff, true);
+                }
+            }
+            else if (pedestal.type == PedestalType.DeadZone_01)
+            {
+                if (diffAngle > 0)
+                {
+                    float diff = pedestal.transform.eulerAngles.y + 60;
+                    _platform.SetAngle(_platform.Angle - diff, true);
+                }
+                else
+                {
+                    float diff = pedestal.transform.eulerAngles.y - 14;
+                    _platform.SetAngle(_platform.Angle - diff, true);
+                }
+            }
         }
 
         void ProcessEndGame(bool endGameByDead)

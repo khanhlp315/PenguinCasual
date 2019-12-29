@@ -19,6 +19,7 @@ namespace Penguin
     {
         #region [ Fields ]
         public Action<Pedestal> OnCollideWithPedestal;
+        public Action<Pedestal> OnStuckInPedestal;
         [SerializeField] private GameObject _model;
         [SerializeField] private BoxCollider _collider;
 
@@ -68,6 +69,7 @@ namespace Penguin
                                                     Quaternion.identity, 
                                                     moveDistance < 0 ? Mathf.Abs(moveDistance) : 0,
                                                     _defaultLayerMask);
+            Pedestal stuckInPedestal = null;
 
             Vector3 position = transform.position;
             position.y += moveDistance;
@@ -82,13 +84,53 @@ namespace Penguin
 
                 OnCollideWithPedestal?.Invoke(pedestal);
 
-                if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
+                if (!pedestal.CanGoThrough)
                 {
-                    position.y = _rayCastHits[i].point.y;
+                    if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
+                    {
+                        position.y = _rayCastHits[i].point.y;
+                    }
+                    else if (_rayCastHits[i].distance <= 0)
+                    {
+                        stuckInPedestal = pedestal;
+                    }
                 }
             }
 
             transform.position = position;
+
+            if (stuckInPedestal != null)
+            {
+                OnStuckInPedestal?.Invoke(stuckInPedestal);
+            }
+        }
+
+        public bool DryCheckCollision()
+        {
+            float moveDistance = 0;
+            int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center,
+                                                    _collider.size / 2,
+                                                    Vector3.down,
+                                                    _rayCastHits,
+                                                    Quaternion.identity,
+                                                    moveDistance < 0 ? Mathf.Abs(moveDistance) : 0,
+                                                    _defaultLayerMask);
+            
+            for (int i = 0; i < totalHit; i++)
+            {
+                Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
+                if (pedestal == null)
+                    pedestal = _rayCastHits[i].collider.GetComponentInParent<Pedestal>();
+                if (pedestal == null || !pedestal.Active)
+                    continue;
+
+                if (!pedestal.CanGoThrough)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void Jump()

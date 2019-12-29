@@ -36,16 +36,21 @@ namespace Penguin
         float _propHeight;
         float _propBottomHeight;
         float _platformAngle;
+        float _platformLastAngle;
 
         PedestalPool _pedestalPool;
         List<PedestalLayer> _pedestalLayers;
         PlatformRule _platformRule;
         private bool _canInteract;
+
         public bool CanInteract
         {
             get { return _canInteract; }
             set { _canInteract = value; }
         }
+
+        public float Angle => _platformAngle;
+        public float LastAngle => _platformLastAngle;
 
         public void Setup(GameSetting gameSetting)
         {
@@ -96,8 +101,19 @@ namespace Penguin
             Camera cam = Camera.main;
             float xMove = e.deltaPos.x / Camera.main.pixelWidth;
             float rotateAngle = xMove * _gameSetting.unitToAngleRotation;
+            _platformLastAngle = _platformAngle;
             _platformAngle -= rotateAngle;
             transform.rotation = Quaternion.Euler(0f, _platformAngle, 0f);
+        }
+
+        public void SetAngle(float angle, bool dryRun = false)
+        {
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            if (!dryRun)
+            {
+                _platformAngle = angle;
+            }
         }
 
         public PedestalType UpdatePenguinPosition(Vector3 position)
