@@ -31,7 +31,6 @@ namespace Penguin
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
-            _scoreCaculator.OnComboActive += OnComboActive;
 
 
             _roundTime = _gameSetting.roundDuration;
@@ -97,10 +96,18 @@ namespace Penguin
                 _platform.ForceDestroyNextLayer();
 
                 if (_remainPowerupBreakFloor == 0)
+                {
                     _character.Jump();
+                    _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, pedestal);
+                    _scoreCaculator.PreventUpdateScoreOnNextLanding();
+                }
+
+                _floorCombo = 0;
+                return;
             }
             else if (HasCombo())
             {
+                Debug.LogError("Has combo");
                 // Special case, should give player powerup.
                 if (pedestal.type == PedestalType.Pedestal_04_Powerup)
                 {
@@ -112,6 +119,12 @@ namespace Penguin
                     _character.Jump();
                     _platform.ForceDestroyNextLayer();
                 }
+
+                _floorCombo += 1;
+                _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, pedestal);
+                _scoreCaculator.PreventUpdateScoreOnNextLanding();
+                _floorCombo = 0;
+                return;
             }
             else
             {
@@ -138,8 +151,8 @@ namespace Penguin
                 }
             }
 
+            _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, pedestal);
             _floorCombo = 0;
-            _scoreCaculator.OnLandingLayer(pedestal);
         }
 
         void OnCharacterStuckInPedestal(Pedestal pedestal)
@@ -200,12 +213,7 @@ namespace Penguin
             if (!layer.hasDestroyed)
                 _platform.DestroyLayer(layer);
 
-            _scoreCaculator.OnPassingLayer(layer);
-        }
-
-        private void OnComboActive()
-        {
-            //TODO: active character combo effect
+            _scoreCaculator.OnPassingLayer(HasPowerUp(), layer);
         }
 
         private bool HasPowerUp()

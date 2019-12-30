@@ -9,7 +9,7 @@ namespace Penguin
     {
         public int basicScore;
 
-        public int numFloorActiveCombo;
+        //public int numFloorActiveCombo;
 
         [Header("-------Multiply------")]
 
