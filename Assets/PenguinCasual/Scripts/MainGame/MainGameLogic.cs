@@ -226,9 +226,9 @@ namespace Penguin
             return _floorCombo >= _gameSetting.comboToBreakFloor;
         }
 
-        private void OnScoreUpdate(long score)
+        private void OnScoreUpdate(long score, long increase)
         {
-            EventHub.Emit<EventUpdateScore>(new EventUpdateScore(score));
+            EventHub.Emit<EventUpdateScore>(new EventUpdateScore(score, increase));
         }
     }
 }

@@ -2,8 +2,7 @@
 {
     public interface IScoreCaculator
     {
-        event System.Action<long> OnScoreUpdate;
-        event System.Action<long> OnScoreIncrease;
+        event System.Action<long, long> OnScoreUpdate;
 
         long Score { get; }
 

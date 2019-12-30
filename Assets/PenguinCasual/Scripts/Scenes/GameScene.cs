@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,14 +39,21 @@ namespace Penguin
         private TextMeshProUGUI _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
+        //[SerializeField]
+        //private TextMeshProUGUI _labelWarning;
         [SerializeField]
-        private TextMeshProUGUI _labelWarning;
+        private GameObject _readyImage;
+        [SerializeField]
+        private GameObject _goImage;
         [SerializeField]
         private Image _countdownFillRing;
         [SerializeField]
         private GameObject _endGamePanel;
         [SerializeField]
         private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
+
+        [SerializeField]
+        private TextMeshProUGUI _labelScoreIncrease;
 
         private CoreGameModel _coreGameModel;
 
@@ -129,17 +137,17 @@ namespace Penguin
 
         private IEnumerator WaitAndStartGame()
         {
-            _labelWarning.gameObject.SetActive(true);
-            _labelWarning.text = "Ready";
+            _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
 
             yield return new WaitForSeconds(2);
 
-            _labelWarning.text = "Go!";
+            _readyImage.SetActive(false);
+            _goImage.SetActive(true);
 
             yield return new WaitForSeconds(1);
 
-            _labelWarning.gameObject.SetActive(false);
+            _goImage.SetActive(false);
 
             EventHub.Emit<EventStartGame>();
         }
@@ -151,6 +159,23 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _labelScore.text = eventData.score.ToString();
+
+            var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
+            spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;
+            spawnLabel.transform.localScale = Vector3.one;
+
+            spawnLabel.gameObject.SetActive(true);
+            spawnLabel.alpha = 1f;
+            spawnLabel.text = "+" + eventData.increase.ToString();
+
+            var seq = DOTween.Sequence();
+            seq.Append(spawnLabel.transform.DOLocalMoveY(spawnLabel.transform.position.y + 250, 1.5f));
+            seq.Join(spawnLabel.DOFade(0, 1.5f));
+
+            seq.OnComplete(() =>
+            {
+                Destroy(spawnLabel.gameObject);
+            });
         }
 
         private void OnEndGame(EventEndGame eventData)

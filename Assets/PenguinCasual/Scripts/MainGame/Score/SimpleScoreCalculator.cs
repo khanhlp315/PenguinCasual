@@ -5,8 +5,8 @@ namespace Penguin
 {
     public class SimpleScoreCalculator : IScoreCaculator
     {
-        public event Action<long> OnScoreUpdate;
-        public event Action<long> OnScoreIncrease;
+        public event System.Action<long, long> OnScoreUpdate;
+        //public event Action<long> OnScoreIncrease;
 
         /// <summary>
         /// Preference instance for score setting
@@ -47,8 +47,8 @@ namespace Penguin
                     UnityEngine.Debug.LogError("Powerup Increase score : " + increaseScore);
                     UnityEngine.Debug.LogError("Powerup multiply : " + _scoreSetting.passingFloorMultiplies[_continousPowerupFloorCount]);
                     Score += increaseScore;
-                    OnScoreIncrease?.Invoke(increaseScore);
-                    OnScoreUpdate?.Invoke(Score);
+                    //OnScoreIncrease?.Invoke(increaseScore);
+                    OnScoreUpdate?.Invoke(Score, increaseScore);
                 }
 
                 _continousPowerupFloorCount += 1;
@@ -92,8 +92,9 @@ namespace Penguin
                 UnityEngine.Debug.LogError("Passing layer count : " + comboCount);
 
                 Score += increaseScore;
-                OnScoreIncrease?.Invoke(increaseScore);
-                OnScoreUpdate?.Invoke(Score);
+                //OnScoreIncrease?.Invoke(increaseScore);
+                //OnScoreUpdate?.Invoke(Score);
+                OnScoreUpdate?.Invoke(Score, increaseScore);
             }
             else
             {
@@ -115,8 +116,9 @@ namespace Penguin
                 UnityEngine.Debug.LogError("Normal score : " + increaseScore);
 
                 Score += increaseScore;
-                OnScoreIncrease?.Invoke(increaseScore);
-                OnScoreUpdate?.Invoke(Score);
+                //OnScoreIncrease?.Invoke(increaseScore);
+                //OnScoreUpdate?.Invoke(Score);
+                OnScoreUpdate?.Invoke(Score, increaseScore);
             }
 
             _hasPassLayer = false;
