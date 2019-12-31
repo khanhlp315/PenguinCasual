@@ -6,7 +6,8 @@ namespace Penguin
     {
         Waiting,
         Playing,
-        End
+        EndByTimeout,
+        EndByDead
     }
 
     public class MainGameLogic : MonoBehaviour
@@ -28,6 +29,7 @@ namespace Penguin
         void Awake()
         {
             EventHub.Bind<EventStartGame>(OnStartGame);
+            EventHub.Bind<EventRevive>(OnRevive);
 
             _scoreCaculator = new SimpleScoreCalculator(_scoreSetting);
             _scoreCaculator.OnScoreUpdate += OnScoreUpdate;
@@ -77,6 +79,25 @@ namespace Penguin
                     time = _roundTime
                 });
             }
+        }
+
+        private void OnRevive(EventRevive e)
+        {
+            if (_gameState == GameState.EndByDead)
+            {
+                _platform.ForceDestroyNextLayer();
+            }
+
+            _character.Revive();
+            _character.Jump();
+
+            _gameState = GameState.Playing;
+            _platform.CanInteract = true;
+            _roundTime = _gameSetting.reviveRoundDuration;
+            EventHub.Emit(new EventGameTimeUpdate()
+            {
+                time = _roundTime
+            });
         }
 
         private void OnCharacterCollideWithPedestal(Pedestal pedestal)
@@ -191,9 +212,9 @@ namespace Penguin
 
         void ProcessEndGame(bool endGameByDead)
         {
-            _gameState = GameState.End;
+            _gameState = endGameByDead ? GameState.EndByDead : GameState.EndByTimeout;
             _character.OnDie();
-            _platform.UnregisterEvent();
+            _platform.CanInteract = false;
             EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
         }
 

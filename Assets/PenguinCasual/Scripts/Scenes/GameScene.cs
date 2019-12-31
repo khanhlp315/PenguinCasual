@@ -129,7 +129,8 @@ namespace Penguin
             EventHub.Bind<EventUpdateScore>(OnScoreUpdate);
             EventHub.Bind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Bind<EventEndGame>(OnEndGame);
-            EventHub.Bind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Bind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
+            EventHub.Bind<EventRevive>(OnRevive);
         }
 
         /// <summary>
@@ -140,7 +141,8 @@ namespace Penguin
             EventHub.Unbind<EventUpdateScore>(OnScoreUpdate);
             EventHub.Unbind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Unbind<EventEndGame>(OnEndGame);
-            EventHub.Unbind<EventCharacterPassLayer>(OnCharacterPassLayer);
+            EventHub.Unbind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
+            EventHub.Unbind<EventRevive>(OnRevive);
         }
 
         private IEnumerator WaitAndStartGame()
@@ -204,12 +206,18 @@ namespace Penguin
             }
         }
 
+        private void OnRevive(EventRevive eventData)
+        {
+            _gamePanel.SetActive(true);
+            _endGamePanel.gameObject.SetActive(false);
+        }
+
         public void OnRestartGame()
         {
             SceneManager.LoadScene("PlatformTestScene");
         }
 
-        public void OnCharacterPassLayer(EventCharacterPassLayer e)
+        public void ShowFishesEscapeEffect(EventCharacterPassLayer e)
         {
             if (e.hasPowerup || e.hasLayerDestroyed)
                 return;

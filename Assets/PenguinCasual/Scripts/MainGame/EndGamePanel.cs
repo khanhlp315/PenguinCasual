@@ -60,7 +60,9 @@ namespace Penguin
         {
             if (_isShowAsNormal)
                 return;
+            
             EventHub.Emit(new EventRevive());
+            DOTween.Kill(_watchAdDuration);
         }
 
         public void OnRestart()
