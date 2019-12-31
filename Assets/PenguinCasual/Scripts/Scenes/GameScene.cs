@@ -187,21 +187,25 @@ namespace Penguin
 
             seq.OnComplete(() =>
             {
-                Destroy(spawnLabel.gameObject);
+                if (spawnLabel != null && spawnLabel.gameObject != null)
+                {
+                    Destroy(spawnLabel.gameObject);
+                }
             });
         }
 
         private void OnEndGame(EventEndGame eventData)
         {
-            _endGameParticle.gameObject.SetActive(true);
-            _endGameParticle.Play(true);
-
             StartCoroutine(DelayAndShowEndGamePanel());
         }
 
         private IEnumerator DelayAndShowEndGamePanel()
         {
             bool hasWatchAd = true;
+
+            yield return new WaitForSeconds(0.5f);
+            _endGameParticle.gameObject.SetActive(true);
+            _endGameParticle.Play(true);
             yield return new WaitForSeconds(0.5f);
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);

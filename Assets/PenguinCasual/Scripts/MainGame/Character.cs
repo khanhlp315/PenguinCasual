@@ -22,6 +22,7 @@ namespace Penguin
         public Action<Pedestal> OnStuckInPedestal;
         [SerializeField] private GameObject _model;
         [SerializeField] private BoxCollider _collider;
+        [SerializeField] private ParticleSystem _deathParticle;
 
         private GameSetting _gameSetting;
         RaycastHit[] _rayCastHits = new RaycastHit[5];
@@ -141,11 +142,16 @@ namespace Penguin
         public void Revive()
         {
             State = CharacterState.Normal;
+
+            _deathParticle.gameObject.SetActive(false);
         }
 
         public void OnDie()
         {
             State = CharacterState.Dead;
+
+            _deathParticle.gameObject.SetActive(true);
+            _deathParticle.Play();
         }
 
         public void ActivePowerup()
