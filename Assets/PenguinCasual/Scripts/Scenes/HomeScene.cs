@@ -9,7 +9,7 @@ namespace Penguin.Scenes
     {
         public void GoToGameScene()
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("PlatformTestScene");
         }
 
         public void GoToSettingsScene()
