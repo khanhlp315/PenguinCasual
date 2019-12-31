@@ -55,6 +55,8 @@ namespace Penguin
         private GameObject _gamePanel;
         [SerializeField]
         private EndGamePanel _endGamePanel;
+        [SerializeField]
+        private ParticleSystem _endGameParticle;
 
         [SerializeField]
         private TextMeshProUGUI _labelScoreIncrease;
@@ -191,8 +193,16 @@ namespace Penguin
 
         private void OnEndGame(EventEndGame eventData)
         {
-            bool hasWatchAd = true;
+            _endGameParticle.gameObject.SetActive(true);
+            _endGameParticle.Play(true);
 
+            StartCoroutine(DelayAndShowEndGamePanel());
+        }
+
+        private IEnumerator DelayAndShowEndGamePanel()
+        {
+            bool hasWatchAd = true;
+            yield return new WaitForSeconds(0.5f);
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);
 

@@ -17,7 +17,6 @@ namespace Penguin
         [SerializeField] private ScoreSetting _scoreSetting;
         [SerializeField] private Character _character;
         [SerializeField] private Platform _platform;
-        [SerializeField] private GameObject _endGamePanel;
 
         private IScoreCaculator _scoreCaculator;
 
