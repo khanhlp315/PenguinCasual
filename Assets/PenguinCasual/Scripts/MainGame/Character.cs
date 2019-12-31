@@ -138,6 +138,11 @@ namespace Penguin
             _velocity = _gameSetting.characterJumpVelocity;
         }
 
+        public void Revive()
+        {
+            State = CharacterState.Normal;
+        }
+
         public void OnDie()
         {
             State = CharacterState.Dead;

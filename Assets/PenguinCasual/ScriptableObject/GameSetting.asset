@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GameSetting
   m_EditorClassIdentifier: 
   roundDuration: 60
+  reviveRoundDuration: 30
   squidBonusDuration: 5
   watchAdBonusDuration: 60
   powerUpBreakFloors: 6

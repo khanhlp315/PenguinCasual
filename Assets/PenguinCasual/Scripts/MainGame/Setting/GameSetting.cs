@@ -9,6 +9,7 @@ namespace Penguin
     {
         [Header("General")]
 		public int roundDuration;
+        public int reviveRoundDuration;
         public int squidBonusDuration;
         public int watchAdBonusDuration;
         public int powerUpBreakFloors;
