@@ -36,7 +36,7 @@ namespace Penguin
 
         [Header("-----------UI--------------")]
         [SerializeField]
-        private TextMeshProUGUI _labelScore;
+        private ShadowText _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
         //[SerializeField]
@@ -48,9 +48,13 @@ namespace Penguin
         [SerializeField]
         private Image _countdownFillRing;
         [SerializeField]
-        private GameObject _endGamePanel;
-        [SerializeField]
         private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
+
+        [Header("-----------UI Menu-----------")]
+        [SerializeField]
+        private GameObject _gamePanel;
+        [SerializeField]
+        private EndGamePanel _endGamePanel;
 
         [SerializeField]
         private TextMeshProUGUI _labelScoreIncrease;
@@ -91,6 +95,10 @@ namespace Penguin
 
             RegisterEvent();
             InitPool();
+
+            _gamePanel.SetActive(true);
+            _endGamePanel.gameObject.SetActive(false);
+
             StartCoroutine(WaitAndStartGame());
         }
 
@@ -139,6 +147,7 @@ namespace Penguin
         {
             _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
+            _labelScore.text = "0";
 
             yield return new WaitForSeconds(2);
 
@@ -180,7 +189,19 @@ namespace Penguin
 
         private void OnEndGame(EventEndGame eventData)
         {
-            _endGamePanel.SetActive(true);
+            bool hasWatchAd = true;
+
+            _gamePanel.SetActive(false);
+            _endGamePanel.gameObject.SetActive(true);
+
+            if (hasWatchAd)
+            {
+                _endGamePanel.ShowWithWatchAd();
+            }
+            else
+            {
+                _endGamePanel.ShowAsNormal();
+            }
         }
 
         public void OnRestartGame()
