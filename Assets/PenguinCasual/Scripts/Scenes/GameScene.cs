@@ -56,6 +56,12 @@ namespace Penguin
         [SerializeField]
         private DestroyPedestalLayerEffect _destroyPedestalLayerPrefab;
 
+        [Header("-------Timeout----------")]
+        [SerializeField]
+        private Image _timeOutEffect;
+        [SerializeField]
+        private Transform _clockScaleAnchor;
+
         [Header("-----------UI Menu-----------")]
         [SerializeField]
         private GameObject _gamePanel;
@@ -72,6 +78,10 @@ namespace Penguin
         private GenericGOPool _effectPool = new GenericGOPool();
 
         private long _currentScore;
+
+        private bool _isTimeoutEffectActive;
+
+        private Sequence _timeoutSeq;
 
         private void Start()
         {
@@ -107,6 +117,7 @@ namespace Penguin
             InitPool();
 
             _currentScore = 0;
+            _timeOutEffect.gameObject.SetActive(false);
             _hideGroup.SetActive(false);
             _gamePanel.SetActive(true);
             _endGamePanel.gameObject.SetActive(false);
@@ -123,6 +134,58 @@ namespace Penguin
         {
             _labelCountdown.text = Mathf.RoundToInt(e.time).ToString();
             _countdownFillRing.fillAmount = e.time / _gameSetting.roundDuration;
+
+            if (_isTimeoutEffectActive)
+            {
+                if (e.time > 5f)
+                {
+                    _isTimeoutEffectActive = false;
+                    ShowTimeoutEffect(false, true);
+                }
+            }
+            else
+            {
+                if (e.time <= 5f)
+                {
+                    _isTimeoutEffectActive = true;
+                    ShowTimeoutEffect(true, false);
+                }
+            }
+        }
+
+        private void ShowTimeoutEffect(bool isShow , bool resetScale)
+        {
+            if (isShow)
+            {
+                _timeOutEffect.gameObject.SetActive(true);
+                _timeoutSeq = DOTween.Sequence();
+
+                var color = _timeOutEffect.color;
+                color.a = 0;
+                _timeOutEffect.color = color;
+                
+                _timeoutSeq.Append(_timeOutEffect.DOFade(0.65f, 0.5f).SetEase(Ease.Linear));
+                _timeoutSeq.Append(_timeOutEffect.DOFade(0, 0.2f).SetEase(Ease.Linear));
+                _timeoutSeq.SetLoops(-1, LoopType.Restart);
+                _timeoutSeq.Play();
+
+                _clockScaleAnchor.DOScale(1.5f, 5f);
+            }
+            else
+            {
+                if (_timeoutSeq != null)
+                {
+                    _timeoutSeq.Kill();
+                    _timeoutSeq = null;
+                }
+
+                _clockScaleAnchor.DOKill();
+                if (resetScale)
+                {
+                    _clockScaleAnchor.localScale = Vector3.one;
+                }
+                _timeOutEffect.gameObject.SetActive(false);
+            }
         }
 
         private void InitPool()
@@ -218,6 +281,10 @@ namespace Penguin
         private IEnumerator DelayAndShowEndGamePanel(bool isTimeout)
         {
             bool hasWatchAd = true;
+            if (isTimeout)
+            {
+                ShowTimeoutEffect(false, false);
+            }
 
             yield return new WaitForSeconds(0.5f);
             float delay = 0.5f;
@@ -251,6 +318,7 @@ namespace Penguin
         private void OnRevive(EventRevive eventData)
         {
             _gamePanel.SetActive(true);
+            ShowTimeoutEffect(false, true);
             _endGamePanel.gameObject.SetActive(false);
             _endGameParticle.gameObject.SetActive(false);
         }
