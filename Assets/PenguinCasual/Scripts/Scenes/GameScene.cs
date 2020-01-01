@@ -48,6 +48,8 @@ namespace Penguin
         [SerializeField]
         private GameObject _goImage;
         [SerializeField]
+        private GameObject _timeupImage;
+        [SerializeField]
         private Image _countdownFillRing;
         [SerializeField]
         private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
@@ -210,20 +212,30 @@ namespace Penguin
 
         private void OnEndGame(EventEndGame eventData)
         {
-            StartCoroutine(DelayAndShowEndGamePanel());
+            StartCoroutine(DelayAndShowEndGamePanel(!eventData.isCharacterDeath));
         }
 
-        private IEnumerator DelayAndShowEndGamePanel()
+        private IEnumerator DelayAndShowEndGamePanel(bool isTimeout)
         {
             bool hasWatchAd = true;
 
             yield return new WaitForSeconds(0.5f);
-            _endGameParticle.gameObject.SetActive(true);
-            _endGameParticle.Play(true);
-            yield return new WaitForSeconds(0.5f);
+            float delay = 0.5f;
+            if (isTimeout)
+            {
+                _timeupImage.SetActive(true);
+                delay = 2f;
+            }
+            else
+            {
+                _endGameParticle.gameObject.SetActive(true);
+                _endGameParticle.Play(true);
+            }
+            yield return new WaitForSeconds(delay);
+            _timeupImage.gameObject.SetActive(false);
+
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);
-
             _endGamePanel.SetScore(_currentScore);
 
             if (hasWatchAd)
@@ -240,6 +252,7 @@ namespace Penguin
         {
             _gamePanel.SetActive(true);
             _endGamePanel.gameObject.SetActive(false);
+            _endGameParticle.gameObject.SetActive(false);
         }
 
         public void OnRestartGame()

@@ -151,9 +151,20 @@ namespace Penguin
         public void OnDie()
         {
             State = CharacterState.Dead;
+        }
 
-            _deathParticle.gameObject.SetActive(true);
-            _deathParticle.Play();
+        public void SetDieEffect(bool isActive)
+        {
+            if (isActive)
+            {
+                _deathParticle.gameObject.SetActive(true);
+                _deathParticle.Play();
+            }
+            else
+            {
+                _deathParticle.gameObject.SetActive(false);
+                _deathParticle.Stop();
+            }
         }
 
         public void ActivePowerup()

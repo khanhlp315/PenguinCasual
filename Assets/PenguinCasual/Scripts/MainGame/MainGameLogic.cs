@@ -216,6 +216,7 @@ namespace Penguin
         {
             _gameState = endGameByDead ? GameState.EndByDead : GameState.EndByTimeout;
             _character.OnDie();
+            _character.SetDieEffect(endGameByDead);
             _platform.CanInteract = false;
             EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
         }
