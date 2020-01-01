@@ -118,6 +118,7 @@ namespace Penguin
                 if (_remainPowerupBreakFloor == 0)
                 {
                     _character.Jump();
+                    _character.SetBoostEffect(false);
                     _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, pedestal);
                     _scoreCaculator.PreventUpdateScoreOnNextLanding();
                 }
@@ -132,6 +133,7 @@ namespace Penguin
                 if (pedestal.type == PedestalType.Pedestal_04_Powerup)
                 {
                     _character.ActivePowerup();
+                    _character.SetBoostEffect(true);
                     _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
                 }
                 else
@@ -157,6 +159,7 @@ namespace Penguin
                 else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
                 {
                     _character.ActivePowerup();
+                    _character.SetBoostEffect(true);
                     _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
                 }
                 else if (pedestal.type == PedestalType.DeadZone_01)

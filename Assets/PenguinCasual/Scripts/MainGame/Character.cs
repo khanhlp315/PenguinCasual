@@ -23,6 +23,8 @@ namespace Penguin
         [SerializeField] private GameObject _model;
         [SerializeField] private BoxCollider _collider;
         [SerializeField] private ParticleSystem _deathParticle;
+        [SerializeField] private ParticleSystem _boostParticle;
+        [SerializeField] private ParticleSystem _boostTraitParticle;
 
         private GameSetting _gameSetting;
         RaycastHit[] _rayCastHits = new RaycastHit[5];
@@ -157,6 +159,26 @@ namespace Penguin
         public void ActivePowerup()
         {
             _velocity = _gameSetting.characterMaxDroppingVelocity;
+        }
+
+        public void SetBoostEffect(bool isActive)
+        {
+            if (isActive)
+            {
+                _boostParticle.gameObject.SetActive(true);
+                _boostTraitParticle.gameObject.SetActive(true);
+
+                _boostParticle.Play(true);
+                _boostTraitParticle.Play(true);
+            }
+            else
+            {
+                _boostParticle.gameObject.SetActive(false);
+                _boostTraitParticle.gameObject.SetActive(false);
+
+                _boostParticle.Stop(true);
+                _boostTraitParticle.Stop(true);
+            }
         }
 
         public void SetModel(GameObject characterModel)
