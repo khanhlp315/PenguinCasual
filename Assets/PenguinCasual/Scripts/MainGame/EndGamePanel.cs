@@ -11,7 +11,7 @@ namespace Penguin
     public class EndGamePanel : MonoBehaviour
     {
         [SerializeField]
-        private ShadowText _labelScore;
+        private ShadowTextUGUI _labelScore;
 
         [SerializeField]
         private GameObject _panelWatchAd;
@@ -25,6 +25,11 @@ namespace Penguin
         private Image _watchAdDuration;
 
         private bool _isShowAsNormal;
+
+        public void SetScore(long score)
+        {
+            _labelScore.text = score.ToString() + "<size=80>匹</size>";
+        }
 
         public void ShowAsNormal()
         {

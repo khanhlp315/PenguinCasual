@@ -36,7 +36,9 @@ namespace Penguin
 
         [Header("-----------UI--------------")]
         [SerializeField]
-        private ShadowText _labelScore;
+        private GameObject _hideGroup;
+        [SerializeField]
+        private ShadowTextUGUI _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
         //[SerializeField]
@@ -66,6 +68,8 @@ namespace Penguin
         private CoreGameModel _coreGameModel;
 
         private GenericGOPool _effectPool = new GenericGOPool();
+
+        private long _currentScore;
 
         private void Start()
         {
@@ -100,6 +104,8 @@ namespace Penguin
             RegisterEvent();
             InitPool();
 
+            _currentScore = 0;
+            _hideGroup.SetActive(false);
             _gamePanel.SetActive(true);
             _endGamePanel.gameObject.SetActive(false);
 
@@ -157,7 +163,7 @@ namespace Penguin
         {
             _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
-            _labelScore.text = "0";
+            _labelScore.text = "0<size=80>匹</size>";
 
             yield return new WaitForSeconds(2);
 
@@ -167,6 +173,7 @@ namespace Penguin
             yield return new WaitForSeconds(1);
 
             _goImage.SetActive(false);
+            _hideGroup.SetActive(true);
 
             EventHub.Emit<EventStartGame>();
         }
@@ -177,7 +184,8 @@ namespace Penguin
         /// <param name="eventData"></param>
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
-            _labelScore.text = eventData.score.ToString();
+            _currentScore = eventData.score;
+            _labelScore.text = eventData.score.ToString() + "<size=80>匹</size>";
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;
@@ -215,6 +223,8 @@ namespace Penguin
             yield return new WaitForSeconds(0.5f);
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);
+
+            _endGamePanel.SetScore(_currentScore);
 
             if (hasWatchAd)
             {
