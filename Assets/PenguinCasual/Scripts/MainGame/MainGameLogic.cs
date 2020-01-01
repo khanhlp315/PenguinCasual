@@ -139,7 +139,7 @@ namespace Penguin
                 else
                 {
                     _character.Jump();
-                    _platform.ForceDestroyNextLayer(true);
+                    _platform.ForceDestroyNextLayer();
                 }
 
                 _floorCombo += 1;
