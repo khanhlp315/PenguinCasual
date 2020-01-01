@@ -53,6 +53,7 @@ MonoBehaviour:
   - {fileID: 2107624825729330266, guid: 527726c378dd741919566a0e3a11e626, type: 3}
   - {fileID: 6899264028402754012, guid: 3f2f24e8719274fc1817939d4e89a5b5, type: 3}
   _propInstance: {fileID: 3463694138957611223}
+  _stoneMaterial: {fileID: 2100000, guid: 97cfc4e3e10be402ca7c5e5d5bbbc200, type: 2}
 --- !u!1001 &8460917593907293133
 PrefabInstance:
   m_ObjectHideFlags: 0

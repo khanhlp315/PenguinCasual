@@ -49,6 +49,8 @@ namespace Penguin
         private Image _countdownFillRing;
         [SerializeField]
         private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
+        [SerializeField]
+        private DestroyPedestalLayerEffect _destroyPedestalLayerPrefab;
 
         [Header("-----------UI Menu-----------")]
         [SerializeField]
@@ -63,7 +65,7 @@ namespace Penguin
 
         private CoreGameModel _coreGameModel;
 
-        private GenericGOPool _fishEscapeEffectPool = new GenericGOPool();
+        private GenericGOPool _effectPool = new GenericGOPool();
 
         private void Start()
         {
@@ -119,8 +121,10 @@ namespace Penguin
         {
             foreach (var prefab in _fishEscapeEffectPrefabs)
             {
-                _fishEscapeEffectPool.RegisterPooledGO(prefab);
+                _effectPool.RegisterPooledGO(prefab);
             }
+
+            _effectPool.RegisterPooledGO(_destroyPedestalLayerPrefab);
         }
 
         /// <summary>
@@ -132,6 +136,7 @@ namespace Penguin
             EventHub.Bind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Bind<EventEndGame>(OnEndGame);
             EventHub.Bind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
+            EventHub.Bind<EventPedestalLayerDestroy>(ShowPedestalLayerDestroyEffect);
             EventHub.Bind<EventRevive>(OnRevive);
         }
 
@@ -144,6 +149,7 @@ namespace Penguin
             EventHub.Unbind<EventGameTimeUpdate>(OnGameTimeUpdate);
             EventHub.Unbind<EventEndGame>(OnEndGame);
             EventHub.Unbind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
+            EventHub.Unbind<EventPedestalLayerDestroy>(ShowPedestalLayerDestroyEffect);
             EventHub.Unbind<EventRevive>(OnRevive);
         }
 
@@ -228,10 +234,11 @@ namespace Penguin
 
         public void OnRestartGame()
         {
+            EventHub.ClearAll();
             SceneManager.LoadScene("PlatformTestScene");
         }
 
-        public void ShowFishesEscapeEffect(EventCharacterPassLayer e)
+        private void ShowFishesEscapeEffect(EventCharacterPassLayer e)
         {
             if (e.hasPowerup || e.hasLayerDestroyed)
                 return;
@@ -251,9 +258,15 @@ namespace Penguin
             if (layerType == PedestalType.Pedestal_01 || layerType == PedestalType.Pedestal_01_1_Fish || layerType == PedestalType.Pedestal_01_3_Fish)
             {
                 Vector3 effectPosition = new Vector3(0f, e.layer.height + 0.3f, _mainCharacter.transform.position.z - 1);
-                var effect = _fishEscapeEffectPool.Instantiate(layerType, effectPosition, 0);
+                var effect = _effectPool.Instantiate(layerType, effectPosition, 0);
                 effect.transform.SetParent(_camera, true);
             }
+        }
+
+        private void ShowPedestalLayerDestroyEffect(EventPedestalLayerDestroy e)
+        {
+            Vector3 effectPosition = new Vector3(0f, e.layer.height - 0.5f, 0);
+            _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
         }
 
         private SkinSetting.SkinData GetSkinById(string skinId)

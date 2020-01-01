@@ -38,7 +38,7 @@ namespace Penguin
             _gameState = GameState.Waiting;
 
             _platform.Setup(_gameSetting);
-            _platform.OnCharacterPassedThoughPedestalLayer += OnCharacterPassLayer;
+            _platform.OnCharacterPassedThoughPedestalLayer += OnCharacterPassThoughLayer;
 
             _cameraFollower.Setup(_gameSetting);
             
@@ -84,7 +84,7 @@ namespace Penguin
         {
             if (_gameState == GameState.EndByDead)
             {
-                _platform.ForceDestroyNextLayer();
+                _platform.ForceDestroyNextLayer(true);
             }
 
             _character.Revive();
@@ -113,7 +113,7 @@ namespace Penguin
             else if (HasPowerUp())
             {
                 _remainPowerupBreakFloor -= 1;
-                _platform.ForceDestroyNextLayer();
+                _platform.ForceDestroyNextLayer(true);
 
                 if (_remainPowerupBreakFloor == 0)
                 {
@@ -137,7 +137,7 @@ namespace Penguin
                 else
                 {
                     _character.Jump();
-                    _platform.ForceDestroyNextLayer();
+                    _platform.ForceDestroyNextLayer(true);
                 }
 
                 _floorCombo += 1;
@@ -217,7 +217,7 @@ namespace Penguin
             EventHub.Emit<EventEndGame>(new EventEndGame(endGameByDead));
         }
 
-        void OnCharacterPassLayer(PedestalLayer layer)
+        void OnCharacterPassThoughLayer(PedestalLayer layer)
         {
             if (!HasPowerUp() && !layer.hasDestroyed)
             {

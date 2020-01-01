@@ -7,6 +7,7 @@ namespace Penguin
 {
     internal interface IEventQueue
     {
+        void ClearAll();
         void Dispatch();
     }
 
@@ -137,6 +138,15 @@ namespace Penguin
             }
 
             _totalEvent = 0;
+        }
+
+        public void ClearAll()
+        {
+            _totalEvent = 0;
+            _batchSubscribers.Clear();
+            _batchInsantSubscribers.Clear();
+            _oneSubscribers.Clear();
+            _oneInstantSubscribers.Clear();
         }
 
         private void EnsureCapacity(int capacity, int power = 2)

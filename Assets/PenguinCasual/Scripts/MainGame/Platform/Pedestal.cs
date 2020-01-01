@@ -23,6 +23,8 @@ namespace Penguin
         [SerializeField]
         private MeshRenderer _meshRenderer;
 
+        private Material _baseMaterial;
+
 
         private bool _active = true;
 
@@ -54,11 +56,28 @@ namespace Penguin
             }
         }
 
-        public void Fall()
+        public bool CanBeTurnedToStone
         {
-            _active = false;
-            transform.SetParent(null, true);
-            StartCoroutine(_Fall());
+            get
+            {
+                switch (type)
+                {
+                    case PedestalType.Pedestal_01:
+                    case PedestalType.Pedestal_01_1_Fish:
+                    case PedestalType.Pedestal_01_3_Fish:
+                    case PedestalType.Pedestal_04_Powerup:
+                    case PedestalType.DeadZone_01:
+                    case PedestalType.Wall_01:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        private void Awake()
+        {
+            _baseMaterial = _meshRenderer.sharedMaterial;
         }
 
         public void Destroy()
@@ -66,6 +85,23 @@ namespace Penguin
             _active = false;
             gameObject.SetActive(false);
             EventHub.Emit(new EventPedestalDestroy(this));
+        }
+
+        public void Fall()
+        {
+            _active = false;
+            transform.SetParent(null, true);
+            StartCoroutine(_Fall());
+        }
+
+        public void SetMaterial(Material material)
+        {
+            _meshRenderer.material = material;
+        }
+
+        public void ResetMaterial()
+        {
+            _meshRenderer.material = _baseMaterial;
         }
 
 

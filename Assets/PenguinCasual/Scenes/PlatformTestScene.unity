@@ -1234,6 +1234,8 @@ MonoBehaviour:
   - {fileID: 537567520540025211, guid: 9903277cf5dae475cbdd48f98e8349d3, type: 3}
   - {fileID: 7287557835474348030, guid: de5572631b2bb4a43ad3439204982d80, type: 3}
   - {fileID: 7287557835474348030, guid: eaa9eb374318545849a2f90ed2bba502, type: 3}
+  _destroyPedestalLayerPrefab: {fileID: 1698371597174983939, guid: 3cde6085172dd4198b3575aa5338c8b0,
+    type: 3}
   _gamePanel: {fileID: 508409927}
   _endGamePanel: {fileID: 1251473676}
   _endGameParticle: {fileID: 356851105}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4933126545096098}
   - component: {fileID: 199933930693833604}
   - component: {fileID: 198777221283870700}
+  - component: {fileID: 1698371597174983939}
   m_Layer: 0
   m_Name: DestroyGroundEffect
   m_TagString: Untagged
@@ -105,13 +106,13 @@ ParticleSystem:
   serializedVersion: 6
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 3
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4811,3 +4812,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1698371597174983939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598831925901028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee65cb8d1cc5840939c741fedb714fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -67,6 +67,7 @@ namespace Penguin
 
         public void OnRestart()
         {
+            EventHub.ClearAll();
             SceneManager.LoadScene("PlatformTestScene");
         }
 

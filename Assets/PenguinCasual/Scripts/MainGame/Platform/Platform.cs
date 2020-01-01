@@ -30,6 +30,7 @@ namespace Penguin
 
         [SerializeField] private List<Pedestal> _pedestalePrefabs;
         [SerializeField] private Transform _propInstance;
+        [SerializeField] private Material _stoneMaterial;
         
         private List<Transform> _props;
         private GameSetting _gameSetting;
@@ -39,6 +40,7 @@ namespace Penguin
         float _platformLastAngle;
 
         PedestalPool _pedestalPool;
+        GenericGOPool _genericPool;
         List<PedestalLayer> _pedestalLayers;
         PlatformRule _platformRule;
         private bool _canInteract;
@@ -76,6 +78,8 @@ namespace Penguin
             _pedestalPool = new PedestalPool(this.transform, _pedestalePrefabs);
             _pedestalLayers = new List<PedestalLayer>();
             _platformRule = new SimplePlatformRule();
+
+            _genericPool = new GenericGOPool();
 
             _gameSetting = gameSetting;
             RecycleOldPedestales();
@@ -116,35 +120,7 @@ namespace Penguin
             }
         }
 
-        public PedestalType UpdatePenguinPosition(Vector3 position)
-        {
-            CheckPropAndRecyclePedestales(position);
-            return PedestalType.None;
-        }
-
-        public PedestalLayer ForceDestroyNextLayer()
-        {
-            PedestalLayer nextLayer = GetNextPedestalLayer();
-            if (nextLayer != null)
-            {
-                DestroyLayer(nextLayer);
-            }
-
-            return nextLayer;
-        }
-        
-        public void DestroyLayer(PedestalLayer layer)
-        {
-            layer.hasDestroyed = true;
-
-            layer.pedestales.RemoveAll(p => !p.Active);
-            foreach (var pedestal in layer.pedestales)
-            {
-                pedestal.Fall();
-            }
-        }
-
-        void CheckPropAndRecyclePedestales(Vector3 position)
+        public void UpdatePenguinPosition(Vector3 position)
         {
             PedestalLayer nextPassLayer = GetNextPassPedestalLayer();
             if (nextPassLayer != null && position.y < nextPassLayer.height - 0.5f)
@@ -157,7 +133,7 @@ namespace Penguin
             if (position.y < centerBotPropY)
             {
                 _propBottomHeight -= _propHeight;
-                
+
                 Vector3 propPosition = _props[0].position;
                 propPosition.y -= _propHeight * 2;
                 _props[0].position = propPosition;
@@ -167,6 +143,39 @@ namespace Penguin
                 RecycleOldPedestales();
                 AddNewPedestales();
             }
+        }
+
+        public PedestalLayer ForceDestroyNextLayer(bool turnPedestalToStone = false)
+        {
+            PedestalLayer nextLayer = GetNextPedestalLayer();
+            if (nextLayer != null)
+            {
+                DestroyLayer(nextLayer, turnPedestalToStone);
+            }
+
+            return nextLayer;
+        }
+        
+        public void DestroyLayer(PedestalLayer layer, bool turnPedestalToStone = false)
+        {
+            layer.hasDestroyed = true;
+
+            layer.pedestales.RemoveAll(p => !p.Active);
+            foreach (var pedestal in layer.pedestales)
+            {
+                pedestal.Fall();
+            }
+
+            if (turnPedestalToStone)
+            {
+                foreach (var pedestal in layer.pedestales)
+                {
+                    if (pedestal.CanBeTurnedToStone)
+                        pedestal.SetMaterial(_stoneMaterial);
+                }
+            }
+
+            EventHub.Emit(new EventPedestalLayerDestroy(layer));
         }
 
         void RecycleOldPedestales()

@@ -51,6 +51,7 @@ namespace Penguin
                 pedestal = CreatePedestal(type, false);
             }
 
+            pedestal.ResetMaterial();
             pedestal.transform.SetParent(_root);
             pedestal.transform.position = position;
             pedestal.transform.rotation = Quaternion.Euler(0f, angle, 0f);

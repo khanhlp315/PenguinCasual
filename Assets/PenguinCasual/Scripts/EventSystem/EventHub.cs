@@ -68,5 +68,13 @@ namespace Penguin
                 eventQueue.Dispatch();
             }
         }
+
+        public static void ClearAll()
+        {
+            foreach (var eventQueue in _eventQueues)
+            {
+                eventQueue.ClearAll();
+            }
+        }
     }
 }
