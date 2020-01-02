@@ -38,8 +38,9 @@ namespace Penguin.Scenes
         // Update is called once per frame
         IEnumerator GoToHomeScreen()
         {
+            var hasAcceptTerms = PlayerPrefs.HasKey("HasAcceptTerms");
             yield return new WaitForSeconds(3.0f);
-            SceneManager.LoadScene("HomeScene");
+            SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : "AcceptTermsScene");
             yield return null;
         }
     }
