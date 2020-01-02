@@ -18,6 +18,13 @@ namespace Penguin
     /// </summary>
     public class Character : MonoBehaviour
     {
+        // Note: defualt is 0
+        static Dictionary<PedestalType, int> _pedestalHitPriority = new Dictionary<PedestalType, int>
+        {
+            {PedestalType.DeadZone_01, -2},
+            {PedestalType.Pedestal_04_Powerup, -1}
+        };
+
         #region [ Fields ]
         public Action<Pedestal> OnCollideWithPedestal;
         public Action<Pedestal> OnStuckInPedestal;
@@ -29,6 +36,7 @@ namespace Penguin
 
         private GameSetting _gameSetting;
         RaycastHit[] _rayCastHits = new RaycastHit[5];
+		Pedestal[] _collidePedestalHits = new Pedestal[5];
         private float _velocity;
         private LayerMask _defaultLayerMask;
 
@@ -78,6 +86,7 @@ namespace Penguin
             Vector3 position = transform.position;
             position.y += moveDistance;
 
+            int totalHitPedestal = 0;
             for (int i = 0; i < totalHit; i++)
             {
                 Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
@@ -86,19 +95,32 @@ namespace Penguin
                 if (pedestal == null || !pedestal.Active)
                     continue;
 
-                OnCollideWithPedestal?.Invoke(pedestal);
+				_collidePedestalHits[totalHitPedestal++] = pedestal;
+            }
 
-                if (!pedestal.CanGoThrough)
-                {
-                    if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
-                    {
-                        position.y = _rayCastHits[i].point.y;
-                    }
-                    else if (_rayCastHits[i].distance <= 0)
-                    {
-                        stuckInPedestal = pedestal;
-                    }
-                }
+            Array.Sort(_collidePedestalHits, 0, totalHit, Comparer<Pedestal>.Create((p1, p2) => {
+                return GetPedestalHitPriority(p1) > GetPedestalHitPriority(p2) ? 1 : -1;
+            }));
+
+			for (int i = 0; i < totalHitPedestal; i++)
+			{
+				Pedestal pedestal = _collidePedestalHits[i];
+				OnCollideWithPedestal?.Invoke(pedestal);
+
+				if (!pedestal.CanGoThrough)
+				{
+					if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
+					{
+						position.y = _rayCastHits[i].point.y;
+					}
+					else if (_rayCastHits[i].distance <= 0)
+					{
+						stuckInPedestal = pedestal;
+					}
+				}
+
+                // Should handle only one
+                break;
             }
 
             transform.position = position;
@@ -107,34 +129,6 @@ namespace Penguin
             {
                 OnStuckInPedestal?.Invoke(stuckInPedestal);
             }
-        }
-
-        public bool DryCheckCollision()
-        {
-            float moveDistance = 0;
-            int totalHit = Physics.BoxCastNonAlloc(transform.position + _collider.center,
-                                                    _collider.size / 2,
-                                                    Vector3.down,
-                                                    _rayCastHits,
-                                                    Quaternion.identity,
-                                                    moveDistance < 0 ? Mathf.Abs(moveDistance) : 0,
-                                                    _defaultLayerMask);
-            
-            for (int i = 0; i < totalHit; i++)
-            {
-                Pedestal pedestal = _rayCastHits[i].collider.GetComponent<Pedestal>();
-                if (pedestal == null)
-                    pedestal = _rayCastHits[i].collider.GetComponentInParent<Pedestal>();
-                if (pedestal == null || !pedestal.Active)
-                    continue;
-
-                if (!pedestal.CanGoThrough)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public void Jump()
@@ -205,6 +199,14 @@ namespace Penguin
             _model = GameObject.Instantiate(characterModel, transform);
             _model.transform.localPosition = Vector3.zero;
             _model.transform.rotation = Quaternion.identity;
+        }
+
+        private int GetPedestalHitPriority(Pedestal pedestal)
+        {
+            if (_pedestalHitPriority.ContainsKey(pedestal.type))
+                return _pedestalHitPriority[pedestal.type];
+            
+            return 0;
         }
 
         #endregion
