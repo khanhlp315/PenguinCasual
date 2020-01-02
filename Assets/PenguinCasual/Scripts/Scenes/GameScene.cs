@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Penguin.Sound;
 using Penguin.Utilities;
 using TMPro;
 using UnityEngine;
@@ -352,11 +353,14 @@ namespace Penguin
                 Vector3 effectPosition = new Vector3(0f, e.layer.height + 0.3f, _mainCharacter.transform.position.z - 1);
                 var effect = _effectPool.Instantiate(layerType, effectPosition, 0);
                 effect.transform.SetParent(_camera, true);
+
+                SoundManager.PlayOneShot(SoundConfig.FishBreakout);
             }
         }
 
         private void ShowPedestalLayerDestroyEffect(EventPedestalLayerDestroy e)
         {
+            SoundManager.PlayOneShot(SoundConfig.BreakFloor);
             Vector3 effectPosition = new Vector3(0f, e.layer.height - 0.5f, 0);
             _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Penguin.Sound;
 using UnityEngine;
 
 namespace Penguin
@@ -139,6 +140,7 @@ namespace Penguin
         public void Jump()
         {
             _velocity = _gameSetting.characterJumpVelocity;
+            SoundManager.PlayOneShot(SoundConfig.Jump);
         }
 
         public void Revive()
@@ -157,6 +159,7 @@ namespace Penguin
         {
             if (isActive)
             {
+                SoundManager.PlayOneShot(SoundConfig.PenguinHitAndDie);
                 _deathParticle.gameObject.SetActive(true);
                 _deathParticle.Play();
             }
