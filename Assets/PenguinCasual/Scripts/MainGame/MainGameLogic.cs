@@ -234,8 +234,12 @@ namespace Penguin
             eventPlayerPassLayer.hasLayerDestroyed = layer.hasDestroyed;
             EventHub.Emit(eventPlayerPassLayer);
 
+            // Special case, character has powerup and pass through the layer
+            if (!layer.hasDestroyed && HasPowerUp())
+                _remainPowerupBreakFloor -= 1;
+
             if (!layer.hasDestroyed)
-                _platform.DestroyLayer(layer);
+                _platform.DestroyLayer(layer, HasPowerUp());
 
             _scoreCaculator.OnPassingLayer(HasPowerUp(), layer);
         }
