@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Penguin.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,7 +29,7 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = score.ToString() + "<size=80>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=80>匹</size>";
         }
 
         public void ShowAsNormal()
