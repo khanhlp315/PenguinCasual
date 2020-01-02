@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Penguin.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -250,7 +251,7 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _currentScore = eventData.score;
-            _labelScore.text = eventData.score.ToString() + "<size=80>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + "<size=80>匹</size>";
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;
@@ -258,7 +259,7 @@ namespace Penguin
 
             spawnLabel.gameObject.SetActive(true);
             spawnLabel.alpha = 1f;
-            spawnLabel.text = "+" + eventData.increase.ToString();
+            spawnLabel.text = "+" + ScoreUtil.FormatScore(eventData.increase);
 
             var seq = DOTween.Sequence();
             seq.Append(spawnLabel.transform.DOLocalMoveY(spawnLabel.transform.position.y + 250, 1.5f));
