@@ -112,17 +112,7 @@ namespace Penguin
             }
             else if (HasPowerUp())
             {
-                _remainPowerupBreakFloor -= 1;
-                _platform.ForceDestroyNextLayer(true);
-
-                if (_remainPowerupBreakFloor == 0)
-                {
-                    _character.Jump();
-                    _character.SetBoostEffect(false);
-                    _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, pedestal);
-                    _scoreCaculator.PreventUpdateScoreOnNextLanding();
-                }
-
+                UsePowerUp(pedestal);
                 _floorCombo = 0;
                 return;
             }
@@ -236,7 +226,7 @@ namespace Penguin
 
             // Special case, character has powerup and pass through the layer
             if (!layer.hasDestroyed && HasPowerUp())
-                _remainPowerupBreakFloor -= 1;
+                UsePowerUp(null);
 
             if (!layer.hasDestroyed)
                 _platform.DestroyLayer(layer, HasPowerUp());
@@ -252,6 +242,24 @@ namespace Penguin
         private bool HasCombo()
         {
             return _floorCombo >= _gameSetting.comboToBreakFloor;
+        }
+
+        private void UsePowerUp(Pedestal collidePedestal)
+        {
+            _remainPowerupBreakFloor -= 1;
+            _platform.ForceDestroyNextLayer(true);
+
+            if (_remainPowerupBreakFloor == 0)
+            {
+                if (collidePedestal != null)
+                {
+                    _character.Jump();
+                    _scoreCaculator.OnLandingLayer(HasCombo(), _floorCombo, collidePedestal);
+                    _scoreCaculator.PreventUpdateScoreOnNextLanding();
+                }
+                    
+                _character.SetBoostEffect(false);
+            }
         }
 
         private void OnScoreUpdate(long score, long increase)
