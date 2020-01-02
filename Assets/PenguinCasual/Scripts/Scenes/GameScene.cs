@@ -297,6 +297,7 @@ namespace Penguin
             }
             else
             {
+                SoundManager.PlayOneShot(SoundConfig.FishMoveEndGame);
                 _endGameParticle.gameObject.SetActive(true);
                 _endGameParticle.Play(true);
             }
@@ -353,8 +354,6 @@ namespace Penguin
                 Vector3 effectPosition = new Vector3(0f, e.layer.height + 0.3f, _mainCharacter.transform.position.z - 1);
                 var effect = _effectPool.Instantiate(layerType, effectPosition, 0);
                 effect.transform.SetParent(_camera, true);
-
-                SoundManager.PlayOneShot(SoundConfig.FishBreakout);
             }
         }
 
