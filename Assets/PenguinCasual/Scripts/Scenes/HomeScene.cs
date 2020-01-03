@@ -1,6 +1,7 @@
 ﻿
 using Penguin.Ads;
 using Penguin.Utilities;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ namespace Penguin.Scenes
         private Text _highscoreText;
         private void Start()
         {
-            _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefs.GetInt(PlayerPrefsKeys.HIGH_SCORE)) + "<size=18>匹</size>";
+            _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefsHelper.GetHighScore()) + "<size=18>匹</size>";
             Advertiser.AdvertisementSystem.ShowNormalBanner();
         }
 

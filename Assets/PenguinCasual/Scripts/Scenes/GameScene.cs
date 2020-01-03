@@ -4,6 +4,7 @@ using DG.Tweening;
 using Penguin.Ads;
 using Penguin.Sound;
 using Penguin.Utilities;
+using PenguinCasual.Scripts.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -85,6 +86,8 @@ namespace Penguin
         private bool _isTimeoutEffectActive;
 
         private Sequence _timeoutSeq;
+
+        private bool _hasAlreadyRevived;
 
         private void Start()
         {
@@ -285,7 +288,28 @@ namespace Penguin
 
         private IEnumerator DelayAndShowEndGamePanel(bool isTimeout)
         {
-            bool hasWatchAd = true;
+            bool hasWatchAd = false;
+            if (PlayerPrefsHelper.CanWatchAds())
+            {
+                #if UNITY_EDITOR
+                hasWatchAd = true;
+                #elif  UNITY_IOS || UNITY_ANDROID
+                if (isTimeout)
+                {
+                    if (Advertiser.AdvertisementSystem.IsTimeUpRewardAdsReady)
+                    {
+                        hasWatchAd = true;
+                    }
+                }
+                else
+                {
+                    if (Advertiser.AdvertisementSystem.IsDieRewardAdsReady)
+                    {
+                        hasWatchAd = true;
+                    }
+                }
+#endif
+            }
             if (isTimeout)
             {
                 ShowTimeoutEffect(false, false);
@@ -316,16 +340,19 @@ namespace Penguin
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);
             _endGamePanel.SetScore(_currentScore);
+            _endGamePanel.SetIsGameEndedByDie(!isTimeout);
 
-            var highScore = PlayerPrefs.GetInt(PlayerPrefsKeys.HIGH_SCORE);
+
+
+            var highScore = PlayerPrefsHelper.GetHighScore();
 
             if (_currentScore > highScore)
             {
-                PlayerPrefs.SetInt(PlayerPrefsKeys.HIGH_SCORE, (int)_currentScore);
+                PlayerPrefsHelper.UpdateHighScore((int)_currentScore);
             }
             
 
-            if (hasWatchAd)
+            if (hasWatchAd && !_hasAlreadyRevived)
             {
                 _endGamePanel.ShowWithWatchAd();
             }
@@ -337,6 +364,7 @@ namespace Penguin
 
         private void OnRevive(EventRevive eventData)
         {
+            _hasAlreadyRevived = true;
             _gamePanel.SetActive(true);
             ShowTimeoutEffect(false, true);
             _endGamePanel.gameObject.SetActive(false);
