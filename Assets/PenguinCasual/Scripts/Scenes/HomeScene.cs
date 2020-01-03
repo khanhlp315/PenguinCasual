@@ -1,12 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using Penguin.Ads;
+using Penguin.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Penguin.Scenes
 {
     public class HomeScene : MonoBehaviour
     {
+        [SerializeField]
+        private Text _highscoreText;
+        private void Start()
+        {
+            _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefs.GetInt(PlayerPrefsKeys.HIGH_SCORE)) + "<size=18>匹</size>";
+            Advertiser.AdvertisementSystem.ShowNormalBanner();
+        }
+
         public void GoToGameScene()
         {
             SceneManager.LoadScene("PlatformTestScene");

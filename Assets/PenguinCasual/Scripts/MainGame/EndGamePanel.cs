@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Penguin.Ads;
 using Penguin.Utilities;
 using TMPro;
 using UnityEngine;
@@ -29,11 +30,12 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=80>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=18>匹</size>";
         }
 
         public void ShowAsNormal()
         {
+            Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = true;
 
             _buttonWatchAd.SetActive(false);
@@ -44,6 +46,7 @@ namespace Penguin
 
         public void ShowWithWatchAd()
         {
+            Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = false;
 
             _buttonWatchAd.SetActive(true);
@@ -64,6 +67,7 @@ namespace Penguin
 
         public void OnRevived()
         {
+            Advertiser.AdvertisementSystem.HideEndGameBanner();
             if (_isShowAsNormal)
                 return;
             
@@ -73,6 +77,7 @@ namespace Penguin
 
         public void OnRestart()
         {
+            Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.ClearAll();
             SceneManager.LoadScene("PlatformTestScene");
         }

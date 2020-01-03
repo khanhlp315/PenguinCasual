@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Penguin.Ads;
 using Penguin.Sound;
 using Penguin.Utilities;
 using TMPro;
@@ -87,6 +88,8 @@ namespace Penguin
 
         private void Start()
         {
+            Advertiser.AdvertisementSystem.HideNormalBanner();
+            Advertiser.AdvertisementSystem.HideEndGameBanner();
             _coreGameModel = MemCached.Get<CoreGameModel>(typeof(CoreGameModel).ToString(), true);
             if (_coreGameModel != null)
             {
@@ -252,7 +255,7 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _currentScore = eventData.score;
-            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + "<size=80>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + "<size=14>匹</size>";
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;
@@ -294,6 +297,12 @@ namespace Penguin
             {
                 _timeupImage.SetActive(true);
                 delay = 2f;
+                var image = _timeupImage.GetComponent<Image>();
+                var sequence = DOTween.Sequence();
+                sequence.Append(image.DOColor(new Color(1,1,1,0),0.5f ));
+                sequence.Append(image.DOColor(new Color(1,1,1,1),0.5f ));
+                sequence.Append(image.DOColor(new Color(1,1,1,0),0.5f ));
+                sequence.Append(image.DOColor(new Color(1,1,1,1),0.5f ));
             }
             else
             {
@@ -307,6 +316,14 @@ namespace Penguin
             _gamePanel.SetActive(false);
             _endGamePanel.gameObject.SetActive(true);
             _endGamePanel.SetScore(_currentScore);
+
+            var highScore = PlayerPrefs.GetInt(PlayerPrefsKeys.HIGH_SCORE);
+
+            if (_currentScore > highScore)
+            {
+                PlayerPrefs.SetInt(PlayerPrefsKeys.HIGH_SCORE, (int)_currentScore);
+            }
+            
 
             if (hasWatchAd)
             {

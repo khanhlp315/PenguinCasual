@@ -31,7 +31,10 @@ namespace Penguin.Ads
             _normalBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _normalBannerAd.OnAdLoaded += (sender, e) => {
                 _isNormalBannerAdLoaded = true;
-                _isNormalBannerAdShow = true;
+                if (!_isNormalBannerAdShow)
+                {
+                    HideNormalBanner();
+                }
                 Callback?.OnNormalBannerAdLoaded();
             };
             _normalBannerAd.OnAdFailedToLoad += (sender, e) => {
@@ -43,6 +46,7 @@ namespace Penguin.Ads
             };
             _normalBannerAd.OnAdClosed += (sender, e) => {
                 _isNormalBannerAdShow = false;
+                LoadNormalBanner(adsId, pos);
                 Callback?.OnNormalBannerAdDismiss();
             };
             _normalBannerAd.LoadAd (new AdRequest.Builder ().Build ());
@@ -71,6 +75,10 @@ namespace Penguin.Ads
             _endGameBannerAd = new BannerView(adsId, size, pos == Data.AdPosition.Top? GoogleMobileAds.Api.AdPosition.Top: GoogleMobileAds.Api.AdPosition.Bottom);
             _endGameBannerAd.OnAdLoaded += (sender, e) => {
                 _isEndGameBannerAdLoaded = true;
+                if (!_isEndGameBannerAdShow)
+                {
+                    HideEndGameBanner();
+                }
                 Callback?.OnEndGameBannerAdLoaded();
             };
             _endGameBannerAd.OnAdFailedToLoad += (sender, e) => {
@@ -83,6 +91,7 @@ namespace Penguin.Ads
             };
             _endGameBannerAd.OnAdClosed += (sender, e) => {
                 _isEndGameBannerAdShow = false;
+                LoadEndGameBanner(adsId, pos);
                 Callback?.OnEndGameBannerAdDismiss();
             }; 
             _endGameBannerAd.LoadAd (new AdRequest.Builder ().Build ());
