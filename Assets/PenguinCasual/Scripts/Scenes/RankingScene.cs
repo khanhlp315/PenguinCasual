@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Penguin.Network;
+using Penguin.Sound;
 using Penguin.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;

@@ -70,6 +70,8 @@ namespace Penguin
         [SerializeField]
         private GameObject _gamePanel;
         [SerializeField]
+        private NewRecordPanel _newRecordPanel;
+        [SerializeField]
         private EndGamePanel _endGamePanel;
         [SerializeField]
         private ParticleSystem _endGameParticle;
@@ -88,6 +90,7 @@ namespace Penguin
         private Sequence _timeoutSeq;
 
         private bool _hasAlreadyRevived;
+        public bool AllowStartGame = false;
 
         private void Start()
         {
@@ -245,6 +248,7 @@ namespace Penguin
 
             yield return new WaitForSeconds(1);
 
+
             _goImage.SetActive(false);
             _hideGroup.SetActive(true);
 
@@ -269,8 +273,8 @@ namespace Penguin
             spawnLabel.text = "+" + ScoreUtil.FormatScore(eventData.increase);
 
             var seq = DOTween.Sequence();
-            seq.Append(spawnLabel.transform.DOLocalMoveY(spawnLabel.transform.position.y + 250, 1.5f));
-            seq.Join(spawnLabel.DOFade(0, 1.5f));
+            seq.Append(spawnLabel.transform.DOLocalMoveY(spawnLabel.transform.position.y, 3.0f));
+            seq.Join(spawnLabel.DOFade(0, 3.0f));
 
             seq.OnComplete(() =>
             {
@@ -288,28 +292,28 @@ namespace Penguin
 
         private IEnumerator DelayAndShowEndGamePanel(bool isTimeout)
         {
-            bool hasWatchAd = false;
-            if (PlayerPrefsHelper.CanWatchAds())
+            #if UNITY_EDITOR
+            bool hasWatchAd = PlayerPrefsHelper.CanWatchAds();
+#elif UNITY_IOS || UNITY_ANDROID
+            bool hasWatchAd = PlayerPrefsHelper.CanWatchAds();
+            if (hasWatchAd)
             {
-                #if UNITY_EDITOR
-                hasWatchAd = true;
-                #elif  UNITY_IOS || UNITY_ANDROID
                 if (isTimeout)
                 {
-                    if (Advertiser.AdvertisementSystem.IsTimeUpRewardAdsReady)
+                    if (!Advertiser.AdvertisementSystem.IsTimeUpRewardAdsReady)
                     {
-                        hasWatchAd = true;
+                        hasWatchAd = false;
                     }
                 }
                 else
                 {
-                    if (Advertiser.AdvertisementSystem.IsDieRewardAdsReady)
+                    if (!Advertiser.AdvertisementSystem.IsDieRewardAdsReady)
                     {
-                        hasWatchAd = true;
+                        hasWatchAd = false;
                     }
-                }
-#endif
+                } 
             }
+#endif
             if (isTimeout)
             {
                 ShowTimeoutEffect(false, false);
@@ -337,20 +341,21 @@ namespace Penguin
             yield return new WaitForSeconds(delay);
             _timeupImage.gameObject.SetActive(false);
 
-            _gamePanel.SetActive(false);
-            _endGamePanel.gameObject.SetActive(true);
-            _endGamePanel.SetScore(_currentScore);
-            _endGamePanel.SetIsGameEndedByDie(!isTimeout);
-
-
-
             var highScore = PlayerPrefsHelper.GetHighScore();
 
             if (_currentScore > highScore)
             {
                 PlayerPrefsHelper.UpdateHighScore((int)_currentScore);
+                _newRecordPanel.SetScore(_currentScore);
+                _newRecordPanel.gameObject.SetActive(true);
+                yield return new WaitForSeconds(3.0f);
+                _newRecordPanel.gameObject.SetActive(false);
             }
             
+            _gamePanel.SetActive(false);
+            _endGamePanel.gameObject.SetActive(true);
+            _endGamePanel.SetScore(_currentScore);
+            _endGamePanel.SetIsGameEndedByDie(!isTimeout);
 
             if (hasWatchAd && !_hasAlreadyRevived)
             {

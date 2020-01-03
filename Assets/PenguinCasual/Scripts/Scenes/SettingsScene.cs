@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Penguin.Network;
+using Penguin.Sound;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,11 +30,11 @@ namespace Penguin.Scenes
 
         public void TurnOnSound()
         {
-            //TODO: Implement Turn on sound
+            Sound2DManager.Instance.SetMuteSound(false);
         }
         public void TurnOffSound()
         {
-            //TODO: Implement Turn on sound
+            Sound2DManager.Instance.SetMuteSound(true);        
         }
     
         public void OpenRequest()

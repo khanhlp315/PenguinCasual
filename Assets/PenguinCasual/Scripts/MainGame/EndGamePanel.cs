@@ -43,7 +43,7 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=18>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=18><color=#3F70D9>匹</color></size>";
         }
 
         public void ShowAsNormal()
@@ -77,6 +77,9 @@ namespace Penguin
         {
             if (_isShowAsNormal)
                 return;
+#if UNITY_EDITOR
+            OnRevived();
+#endif
             if (_isGameEndedByDie)
             {
                 Advertiser.AdvertisementSystem.ShowDieRewardAds("die");
