@@ -123,7 +123,7 @@ namespace Penguin
         public void UpdatePenguinPosition(Vector3 position)
         {
             PedestalLayer nextPassLayer = GetNextPassPedestalLayer();
-            if (nextPassLayer != null && position.y < nextPassLayer.height - 0.5f)
+            if (nextPassLayer != null && position.y < nextPassLayer.height - 0.15f)
             {
                 nextPassLayer.hasPassed = true;
                 OnCharacterPassedThoughPedestalLayer?.Invoke(nextPassLayer);
