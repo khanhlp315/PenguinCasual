@@ -1,4 +1,5 @@
 using System;
+using Penguin.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ namespace Penguin.UI
         {
             _rank.text = Rank.ToString();
             _name.text = Name;
-            _score.text = $"{Score}点";
+            _score.text = $"{ScoreUtil.FormatScore(Score)}匹";
         }
     }
 }

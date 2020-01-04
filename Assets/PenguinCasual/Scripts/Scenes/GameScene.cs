@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Penguin.Ads;
+using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
@@ -346,6 +347,7 @@ namespace Penguin
             if (_currentScore > highScore)
             {
                 PlayerPrefsHelper.UpdateHighScore((int)_currentScore);
+                NetworkCaller.Instance.UpdateHighScore((int)_currentScore);
                 _newRecordPanel.SetScore(_currentScore);
                 _newRecordPanel.gameObject.SetActive(true);
                 yield return new WaitForSeconds(3.0f);

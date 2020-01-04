@@ -31,6 +31,7 @@ namespace Penguin
 
         private bool _isShowAsNormal;
         private bool _isGameEndedByDie = false;
+        private bool _willReward = false;
 
         private void Start()
         {
@@ -49,12 +50,6 @@ namespace Penguin
 
         public void ShowAsNormal()
         {
-            var localHighscore = PlayerPrefsHelper.GetHighScore();
-            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
-            if (localHighscore < serverHighscore)
-            {
-                NetworkCaller.Instance.UpdateHighScore(localHighscore);
-            }
             Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = true;
 
@@ -66,6 +61,7 @@ namespace Penguin
 
         public void ShowWithWatchAd()
         {
+            _willReward = false;
             Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = false;
 
@@ -109,24 +105,13 @@ namespace Penguin
         {
             Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.ClearAll();
-            var localHighscore = PlayerPrefsHelper.GetHighScore();
-            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
-            if (localHighscore < serverHighscore)
-            {
-                NetworkCaller.Instance.UpdateHighScore(localHighscore);
-            }
             SceneManager.LoadScene("PlatformTestScene");
         }
 
         public void OnHome()
         {
+            Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.ClearAll();
-            var localHighscore = PlayerPrefsHelper.GetHighScore();
-            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
-            if (localHighscore < serverHighscore)
-            {
-                NetworkCaller.Instance.UpdateHighScore(localHighscore);
-            }
             SceneManager.LoadScene("HomeScene");
         }
 
@@ -178,11 +163,15 @@ namespace Penguin
 
         public void OnDieRewardDismiss()
         {
+            if (_willReward)
+            {
+                OnRevived();
+            }
         }
 
         public void OnDieRewardDidReward()
         {
-            OnRevived();
+            _willReward = true;
         }
 
         public void OnDieRewardFailedToLoad()
@@ -205,12 +194,15 @@ namespace Penguin
 
         public void OnTimeUpRewardDismiss()
         {
-            
+            if (_willReward)
+            {
+                OnRevived();
+            }
         }
 
         public void OnTimeUpRewardDidReward()
         {
-            OnRevived();
+            _willReward = true;
         }
 
         public void OnTimeUpRewardFailedToLoad()
