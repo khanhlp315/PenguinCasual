@@ -107,6 +107,7 @@ namespace Penguin
 
         public void OnHome()
         {
+            EventHub.ClearAll();
             SceneManager.LoadScene("HomeScene");
         }
 
