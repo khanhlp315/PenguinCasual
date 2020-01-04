@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Penguin.Network;
 using Penguin.Sound;
+using Penguin.Utilities;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +11,29 @@ namespace Penguin.Scenes
 {
     public class SplashScene : MonoBehaviour
     {
+        private int _systemsLoaded = 0;
+
+        private int _systemToLoad = 0;
         void Start()
         {
+            PlayerPrefsHelper.CheckDate();
             InitCrashlytics();
+            
+            NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
+            _systemToLoad++;
+            
+            NetworkCaller.Instance.Initialize();
+            
             StartCoroutine(GoToHomeScreen());
+        }
+
+        private void OnSystemLoad()
+        {
+            _systemsLoaded++;
+            if (_systemsLoaded >= _systemToLoad)
+            {
+                StartCoroutine(GoToHomeScreen());
+            }
         }
 
         private void InitCrashlytics()
@@ -36,10 +58,9 @@ namespace Penguin.Scenes
             });
         }
 
-        // Update is called once per frame
         IEnumerator GoToHomeScreen()
         {
-            var hasAcceptTerms = PlayerPrefs.HasKey("HasAcceptTerms");
+            var hasAcceptTerms = !PlayerPrefsHelper.IsFirstTimeUser();
             yield return new WaitForSeconds(3.0f);
             SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : "AcceptTermsScene");
             yield return null;

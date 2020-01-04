@@ -14,6 +14,9 @@ namespace PenguinCasual.Scripts.Utilities
         public const string WATCH_ADS_TIMES = "WATCH_ADS_TIMES";
         public const string DAYS_PLAYED = "WATCH_ADS_TIMES";
         public const string TOTAL_SCORE = "TOTAL_SCORE";
+        
+        public const string TOKEN = "TOKEN";
+        public const string FIRST_TIME_USER = "FIRST_TIME_USER";
     }
     
     public class PlayerPrefsHelper
@@ -104,6 +107,32 @@ namespace PenguinCasual.Scripts.Utilities
             totalScore += score;
             PlayerPrefs.SetInt(PlayerPrefsKeys.TOTAL_SCORE, totalScore);
             PlayerPrefs.Save();
+        }
+
+        public static bool IsFirstTimeUser()
+        {
+            return PlayerPrefs.HasKey(PlayerPrefsKeys.FIRST_TIME_USER);
+        }
+
+        public static void SetFirstTimeUser()
+        {
+            PlayerPrefs.SetInt(PlayerPrefsKeys.FIRST_TIME_USER, 0);
+        }
+
+        public static bool HasToken()
+        {
+            return PlayerPrefs.HasKey(PlayerPrefsKeys.TOKEN);
+        }
+
+        public static void SetToken(string token)
+        {
+            PlayerPrefs.SetString(PlayerPrefsKeys.TOKEN, token);
+            PlayerPrefs.Save();
+        }
+
+        public static string GetToken()
+        {
+            return PlayerPrefs.GetString(PlayerPrefsKeys.TOKEN);
         }
     }
 }

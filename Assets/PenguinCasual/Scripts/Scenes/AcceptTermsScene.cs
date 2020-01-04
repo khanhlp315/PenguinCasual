@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Penguin.Ads;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -27,7 +28,7 @@ namespace Penguin.Scenes
         // Update is called once per frame
         public  void GoToHomeScreen()
         {
-            PlayerPrefs.SetInt("HasAcceptTerms", 0);
+            PlayerPrefsHelper.SetFirstTimeUser();
             SceneManager.LoadScene("HomeScene");
         }
     }

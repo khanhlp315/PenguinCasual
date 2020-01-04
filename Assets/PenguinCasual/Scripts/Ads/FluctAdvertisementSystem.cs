@@ -49,8 +49,6 @@ namespace Penguin.Ads
         {
             var groupId = adsId.Split('_')[0];
             var unitId = adsId.Split('_')[1];
-            Debug.Log(groupId);
-            Debug.Log(unitId);
             _dieRewardAd = new RewardedVideo(groupId, unitId);
             _dieRewardAd.OnDidLoad += (sender, e) =>
             {

@@ -23,9 +23,24 @@ namespace Penguin.Network.Data
         private string updated_at;
 
         public int Id => id;
-        public string Nickname => nickname;
-        public int SkinId => skin_id;
-        public int HighestScore => highest_score;
+
+        public string Nickname
+        {
+            get => nickname;
+            set => nickname = value;
+        }
+
+        public int SkinId
+        {
+            get => skin_id;
+            set => skin_id = value;
+        }
+
+        public int HighestScore
+        {
+            get => highest_score;
+            set => highest_score = value;
+        }
         public int Rank => rank;
         public string CreatedAt => created_at;
         public string UpdatedAt => updated_at;

@@ -3,6 +3,8 @@ using System.Collections;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.UI;
+using Penguin.Utilities;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,21 +20,44 @@ public class RankingScene : MonoBehaviour
     [SerializeField] private Text _scoreText;
     [SerializeField] private Text _rankText;
 
-    private IEnumerator Start()
-    {
-        yield return NetworkCaller.Instance.GetTopPlayers();
-        int rank = 0;
-        foreach (var player in NetworkCaller.Instance.TopPlayers)
-        {
-            var item = Instantiate(_topPlayerItem, _topPlayerList, false);
-            item.Rank = ++rank;
-            item.Name = player.Nickname;
-            item.Score = player.HighestScore;
-        }
+    [SerializeField]
+    private GameObject _loadingLayer;
 
-        _nameText.text = NetworkCaller.Instance.PlayerData.Nickname;
-        _scoreText.text = $"{NetworkCaller.Instance.PlayerData.HighestScore}点";
-        _rankText.text = $"{NetworkCaller.Instance.PlayerData.Rank}位";
+    private void Start()
+    {
+        var localHighscore = PlayerPrefsHelper.GetHighScore();
+        var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
+        if (localHighscore < serverHighscore)
+        {
+            NetworkCaller.Instance.UpdateHighScore(localHighscore, () =>
+            {
+                var responsePlayerData = NetworkCaller.Instance.PlayerData;
+                _nameText.text = responsePlayerData.Nickname;
+                _scoreText.text = $"{ScoreUtil.FormatScore(responsePlayerData.HighestScore)}匹";
+                _rankText.text = $"{ScoreUtil.FormatScore(responsePlayerData.Rank)}位";
+            });
+        }
+        
+        var playerData = NetworkCaller.Instance.PlayerData;
+        _nameText.text = playerData.Nickname;
+        _scoreText.text = $"{ScoreUtil.FormatScore(playerData.HighestScore)}匹";
+        _rankText.text = $"{ScoreUtil.FormatScore(playerData.Rank)}位";
+        
+        NetworkCaller.Instance.GetTopPlayers((players) =>
+        {
+            int rank = 0;
+            foreach (var player in players)
+            {
+                var playerItem = Instantiate(_topPlayerItem, _topPlayerList, false);
+                playerItem.Rank = ++rank;
+                playerItem.Score = player.HighestScore;
+                playerItem.Name = player.Nickname;
+            }
+            _loadingLayer.SetActive(false);
+        }, () =>
+        {
+            
+        });
     }
 
     public void GoToHomeScene()

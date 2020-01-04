@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Penguin.Ads;
+using Penguin.Network;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
 using TMPro;
@@ -48,6 +49,12 @@ namespace Penguin
 
         public void ShowAsNormal()
         {
+            var localHighscore = PlayerPrefsHelper.GetHighScore();
+            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
+            if (localHighscore < serverHighscore)
+            {
+                NetworkCaller.Instance.UpdateHighScore(localHighscore);
+            }
             Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = true;
 
@@ -102,12 +109,24 @@ namespace Penguin
         {
             Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.ClearAll();
+            var localHighscore = PlayerPrefsHelper.GetHighScore();
+            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
+            if (localHighscore < serverHighscore)
+            {
+                NetworkCaller.Instance.UpdateHighScore(localHighscore);
+            }
             SceneManager.LoadScene("PlatformTestScene");
         }
 
         public void OnHome()
         {
             EventHub.ClearAll();
+            var localHighscore = PlayerPrefsHelper.GetHighScore();
+            var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
+            if (localHighscore < serverHighscore)
+            {
+                NetworkCaller.Instance.UpdateHighScore(localHighscore);
+            }
             SceneManager.LoadScene("HomeScene");
         }
 

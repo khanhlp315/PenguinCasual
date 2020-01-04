@@ -105,10 +105,21 @@ namespace Penguin.Analytics
 
         public static class GameProgress
         {
-            public static void Replay()
+            public static void StartGame()
             {
-                Analyzer.Analytics.LogEvent ("replay");
+                Analyzer.Analytics.LogEvent ("start_game");
             }
+            
+            public static void Revive(string cause)
+            {
+                Analyzer.Analytics.LogEvent ("revive", new AnalyticsParameter("cause", cause));
+            }
+
+            public static void BreakBestScore(int score)
+            {
+                Analyzer.Analytics.LogEvent ("break_best_score", new AnalyticsParameter("score", score));
+            }
+            
         }
     }
     

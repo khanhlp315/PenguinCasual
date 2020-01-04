@@ -59,9 +59,15 @@ namespace Penguin.Scenes
 
         public void ChangeName()
         {
-            if (_nameInputField.text != "")
+            if (_nameInputField.text != "" && _nameInputField.text.Length <= 6)
             {
-                NetworkCaller.Instance.ChangeNickname(_nameInputField.text);
+                NetworkCaller.Instance.ChangeName(_nameInputField.text, () =>
+                {
+                    Debug.LogError("Change nickname successful");
+                }, () =>
+                {
+                    Debug.LogError("Change nickname failed");
+                });
             }
         }
     }    

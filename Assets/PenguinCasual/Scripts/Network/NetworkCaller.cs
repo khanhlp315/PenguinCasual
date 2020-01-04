@@ -1,41 +1,83 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Penguin.Network.Data;
+using Penguin.Utilities;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace Penguin.Network
 {
-    public class NetworkCaller : MonoBehaviour
+    public class NetworkCaller : MonoSingleton<NetworkCaller>
     {
-        public static NetworkCaller instance;
-        public static NetworkCaller Instance
-        {
-            get
-            {
-                if (instance == null) instance = FindObjectOfType(typeof(NetworkCaller)) as NetworkCaller;
+        private const string _baseUrl = "http://18.179.159.55";
+        private const string _getTokenPath = "oauth/token";
+        private const string _currentPlayerPath = "api/get/player";
+        private const string _topPlayersPath = "api/get/player_top";
+        private const string _putPlayerPath = "api/put/player";
+        private const string _updateScorePath = "api/post/player_score";
 
-                return instance;
-            }
-        }
-
-        [SerializeField]
-        private string _baseUrl = "http://18.179.159.55";
 
         private PlayerData _playerData;
-        private List<TopPlayerData> _topPlayers;
         
         private string _token;
 
-        void Awake( )
+        public PlayerData PlayerData
         {
-            DontDestroyOnLoad(this.gameObject);
+            get => _playerData;
+            private set => _playerData = value;
         }
 
-        private IEnumerator SendPostRequest(string path, DownloadHandler downloadHandler, string requestBody = null)
+        public override void Initialize()
         {
+            if (PlayerPrefsHelper.HasToken())
+            {
+                _token = PlayerPrefsHelper.GetToken();
+            }
+            else
+            {
+                StartCoroutine(SendPostRequest(_getTokenPath, (json, responseCode) =>
+                    {
+                        if (responseCode == 200)
+                        {
+                            _token = TokenInfo.FromJson(json).Token;
+                            PlayerPrefsHelper.SetToken(_token);
+                        }
+                        else
+                        {
+                            Debug.LogError("Cannot connect to server");
+                        }
+                        Initialize();
+                    }));
+                return;
+            }
+
+            StartCoroutine(SendPostRequest(_currentPlayerPath, (json, responseCode) =>
+                {
+                    Debug.Log(responseCode);
+                    if (responseCode == 200)
+                    {
+                        _playerData = PlayerDataResponse.FromJson(json).Get();
+                        var localHighScore = PlayerPrefsHelper.GetHighScore();
+                        if (localHighScore > _playerData.HighestScore)
+                        {
+                            UpdateHighScore(localHighScore);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Cannot connect to server");
+                    }
+
+                    OnInitializeDone();
+                }));
+        }
+
+        private IEnumerator SendPostRequest(string path, UnityAction<string, long> onResponseReceived = null, string requestBody = null)
+        {
+            var downloadHandler = new DownloadHandlerBuffer();
             var request = new UnityWebRequest($"{_baseUrl}/{path}", "POST")
             {
                 downloadHandler = downloadHandler
@@ -47,82 +89,70 @@ namespace Penguin.Network
             if (requestBody != null)
             {
                 var bodyRaw = Encoding.UTF8.GetBytes(requestBody);
-                request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
+                request.uploadHandler = new UploadHandlerRaw(bodyRaw);
                 request.SetRequestHeader("Content-Type", "application/json");
             }
             yield return request.SendWebRequest();
 
-            Debug.Log(request.responseCode);
+            onResponseReceived?.Invoke(downloadHandler.text, request.responseCode);
+        }
+
+        public void ChangeName(string nickname, UnityAction onDone = null, UnityAction onError = null)
+        {
+            StartCoroutine(SendPostRequest(_putPlayerPath, (json, responseCode) =>
+                {
+                    if (responseCode == 200)
+                    {
+                        var playerData = PlayerDataResponse.FromJson(json).Get();
+                        _playerData.Nickname = playerData.Nickname;
+                        _playerData.SkinId = playerData.SkinId;
+                        onDone?.Invoke();
+                    }
+                    else
+                    {
+                        Debug.LogError("Cannot connect to server");
+                        onError?.Invoke();
+                    }
+
+                }, $"{{\"nickname\": \"{nickname}\" }}"));
+        }
+
+        public void GetTopPlayers(UnityAction<List<TopPlayerData>> onDone, UnityAction onError)
+        {
+            StartCoroutine(SendPostRequest(_topPlayersPath, (json, responseCode) =>
+            {
+                if (responseCode == 200)
+                {
+                    var playersData = TopPlayersResponse.FromJson(json).GetAll();
+                    onDone?.Invoke(playersData);
+                }
+                else
+                {
+                    Debug.LogError("Cannot connect to server");
+                    onError?.Invoke();
+                }
+            }));
+        }
+
+        public void UpdateHighScore(int highScore, UnityAction onDone = null, UnityAction onError = null)
+        {
+            StartCoroutine(SendPostRequest(_updateScorePath, (json, responseCode) =>
+            {
+                if (responseCode == 200)
+                {
+                    var playerData = PlayerDataResponse.FromJson(json).Get();
+                    _playerData.HighestScore = playerData.HighestScore;
+                    _playerData.SkinId = playerData.SkinId;
+                    onDone?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError("Cannot connect to server");
+                    onError?.Invoke();
+                }
+
+            }, $"{{\"score\": \"{highScore}\" }}"));
         }
         
-        private IEnumerator GetToken()
-        {
-            var downloadHandler = new DownloadHandlerBuffer();
-            yield return SendPostRequest("oauth/token", downloadHandler);
-            var tokenInfo = TokenInfo.FromJson(downloadHandler.text);
-            _token = tokenInfo.Token;
-            PlayerPrefs.SetString("token", _token);
-        }
-
-        private IEnumerator GetPlayerData()
-        {
-            var downloadHandler = new DownloadHandlerBuffer();
-            yield return SendPostRequest("api/get/player", downloadHandler);
-            var playerData = PlayerDataResponse.FromJson(downloadHandler.text).Get();
-            _playerData = playerData;
-        }
-        
-        private IEnumerator Start()
-        {
-            if(Instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-            else if(instance == null)
-            {
-                instance = this;
-            }
-            
-            if (PlayerPrefs.HasKey("token"))
-            {
-                _token = PlayerPrefs.GetString("token");
-                yield return null;
-            }
-            else
-            {
-                yield return GetToken();
-            }
-            yield return GetPlayerData();
-        }
-
-        public PlayerData PlayerData
-        {
-            get => _playerData;
-            private set => _playerData = value;
-        }
-        
-        public List<TopPlayerData> TopPlayers
-        {
-            get => _topPlayers;
-            private set => _topPlayers = value;
-        }
-
-        public void ChangeNickname(string nickname)
-        {
-            StartCoroutine(ChangeNicknameCoroutine(nickname));
-        }
-
-        private IEnumerator ChangeNicknameCoroutine(string nickname)
-        {
-            var downloadHandler = new DownloadHandlerBuffer();
-            yield return SendPostRequest("api/put/player", downloadHandler, $"{{\"nickname\": \"{nickname}\" }}");
-        }
-
-        public IEnumerator GetTopPlayers()
-        {
-            var downloadHandler = new DownloadHandlerBuffer();
-            yield return SendPostRequest("api/get/player_top", downloadHandler);
-            _topPlayers = JsonUtility.FromJson<TopPlayersResponse>(downloadHandler.text).GetAll();
-        }
     }
 }
