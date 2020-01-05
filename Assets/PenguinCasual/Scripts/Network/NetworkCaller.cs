@@ -65,7 +65,6 @@ namespace Penguin.Network
                     {
                         _playerData = PlayerDataResponse.FromJson(json).Get();
                         var localHighScore = PlayerPrefsHelper.GetHighScore();
-                        Debug.Log(_playerData.SkinId);
                         if (localHighScore > _playerData.HighestScore)
                         {
                             UpdateHighScore(localHighScore);

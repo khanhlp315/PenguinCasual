@@ -154,14 +154,10 @@ namespace Penguin.Ads
         {
             if (!string.IsNullOrEmpty (provider)) {
                 var adSys = GetSystemWithProvider (provider);
-                if (adSys != null && adSys.IsNormalBannerReady && !adSys.IsNormalBannerShowing) {
-                    adSys.ShowNormalBanner();
-                }
+                adSys?.ShowNormalBanner();
             } else {
                 foreach (var item in _managedSystem) {
-                    if (item.Value.IsNormalBannerReady && !item.Value.IsNormalBannerShowing) {
-                        item.Value.ShowNormalBanner();
-                    }
+                    item.Value.ShowNormalBanner();
                 }
             }
         }
@@ -177,14 +173,10 @@ namespace Penguin.Ads
         {
             if (!string.IsNullOrEmpty (provider)) {
                 var adSys = GetSystemWithProvider (provider);
-                if (adSys != null && adSys.IsEndGameBannerReady) {
-                    adSys.ShowEndGameBanner();
-                }
+                adSys?.ShowEndGameBanner();
             } else {
                 foreach (var item in _managedSystem) {
-                    if (item.Value.IsEndGameBannerReady) {
-                        item.Value.ShowEndGameBanner ();
-                    }
+                    item.Value.ShowEndGameBanner ();
                 }
             }
         }

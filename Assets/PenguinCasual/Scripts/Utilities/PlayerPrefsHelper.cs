@@ -113,7 +113,7 @@ namespace PenguinCasual.Scripts.Utilities
 
         public static bool IsFirstTimeUser()
         {
-            return PlayerPrefs.HasKey(PlayerPrefsKeys.FIRST_TIME_USER);
+            return !PlayerPrefs.HasKey(PlayerPrefsKeys.FIRST_TIME_USER);
         }
 
         public static void SetFirstTimeUser()
