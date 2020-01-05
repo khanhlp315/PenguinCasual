@@ -166,6 +166,7 @@ namespace Penguin.Network
             {
                 if (responseCode == 200)
                 {
+                    Debug.Log(json);
                     skinsData = SkinDataResponse.FromJson(json).GetAll();
                     if (unlocksData != null)
                     {

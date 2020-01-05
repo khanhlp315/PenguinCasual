@@ -36,10 +36,16 @@ public class CharacterScene : MonoBehaviour
     
     private List<CharacterItemController> _characterItemControllers;
 
+    [SerializeField]
+    private CharacterInfoPanel _characterInfoPanel;
+
+    [SerializeField] private MissionPanel _missionPanel;
+
     private void Start()
     {
         _characterLayer.SetActive(true);
         _backgroundLayer.SetActive(false);
+        _characterInfoPanel.OnCharacterSelect += OnSkinTapped;
         _switchButtonGroup.OnButtonSelected += (buttonName)=>
         {
             if (buttonName == "Character")
@@ -74,9 +80,25 @@ public class CharacterScene : MonoBehaviour
                     var unlock = unlocks.Find(x => x.Id == skinData.UnlockId);
                     isLocked = !unlock.IsUnlocked();
                 }
+                
 
                 skinItem.IsLocked = isLocked;
-                skinItem.OnSelected += OnSkinSelected;
+
+                skinItem.OnSelected += () =>
+                {
+                    if (!skinItem.IsLocked)
+                    {
+                        _characterInfoPanel.SkinData = skinData;
+                        _characterInfoPanel.SetAvatar(skin.skinAvatar);
+                        _characterInfoPanel.Show();
+                    }
+                    else
+                    {
+                        var unlock = unlocks.Find(x => x.Id == skinData.UnlockId);
+                        _missionPanel.SetMission(unlock.Mission);
+                        _missionPanel.Show();
+                    }
+                };
                 
                 _characterItemControllers.Add(skinItem);
             }
@@ -106,7 +128,7 @@ public class CharacterScene : MonoBehaviour
 
     }
 
-    public void OnSkinSelected(int skinId)
+    private void OnSkinTapped(int skinId)
     {
         NetworkCaller.Instance.SelectSkin(skinId, () =>
         {
@@ -116,6 +138,7 @@ public class CharacterScene : MonoBehaviour
                 x.IsSelected = x.Id == updatedSkinId;
                 x.Reload();
             });
+            _characterInfoPanel.Hide();
         }, () =>
         {
             

@@ -16,12 +16,12 @@ namespace Penguin.Network.Data
         private string name;
 
         [SerializeField] 
-        private string introduction;
+        private string introdution;
 
         public int Id => id;
         public int UnlockId => unlock_id;
         public string Name => name;
-        public string Introduction => introduction;
+        public string Introduction => introdution;
     }
     
     [Serializable]

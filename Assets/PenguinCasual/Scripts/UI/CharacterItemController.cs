@@ -20,7 +20,7 @@ namespace Penguin.UI
         public int Id;
 
         [HideInInspector] 
-        public UnityAction<int> OnSelected;
+        public UnityAction OnSelected;
 
         [SerializeField]
         private Image _avatar;
@@ -39,6 +39,7 @@ namespace Penguin.UI
 
         private void Start()
         {
+            Debug.Log(IsLocked);
             _avatar.sprite = Avatar;
             _background.sprite = IsSelected ? _selectedBackground : _notSelectedBackground;
             _lockLayer.SetActive(IsLocked);
@@ -46,10 +47,7 @@ namespace Penguin.UI
 
         public void OnTap()
         {
-            if (!IsLocked && !IsSelected)
-            {
-                OnSelected?.Invoke(Id);
-            }
+            OnSelected?.Invoke();
         }
 
         public void Reload()

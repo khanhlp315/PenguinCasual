@@ -21,9 +21,13 @@ namespace Penguin.Network.Data
         [SerializeField] 
         private int condition;
 
+        [SerializeField] private string mission;
+
         public int Id => id;
         public string UnlockActionName => unlock_action_name;
         public int Condition => condition;
+
+        public string Mission => mission;
 
         public bool IsUnlocked()
         {

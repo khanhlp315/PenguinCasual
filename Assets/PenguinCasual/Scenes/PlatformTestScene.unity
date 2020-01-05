@@ -1495,6 +1495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 727122443}
   - component: {fileID: 727122444}
+  - component: {fileID: 727122445}
   m_Layer: 5
   m_Name: NewRecordPanel
   m_TagString: Untagged
@@ -1537,8 +1538,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _labelScore: {fileID: 2038264408}
-  _starEffect: {fileID: 1583489312}
-  _bannerImage: {fileID: 1131217497}
+  _animation: {fileID: 727122445}
+--- !u!111 &727122445
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727122442}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5a09db8d501624ae08e466f4ca1d1681, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5a09db8d501624ae08e466f4ca1d1681, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &772309069
 GameObject:
   m_ObjectHideFlags: 0
