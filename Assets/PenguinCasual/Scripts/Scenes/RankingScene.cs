@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Penguin;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.UI;
@@ -11,6 +12,8 @@ using UnityEngine.UI;
 
 public class RankingScene : MonoBehaviour
 {
+    [SerializeField] 
+    private SkinSetting _skinSetting;
     [SerializeField]
     private RankingItemController _topPlayerItem;
     [SerializeField]
@@ -52,6 +55,7 @@ public class RankingScene : MonoBehaviour
                 playerItem.Rank = ++rank;
                 playerItem.Score = player.HighestScore;
                 playerItem.Name = player.Nickname;
+                playerItem.Avatar = _skinSetting.GetSkinById(player.SkinId).skinAvatar;
             }
             _loadingLayer.SetActive(false);
         }, () =>

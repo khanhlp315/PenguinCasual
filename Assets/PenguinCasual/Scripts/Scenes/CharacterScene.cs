@@ -31,6 +31,8 @@ public class CharacterScene : MonoBehaviour
     [SerializeField] private GameObject _backgroundLayer;
 
     [SerializeField] private SwitchButtonGroup _switchButtonGroup;
+
+    [SerializeField] private GameObject _loadingLayer;
     
     private List<CharacterItemController> _characterItemControllers;
 
@@ -78,6 +80,7 @@ public class CharacterScene : MonoBehaviour
                 
                 _characterItemControllers.Add(skinItem);
             }
+            _loadingLayer.SetActive(false);
         }, () =>
         {
             

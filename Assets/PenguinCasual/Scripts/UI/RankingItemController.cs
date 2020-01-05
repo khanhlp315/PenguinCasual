@@ -13,6 +13,8 @@ namespace Penguin.UI
         public string Name;
         [HideInInspector]
         public int Score;
+        [HideInInspector] 
+        public Sprite Avatar; 
 
         [SerializeField]
         private Text _rank;
@@ -23,11 +25,16 @@ namespace Penguin.UI
         [SerializeField]
         private Text _score;
 
+        [SerializeField] 
+        private Image _avatar;
+
+
         private void Start()
         {
             _rank.text = Rank.ToString();
             _name.text = Name;
             _score.text = $"{ScoreUtil.FormatScore(Score)}匹";
+            _avatar.sprite = Avatar;
         }
     }
 }

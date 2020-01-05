@@ -356,9 +356,11 @@ MonoBehaviour:
   Rank: 0
   Name: 
   Score: 0
+  Avatar: {fileID: 0}
   _rank: {fileID: 6058895252616404485}
   _name: {fileID: 7462692693363438431}
   _score: {fileID: 2100605762683840586}
+  _avatar: {fileID: 3963678313414249995}
 --- !u!1 &8816076978883306876
 GameObject:
   m_ObjectHideFlags: 0

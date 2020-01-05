@@ -41,7 +41,12 @@ namespace Penguin.Network.Data
             get => highest_score;
             set => highest_score = value;
         }
-        public int Rank => rank;
+
+        public int Rank
+        {
+            get => rank;
+            set => rank = value;
+        }
         public string CreatedAt => created_at;
         public string UpdatedAt => updated_at;
     }

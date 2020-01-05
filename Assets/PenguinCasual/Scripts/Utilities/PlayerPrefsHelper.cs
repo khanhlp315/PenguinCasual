@@ -12,7 +12,7 @@ namespace PenguinCasual.Scripts.Utilities
 
         public const string GAMES_PLAYED = "GAMES_PLAYED";
         public const string WATCH_ADS_TIMES = "WATCH_ADS_TIMES";
-        public const string DAYS_PLAYED = "WATCH_ADS_TIMES";
+        public const string DAYS_PLAYED = "DAYS_PLAYED";
         public const string TOTAL_SCORE = "TOTAL_SCORE";
         
         public const string TOKEN = "TOKEN";

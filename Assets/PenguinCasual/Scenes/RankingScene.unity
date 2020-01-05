@@ -1194,6 +1194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882660fa1829a4bd4971fb673e143723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _skinSetting: {fileID: 11400000, guid: c9bbffd7211264aaca727f8934ae8336, type: 2}
   _topPlayerItem: {fileID: 5054963561243562604, guid: 643ea016c8e6d423cbeb7b257ac01f6e,
     type: 3}
   _topPlayerList: {fileID: 590948005}
