@@ -147,7 +147,6 @@ namespace Penguin.Network
                 {
                     var playerData = PlayerDataResponse.FromJson(json).Get();
                     _playerData.HighestScore = playerData.HighestScore;
-                    _playerData.SkinId = playerData.SkinId;
                     onDone?.Invoke();
                 }
                 else
