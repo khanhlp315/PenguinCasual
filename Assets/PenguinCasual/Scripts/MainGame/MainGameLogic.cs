@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PenguinCasual.Scripts.Utilities;
+using UnityEngine;
 
 namespace Penguin
 {
@@ -265,6 +266,7 @@ namespace Penguin
         private void OnScoreUpdate(long score, long increase)
         {
             EventHub.Emit<EventUpdateScore>(new EventUpdateScore(score, increase));
+            PlayerPrefsHelper.AddToTotalScore((int)increase);
         }
     }
 }

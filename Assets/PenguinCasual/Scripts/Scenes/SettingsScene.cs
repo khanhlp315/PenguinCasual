@@ -30,11 +30,11 @@ namespace Penguin.Scenes
 
         public void TurnOnSound()
         {
-            Sound2DManager.Instance.SetMuteSound(false);
+            //TODO: Turn on sound
         }
         public void TurnOffSound()
         {
-            Sound2DManager.Instance.SetMuteSound(true);        
+            //TODO: Turn off sound
         }
     
         public void OpenRequest()

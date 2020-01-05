@@ -2,7 +2,7 @@
 {
     public class CoreGameModel
     {
-        public string characterId;
-        public string backgroundId;
+        public int characterId;
+        public int backgroundId;
     }
 }

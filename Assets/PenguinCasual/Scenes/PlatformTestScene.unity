@@ -1268,12 +1268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 761785e8e413e482e9cd9d9454e98c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skinSetting: {fileID: 11400000, guid: b3d1e0ac6d1ba476581d033024fbf914, type: 2}
+  _skinSetting: {fileID: 11400000, guid: c9bbffd7211264aaca727f8934ae8336, type: 2}
+  _backgroundSetting: {fileID: 11400000, guid: cad19752f626e4ea9bf176b79a0e95b9, type: 2}
   _gameSetting: {fileID: 11400000, guid: 045a1e4cb5d384ad8881664534315ad2, type: 2}
   _camera: {fileID: 1045260918}
   _mainCharacter: {fileID: 1487469152}
   _backgroundPosition: {x: 0, y: 0, z: 0}
   _background: {fileID: 1203836416}
+  _backgroundCanvas: {fileID: 1097487131}
   _hideGroup: {fileID: 1929001167}
   _labelScore: {fileID: 1589810880}
   _labelCountdown: {fileID: 192734937}
@@ -1294,7 +1296,6 @@ MonoBehaviour:
   _endGamePanel: {fileID: 1251473676}
   _endGameParticle: {fileID: 356851105}
   _labelScoreIncrease: {fileID: 775165991}
-  AllowStartGame: 0
 --- !u!4 &552050534
 Transform:
   m_ObjectHideFlags: 0
@@ -3009,6 +3010,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
+        type: 3}
+      propertyPath: _gameScene
+      value: 
+      objectReference: {fileID: 552050533}
+    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
+        type: 3}
+      propertyPath: _model
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7545640757774481473, guid: 01b3155e1f49142f787ef29e8e13c3b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3064,11 +3075,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
-        type: 3}
-      propertyPath: _gameScene
-      value: 
-      objectReference: {fileID: 552050533}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01b3155e1f49142f787ef29e8e13c3b4, type: 3}
 --- !u!1 &1420414506
@@ -3420,7 +3426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15}
+  m_AnchoredPosition: {x: -20, y: -45}
   m_SizeDelta: {x: 200, y: 47}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1589810878

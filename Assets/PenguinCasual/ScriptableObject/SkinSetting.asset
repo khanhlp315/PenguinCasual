@@ -13,66 +13,23 @@ MonoBehaviour:
   m_Name: SkinSetting
   m_EditorClassIdentifier: 
   skinDataList:
-  - id: chinstrap
-    prefabModel: {fileID: -927199367670048503, guid: 50e875d5957e849528621fe4d1c9bb3b,
-      type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 0
-    scoreRequire: 0
-  - id: emp
+  - id: 1
     prefabModel: {fileID: -927199367670048503, guid: fc0f43d6fd9b6427aa9c73a9573161b7,
       type: 3}
-    unlockType: 8
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
-  - id: background1
-    prefabModel: {fileID: 160785575762151607, guid: ba9afcb2969e14b0394f2cceadd29d24,
+    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+  - id: 2
+    prefabModel: {fileID: -927199367670048503, guid: 35d2ba9c1160edd498a843d2e714639c,
       type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
-  - id: background2
-    prefabModel: {fileID: 7261502849670703666, guid: 29b49f3419e194fe8a57f161c5facc46,
+    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+  - id: 3
+    prefabModel: {fileID: -927199367670048503, guid: 50e875d5957e849528621fe4d1c9bb3b,
       type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
-  - id: background3
-    prefabModel: {fileID: 2731377715709460275, guid: b830b460e30454bb2ad74afdc8b02f4e,
+    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+  - id: 4
+    prefabModel: {fileID: -927199367670048503, guid: 5287bdbecd54fe44f8a5de09ffc1d910,
       type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
-  - id: background4
-    prefabModel: {fileID: 3769213146979470585, guid: f2ec52d3f0cf94155955e8d0694ecb8b,
+    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+  - id: 5
+    prefabModel: {fileID: -927199367670048503, guid: 6ef1b8b66b5333042acce82b640fad97,
       type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
-  - id: background5
-    prefabModel: {fileID: 3882747305401980249, guid: 78e20712689e148619bae64d9517cd79,
-      type: 3}
-    unlockType: 0
-    iapProductId: 
-    currencyId: 
-    currencyAmount: 0
-    levelReqire: 1
-    scoreRequire: 0
+    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}

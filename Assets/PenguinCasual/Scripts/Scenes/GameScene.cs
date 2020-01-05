@@ -22,6 +22,8 @@ namespace Penguin
         [SerializeField]
         private SkinSetting _skinSetting;
         [SerializeField]
+        private BackgroundSetting _backgroundSetting;
+        [SerializeField]
         private GameSetting _gameSetting;
 
         [Header("------------Character---------------")]
@@ -38,6 +40,8 @@ namespace Penguin
 
         [SerializeField]
         private GameObject _background;
+
+        [SerializeField] private Transform _backgroundCanvas;
 
         [Header("-----------UI--------------")]
         [SerializeField]
@@ -91,39 +95,14 @@ namespace Penguin
         private Sequence _timeoutSeq;
 
         private bool _hasAlreadyRevived;
-        public bool AllowStartGame = false;
 
         private void Start()
         {
             Advertiser.AdvertisementSystem.HideNormalBanner();
             Advertiser.AdvertisementSystem.HideEndGameBanner();
-            _coreGameModel = MemCached.Get<CoreGameModel>(typeof(CoreGameModel).ToString(), true);
-            if (_coreGameModel != null)
-            {
-                if (_mainCharacter != null)
-                {
-                    var skinData = GetSkinById(_coreGameModel.characterId);
-                    if (skinData != null)
-                    {
-                        _mainCharacter.SetModel(skinData.prefabModel);
-                    }
-                }
 
-                if (_background != null)
-                {
-                    var skinData = GetSkinById(_coreGameModel.backgroundId);
-                    if (skinData != null)
-                    {
-                        if (_background != null)
-                        {
-                            GameObject.Destroy(_background);
-                        }
-
-                        _background = GameObject.Instantiate(skinData.prefabModel);
-                        _background.transform.localPosition = _backgroundPosition;
-                    }
-                }
-            }
+            ChangeBackgroundAndSkin();
+            PlayerPrefsHelper.CountGamesPlayed();
 
             RegisterEvent();
             InitPool();
@@ -135,6 +114,23 @@ namespace Penguin
             _endGamePanel.gameObject.SetActive(false);
 
             StartCoroutine(WaitAndStartGame());
+        }
+
+        private void ChangeBackgroundAndSkin()
+        {
+            var skinData = GetSkinById(NetworkCaller.Instance.PlayerData.SkinId);
+            var unlockedBackgrounds = _backgroundSetting.GetUnlockedBackgrounds();
+            Debug.Log("Unlocked backgrounds: " + unlockedBackgrounds.Count);
+            var unlockedBackgroundsCount = unlockedBackgrounds.Count;
+            var backgroundData = unlockedBackgrounds[Random.Range(0, unlockedBackgroundsCount)];
+            Debug.Log(_mainCharacter);
+            Debug.Log(skinData);
+            _mainCharacter.SetModel(skinData.prefabModel);
+
+            PlayerPrefsHelper.CountCharacterPlayTimes(skinData.id);
+            
+            _background = GameObject.Instantiate(backgroundData.prefabModel, _backgroundCanvas);
+            _background.transform.localPosition = _backgroundPosition;
         }
 
         private void OnDestroy()
@@ -416,7 +412,7 @@ namespace Penguin
             _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
         }
 
-        private SkinSetting.SkinData GetSkinById(string skinId)
+        private SkinSetting.SkinData GetSkinById(int skinId)
         {
             return _skinSetting != null ? _skinSetting.GetSkinById(skinId) : null;
         }

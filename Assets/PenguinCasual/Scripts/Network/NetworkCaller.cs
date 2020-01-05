@@ -18,10 +18,14 @@ namespace Penguin.Network
         private const string _topPlayersPath = "api/get/player_top";
         private const string _putPlayerPath = "api/put/player";
         private const string _updateScorePath = "api/post/player_score";
+        private const string _getAllSkinsPath = "api/get/skin";
+        private const string _updateSkinPath = "api/put/player";
+        private const string _getAllUnlocksPath = "api/get/unlock";
+
 
 
         private PlayerData _playerData;
-        
+
         private string _token;
 
         public PlayerData PlayerData
@@ -61,6 +65,7 @@ namespace Penguin.Network
                     {
                         _playerData = PlayerDataResponse.FromJson(json).Get();
                         var localHighScore = PlayerPrefsHelper.GetHighScore();
+                        Debug.Log(_playerData.SkinId);
                         if (localHighScore > _playerData.HighestScore)
                         {
                             UpdateHighScore(localHighScore);
@@ -153,6 +158,65 @@ namespace Penguin.Network
 
             }, $"{{\"score\": \"{highScore}\" }}"));
         }
-        
+
+        public void GetAllSkins(UnityAction<List<SkinData>, List<UnlockData>> onDone, UnityAction onError)
+        {
+            List<SkinData> skinsData = null;
+            List<UnlockData> unlocksData = null;
+            StartCoroutine(SendPostRequest(_getAllSkinsPath, (json, responseCode) =>
+            {
+                if (responseCode == 200)
+                {
+                    skinsData = SkinDataResponse.FromJson(json).GetAll();
+                    if (unlocksData != null)
+                    {
+                        onDone?.Invoke(skinsData, unlocksData);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Cannot connect to server");
+                    onError?.Invoke();
+                }
+            }));
+            
+            StartCoroutine(SendPostRequest(_getAllUnlocksPath, (json, responseCode) =>
+            {
+                if (responseCode == 200)
+                {
+                    unlocksData = UnlockDataResponse.FromJson(json).GetAll();
+                    if (skinsData != null)
+                    {
+                        onDone?.Invoke(skinsData, unlocksData);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Cannot connect to server");
+                    onError?.Invoke();
+                }
+            }));
+        }
+
+        public void SelectSkin(int skinId, UnityAction onDone, UnityAction onError)
+        { 
+            StartCoroutine(SendPostRequest(_updateSkinPath, (json, responseCode) =>
+            {
+                Debug.Log(json);
+                if (responseCode == 200)
+                {
+                    var playerData = PlayerDataResponse.FromJson(json).Get();
+                    _playerData.HighestScore = playerData.HighestScore;
+                    _playerData.SkinId = playerData.SkinId;
+                    onDone?.Invoke();
+                }
+                else
+                {
+                    Debug.LogError("Cannot connect to server");
+                    onError?.Invoke();
+                }
+
+            }, $"{{\"skin_id\": \"{skinId}\" }}"));        
+        }
     }
 }

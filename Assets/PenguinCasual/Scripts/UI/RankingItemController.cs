@@ -7,8 +7,11 @@ namespace Penguin.UI
 {
     public class RankingItemController : MonoBehaviour
     {
+        [HideInInspector]
         public int Rank;
+        [HideInInspector]
         public string Name;
+        [HideInInspector]
         public int Score;
 
         [SerializeField]

@@ -17,6 +17,8 @@ namespace PenguinCasual.Scripts.Utilities
         
         public const string TOKEN = "TOKEN";
         public const string FIRST_TIME_USER = "FIRST_TIME_USER";
+        
+        public const string CHARACTER_PLAYED_TIMES = "CHARACTER_PLAYED_TIMES";
     }
     
     public class PlayerPrefsHelper
@@ -133,6 +135,30 @@ namespace PenguinCasual.Scripts.Utilities
         public static string GetToken()
         {
             return PlayerPrefs.GetString(PlayerPrefsKeys.TOKEN);
+        }
+
+        public static int GetCharacterPlayTimes(int id)
+        {
+            Debug.Log(PlayerPrefsKeys.CHARACTER_PLAYED_TIMES + id);
+            return PlayerPrefs.GetInt(PlayerPrefsKeys.CHARACTER_PLAYED_TIMES + id, 0);
+        }
+
+        public static void CountCharacterPlayTimes(int id)
+        {
+            Debug.Log(PlayerPrefsKeys.CHARACTER_PLAYED_TIMES + id);
+            var currentPlayTimes = PlayerPrefs.GetInt(PlayerPrefsKeys.CHARACTER_PLAYED_TIMES + id, 0);
+            PlayerPrefs.SetInt(PlayerPrefsKeys.CHARACTER_PLAYED_TIMES + id, currentPlayTimes + 1);
+            PlayerPrefs.Save();
+        }
+
+        public static int GetTotalScore()
+        {
+            return PlayerPrefs.GetInt(PlayerPrefsKeys.TOTAL_SCORE);
+        }
+
+        public static int GetDaysPlayed()
+        {
+            return PlayerPrefs.GetInt(PlayerPrefsKeys.DAYS_PLAYED);
         }
     }
 }

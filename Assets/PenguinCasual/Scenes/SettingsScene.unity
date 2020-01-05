@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 661180993}
   - component: {fileID: 661180992}
   - component: {fileID: 661180991}
+  - component: {fileID: 661180994}
   m_Layer: 5
   m_Name: OFF Button
   m_TagString: Untagged
@@ -1058,6 +1059,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661180989}
   m_CullTransparentMesh: 0
+--- !u!114 &661180994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661180989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f9d9e53e244a7799992222d229e90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeSprite: {fileID: 21300000, guid: 757d2cb0d5ec34195bd9c29a1c99963f, type: 3}
+  _inactiveSprite: {fileID: 21300000, guid: 1767531429f884462b356969d27afc82, type: 3}
+  _activeTextColor: {r: 1, g: 1, b: 1, a: 1}
+  _inactiveTextColor: {r: 0.101960786, g: 0.40784314, b: 0.6666667, a: 1}
+  _image: {fileID: 661180992}
+  _text: {fileID: 1169511982}
+  _name: Off
 --- !u!1 &735019801
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1229,7 @@ GameObject:
   - component: {fileID: 771170501}
   - component: {fileID: 771170500}
   - component: {fileID: 771170499}
+  - component: {fileID: 771170502}
   m_Layer: 5
   m_Name: ON Button
   m_TagString: Untagged
@@ -1326,6 +1347,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 771170497}
   m_CullTransparentMesh: 0
+--- !u!114 &771170502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771170497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f9d9e53e244a7799992222d229e90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activeSprite: {fileID: 21300000, guid: 757d2cb0d5ec34195bd9c29a1c99963f, type: 3}
+  _inactiveSprite: {fileID: 21300000, guid: 1767531429f884462b356969d27afc82, type: 3}
+  _activeTextColor: {r: 1, g: 1, b: 1, a: 1}
+  _inactiveTextColor: {r: 0.101960786, g: 0.40784314, b: 0.6666667, a: 1}
+  _image: {fileID: 771170500}
+  _text: {fileID: 385551062}
+  _name: On
 --- !u!1 &823772990
 GameObject:
   m_ObjectHideFlags: 0
@@ -2524,7 +2564,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u3054\u610F\u898B\u30FB\u3054\u8981\u671B"
+  m_Text: "\u30E9\u30A4\u30BB\u30F3\u30B9\u8868\u8A18"
 --- !u!222 &1394952736
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2771,6 +2811,7 @@ GameObject:
   - component: {fileID: 1678868095}
   - component: {fileID: 1678868096}
   - component: {fileID: 1678868097}
+  - component: {fileID: 1678868098}
   m_Layer: 5
   m_Name: BGM Buttons
   m_TagString: Untagged
@@ -2832,6 +2873,21 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &1678868098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678868094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a00a8b1bf3674c448bd57be0e2339c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _switchButtons:
+  - {fileID: 771170502}
+  - {fileID: 661180994}
 --- !u!1 &1769599013
 GameObject:
   m_ObjectHideFlags: 0

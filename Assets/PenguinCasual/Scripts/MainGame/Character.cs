@@ -198,7 +198,7 @@ namespace Penguin
 
             _model = GameObject.Instantiate(characterModel, transform);
             _model.transform.localPosition = Vector3.zero;
-            _model.transform.rotation = Quaternion.identity;
+            _model.transform.localRotation = Quaternion.identity;
         }
 
         private int GetPedestalHitPriority(Pedestal pedestal)
