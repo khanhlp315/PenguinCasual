@@ -344,13 +344,14 @@ namespace Penguin
             if (_currentScore > highScore)
             {
                 PlayerPrefsHelper.UpdateHighScore((int)_currentScore);
-                NetworkCaller.Instance.UpdateHighScore((int)_currentScore, () =>
+                var totalScore = PlayerPrefsHelper.GetTotalScore();
+                NetworkCaller.Instance.UpdateHighScore((int)_currentScore, totalScore, () =>
                 {
                     
                 }, () =>
                 {
                     NativeDialog.OpenDialog("Error",
-                        "Cannot connect to server. Highscore will be updated later", "Ok",
+                        "Cannot connect to server. Score will be updated later", "Ok",
                         () => { });
 
                 });

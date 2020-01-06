@@ -16,6 +16,8 @@ namespace Penguin.Network.Data
         [SerializeField]
         private int highest_score;
         [SerializeField]
+        private int total_score;
+        [SerializeField]
         private int rank;
         [SerializeField]
         private string created_at;
@@ -40,6 +42,12 @@ namespace Penguin.Network.Data
         {
             get => highest_score;
             set => highest_score = value;
+        }
+        
+        public int TotalScore
+        {
+            get => total_score;
+            set => total_score = value;
         }
 
         public int Rank

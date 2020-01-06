@@ -57,7 +57,7 @@ namespace Penguin
             _panelRestart.SetActive(true);
             _panelWatchAd.SetActive(false);
             _labelWatchAdDesc.gameObject.SetActive(false);
-        }
+        } 
 
         public void ShowWithWatchAd()
         {

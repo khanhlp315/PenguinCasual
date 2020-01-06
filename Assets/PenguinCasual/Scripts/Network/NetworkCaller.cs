@@ -37,6 +37,7 @@ namespace Penguin.Network
 
         public override void Initialize()
         {
+            Debug.Log(this.GetType());
             if (PlayerPrefsHelper.HasToken())
             {
                 _token = PlayerPrefsHelper.GetToken();
@@ -68,9 +69,10 @@ namespace Penguin.Network
                     {
                         _playerData = PlayerDataResponse.FromJson(json).Get();
                         var localHighScore = PlayerPrefsHelper.GetHighScore();
-                        if (localHighScore > _playerData.HighestScore)
+                        var totalScore = PlayerPrefsHelper.GetTotalScore();
+                        if (localHighScore > _playerData.HighestScore || totalScore > _playerData.TotalScore)
                         {
-                            UpdateHighScore(localHighScore);
+                            UpdateHighScore(localHighScore, totalScore);
                         }
                     }
                     else
@@ -141,7 +143,7 @@ namespace Penguin.Network
             }));
         }
 
-        public void UpdateHighScore(int highScore, UnityAction onDone = null, UnityAction onError = null)
+        public void UpdateHighScore(int highScore, int totalScore, UnityAction onDone = null, UnityAction onError = null)
         {
             StartCoroutine(SendPostRequest(_updateScorePath, (json, responseCode) =>
             {
@@ -149,6 +151,7 @@ namespace Penguin.Network
                 {
                     var playerData = PlayerDataResponse.FromJson(json).Get();
                     _playerData.HighestScore = playerData.HighestScore;
+                    _playerData.TotalScore = playerData.TotalScore;
                     _playerData.Rank = playerData.Rank;
                     onDone?.Invoke();
                 }
@@ -158,7 +161,7 @@ namespace Penguin.Network
                     onError?.Invoke();
                 }
 
-            }, $"{{\"score\": \"{highScore}\" }}"));
+            }, $"{{\"total_score\": \"{totalScore}\",\"highest_score\": \"{highScore}\" }}"));
         }
 
         public void GetAllSkins(UnityAction<List<SkinData>, List<UnlockData>> onDone, UnityAction onError)
@@ -208,7 +211,6 @@ namespace Penguin.Network
                 if (responseCode == 200)
                 {
                     var playerData = PlayerDataResponse.FromJson(json).Get();
-                    _playerData.HighestScore = playerData.HighestScore;
                     _playerData.SkinId = playerData.SkinId;
                     onDone?.Invoke();
                 }
