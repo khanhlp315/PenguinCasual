@@ -4,6 +4,7 @@ using System.Text;
 using Penguin.Network.Data;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
+using pingak9;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
@@ -51,7 +52,9 @@ namespace Penguin.Network
                         }
                         else
                         {
-                            Debug.LogError("Cannot connect to server");
+                            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
+                                Initialize,
+                                Application.Quit);
                         }
                         Initialize();
                     }));
@@ -72,7 +75,9 @@ namespace Penguin.Network
                     }
                     else
                     {
-                        Debug.LogError("Cannot connect to server");
+                        NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
+                            Initialize,
+                            Application.Quit);
                     }
 
                     OnInitializeDone();
@@ -101,7 +106,7 @@ namespace Penguin.Network
             onResponseReceived?.Invoke(downloadHandler.text, request.responseCode);
         }
 
-        public void ChangeName(string nickname, UnityAction onDone = null, UnityAction onError = null)
+        public void ChangeName(string nickname, UnityAction onDone = null, UnityAction<int> onError = null)
         {
             StartCoroutine(SendPostRequest(_putPlayerPath, (json, responseCode) =>
                 {
@@ -112,10 +117,9 @@ namespace Penguin.Network
                         _playerData.SkinId = playerData.SkinId;
                         onDone?.Invoke();
                     }
-                    else
+                    else 
                     {
-                        Debug.LogError("Cannot connect to server");
-                        onError?.Invoke();
+                        onError?.Invoke((int)responseCode);
                     }
 
                 }, $"{{\"nickname\": \"{nickname}\" }}"));
@@ -132,7 +136,6 @@ namespace Penguin.Network
                 }
                 else
                 {
-                    Debug.LogError("Cannot connect to server");
                     onError?.Invoke();
                 }
             }));
@@ -202,7 +205,6 @@ namespace Penguin.Network
         { 
             StartCoroutine(SendPostRequest(_updateSkinPath, (json, responseCode) =>
             {
-                Debug.Log(json);
                 if (responseCode == 200)
                 {
                     var playerData = PlayerDataResponse.FromJson(json).Get();
@@ -212,7 +214,6 @@ namespace Penguin.Network
                 }
                 else
                 {
-                    Debug.LogError("Cannot connect to server");
                     onError?.Invoke();
                 }
 

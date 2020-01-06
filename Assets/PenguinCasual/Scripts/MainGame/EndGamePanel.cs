@@ -70,7 +70,7 @@ namespace Penguin
             _panelWatchAd.SetActive(true);
             _labelWatchAdDesc.gameObject.SetActive(true);
             _labelWatchAdDesc.text =
-                $"今日はあと<b><color=#F045C2><size=20>{PlayerPrefsHelper.WatchAdsTimesToday()}</size><size=14>/{PlayerPrefsHelper.WatchAdsTimesPerDay}</size><size=10>かい</size></color></b> 使えるよ";
+                $"今日はあと<b><color=#F045C2><size=20>{PlayerPrefsHelper.WatchAdsTimesPerDay - PlayerPrefsHelper.WatchAdsTimesToday()}</size><size=14>/{PlayerPrefsHelper.WatchAdsTimesPerDay}</size><size=10>かい</size></color></b> 使えるよ";
 
             _watchAdDuration.DOFillAmount(0, 5)
                 .OnComplete(ShowAsNormal);

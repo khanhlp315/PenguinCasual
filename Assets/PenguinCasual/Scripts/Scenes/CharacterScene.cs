@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Penguin;
 using Penguin.Network;
 using Penguin.UI;
+using pingak9;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -60,6 +61,18 @@ public class CharacterScene : MonoBehaviour
             }
         };
         _characterItemControllers = new List<CharacterItemController>();
+        
+        CallToNetwork();
+        _backgroundSetting.backgroundDataList.ForEach((background) =>
+        {
+            var backgroundItem = Instantiate(_backgroundItem, _backgroundList, false);
+            backgroundItem.Avatar = background.skinAvatar;
+            backgroundItem.IsLocked = !background.IsUnlocked();
+        });
+    }
+
+    private void CallToNetwork()
+    {
         NetworkCaller.Instance.GetAllSkins((skins, unlocks) =>
         {
             var currentSkin = NetworkCaller.Instance.PlayerData.SkinId;
@@ -105,14 +118,10 @@ public class CharacterScene : MonoBehaviour
             _loadingLayer.SetActive(false);
         }, () =>
         {
-            
-        });
-        
-        _backgroundSetting.backgroundDataList.ForEach((background) =>
-        {
-            var backgroundItem = Instantiate(_backgroundItem, _backgroundList, false);
-            backgroundItem.Avatar = background.skinAvatar;
-            backgroundItem.IsLocked = !background.IsUnlocked();
+            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
+                CallToNetwork,
+                () => { SceneManager.LoadScene("HomeScene"); });
+
         });
     }
 
@@ -141,7 +150,15 @@ public class CharacterScene : MonoBehaviour
             _characterInfoPanel.Hide();
         }, () =>
         {
-            
+            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
+                () =>
+                {
+                    OnSkinTapped(skinId);
+                },
+                () =>
+                {
+                    
+                });
         });
     }
 }

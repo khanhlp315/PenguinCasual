@@ -23,8 +23,6 @@ namespace Penguin.Scenes
             _systemToLoad++;
             
             NetworkCaller.Instance.Initialize();
-            
-            StartCoroutine(GoToHomeScreen());
         }
 
         private void OnSystemLoad()

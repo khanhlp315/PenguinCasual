@@ -6,6 +6,7 @@ using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
+using pingak9;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -343,7 +344,16 @@ namespace Penguin
             if (_currentScore > highScore)
             {
                 PlayerPrefsHelper.UpdateHighScore((int)_currentScore);
-                NetworkCaller.Instance.UpdateHighScore((int)_currentScore);
+                NetworkCaller.Instance.UpdateHighScore((int)_currentScore, () =>
+                {
+                    
+                }, () =>
+                {
+                    NativeDialog.OpenDialog("Error",
+                        "Cannot connect to server. Highscore will be updated later", "Ok",
+                        () => { });
+
+                });
                 _newRecordPanel.SetScore(_currentScore);
                 _newRecordPanel.gameObject.SetActive(true);
                 yield return new WaitForSeconds(2.0f);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Penguin.Network;
 using Penguin.Sound;
+using pingak9;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -63,10 +64,16 @@ namespace Penguin.Scenes
             {
                 NetworkCaller.Instance.ChangeName(_nameInputField.text, () =>
                 {
-                    Debug.LogError("Change nickname successful");
-                }, () =>
+                    NativeDialog.OpenDialog("Success",
+                        "Name changes successfully", "Ok",
+                        () => { });
+                }, (errorCode) =>
                 {
-                    Debug.LogError("Change nickname failed");
+                    NativeDialog.OpenDialog("Error",
+                        errorCode == 422
+                            ? "Cannot change into this name. Please select another name"
+                            : "Cannot connect to server", "Ok",
+                        () => { });
                 });
             }
         }
