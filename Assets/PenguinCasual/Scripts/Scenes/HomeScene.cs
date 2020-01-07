@@ -15,6 +15,7 @@ namespace Penguin.Scenes
         private Text _highscoreText;
         private void Start()
         {
+            Sound2DManager.Instance.PlayBgm();
             _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefsHelper.GetHighScore()) + "<size=18>匹</size>";
             Advertiser.AdvertisementSystem.ShowNormalBanner();
         }

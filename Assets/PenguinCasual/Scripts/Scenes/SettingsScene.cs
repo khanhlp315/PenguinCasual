@@ -24,15 +24,18 @@ namespace Penguin.Scenes
         private void Start()
         {
             _nameInputField.text = NetworkCaller.Instance.PlayerData.Nickname;
+            _switchButtonGroup.SetButton(Sound2DManager.Instance.IsMuteBGM? "Off": "On");
             _switchButtonGroup.OnButtonSelected += (buttonName) =>
             {
-                if (buttonName == "On")
+                if (buttonName == "Off")
                 {
-                    
+                    Sound2DManager.Instance.SetMuteSound(true);
+                    Sound2DManager.Instance.SetMuteBGM(true);
                 }
                 else if (buttonName == "On")
                 {
-                    
+                    Sound2DManager.Instance.SetMuteSound(false);
+                    Sound2DManager.Instance.SetMuteBGM(false);                    
                 }
             };
         }

@@ -596,6 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameInputField: {fileID: 735019803}
+  _switchButtonGroup: {fileID: 1678868098}
   _termsDialog: {fileID: 5766008}
   _licenseDialog: {fileID: 6207277741902980315}
 --- !u!4 &525909744

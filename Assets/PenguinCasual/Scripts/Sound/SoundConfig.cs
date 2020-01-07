@@ -2,6 +2,7 @@
 {
     public class SoundConfig
     {
+        public const string BGM = "Sounds/BGM";
         public const string PenguinHitAndDie = "Sounds/OUT加工済み";
         public const string FishMoveEndGame = "Sounds/魚演出加工済み";
         public const string BreakFloor = "Sounds/台座破壊音加工済み";

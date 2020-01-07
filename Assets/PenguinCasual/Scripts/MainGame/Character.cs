@@ -134,7 +134,7 @@ namespace Penguin
         public void Jump()
         {
             _velocity = _gameSetting.characterJumpVelocity;
-            SoundManager.PlayOneShot(SoundConfig.Jump);
+            Sound2DManager.Instance.PlaySound(SoundConfig.Jump);
         }
 
         public void Revive()
@@ -153,7 +153,7 @@ namespace Penguin
         {
             if (isActive)
             {
-                SoundManager.PlayOneShot(SoundConfig.PenguinHitAndDie);
+                Sound2DManager.Instance.PlaySound(SoundConfig.PenguinHitAndDie);
                 _deathParticle.gameObject.SetActive(true);
                 _deathParticle.Play();
             }

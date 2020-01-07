@@ -332,7 +332,7 @@ namespace Penguin
             }
             else
             {
-                SoundManager.PlayOneShot(SoundConfig.FishMoveEndGame);
+                Sound2DManager.Instance.PlaySound(SoundConfig.FishMoveEndGame);
                 _endGameParticle.gameObject.SetActive(true);
                 _endGameParticle.Play(true);
             }
@@ -418,7 +418,7 @@ namespace Penguin
 
         private void ShowPedestalLayerDestroyEffect(EventPedestalLayerDestroy e)
         {
-            SoundManager.PlayOneShot(SoundConfig.BreakFloor);
+            Sound2DManager.Instance.PlaySound(SoundConfig.BreakFloor);
             Vector3 effectPosition = new Vector3(0f, e.layer.height - 0.5f, 0);
             _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
         }

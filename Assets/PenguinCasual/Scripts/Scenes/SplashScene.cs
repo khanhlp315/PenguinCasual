@@ -20,9 +20,13 @@ namespace Penguin.Scenes
             InitCrashlytics();
             
             NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
+            Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
             _systemToLoad++;
+            _systemToLoad++;
+
             
             NetworkCaller.Instance.Initialize();
+            Sound2DManager.Instance.Initialize();
         }
 
         private void OnSystemLoad()

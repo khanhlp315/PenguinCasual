@@ -24,7 +24,14 @@ namespace Penguin.UI
                 OnButtonSelected?.Invoke(buttonName);
             }; });
         }
-        
+
+        public void SetButton(string selectedButtonName)
+        {
+            foreach (var button in _switchButtons)
+            {
+                button.IsActive = button.Name == selectedButtonName;
+            }
+        }
         
     }
 }

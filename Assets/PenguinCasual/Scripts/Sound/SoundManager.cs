@@ -1,88 +1,15 @@
 ﻿using System.Collections.Generic;
+using Penguin.Utilities;
 using UnityEngine;
 
 namespace Penguin.Sound
 {
     /// <summary>
-    /// Wrapper of Sound Manager
-    /// </summary>
-    public static class SoundManager
-    {
-        public static void PlayBGM(string pathName)
-        {
-            Sound2DManager.Instance.PlayBgm(pathName);
-        }
-
-        public static void PauseBGM(string pathName)
-        {
-            Sound2DManager.Instance.PauseBgm(pathName);
-        }
-
-        public static void ResumeBGM(string pathName)
-        {
-            Sound2DManager.Instance.ResumeBgm(pathName);
-        }
-
-        public static void StopBGM(string pathName)
-        {
-            Sound2DManager.Instance.StopBgm(pathName);
-        }
-
-        public static void PlayOneShot(string pathName)
-        {
-            Sound2DManager.Instance.PlaySound(pathName);
-        }
-
-		public static void PlaySound(string pathName, bool loop = false)
-		{
-			if (loop)
-				Sound2DManager.Instance.PlaySoundLoop(pathName);
-			else
-				Sound2DManager.Instance.PlaySound(pathName);
-		}
-
-		public static void StopSound(string pathName)
-		{
-			Sound2DManager.Instance.StopSound(pathName);
-		}
-    }
-
-    /// <summary>
     /// Internal class for handling load and playing sounds.
     /// </summary>
-    internal sealed class Sound2DManager : MonoBehaviour
+    class Sound2DManager : MonoSingleton<Sound2DManager>
     {
-        #region [ Static ]
-
-        /// <summary>
-        /// The static instance
-        /// </summary>
-        private static Sound2DManager _instance = new GameObject("[Sound2DManager]").AddComponent<Sound2DManager>();
-
-        /// <summary>
-        /// Gets the instance.
-        /// </summary>
-        /// <value>The instance.</value>
-        public static Sound2DManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    var go = new GameObject();
-                    _instance.gameObject.name = "[" + typeof(Sound2DManager) + "]";
-
-                    _instance = go.AddComponent<Sound2DManager>();
-
-                    DontDestroyOnLoad(_instance.gameObject);
-                }
-
-                return _instance;
-            }
-        }
-
-        #endregion
-
+        
         #region [ Constant ]
 
         /// <summary>
@@ -112,6 +39,8 @@ namespace Penguin.Sound
         /// Check if bgm is muted or not
         /// </summary>
         private bool _isMuteBGM = false;
+
+        private bool _isBGMPlaying;
 
         #endregion
 
@@ -144,26 +73,13 @@ namespace Penguin.Sound
         #endregion
 
         #region [ Public Methods ]
-
-        /// <summary>
-        /// Awake this instance.
-        /// </summary>
-        public void Awake()
+        
+        public override void Initialize()
         {
-            if (_instance != null)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-
-            _instance = this;
-            _instance.gameObject.name = "[" + typeof(Sound2DManager) + "]";
-            DontDestroyOnLoad(_instance.gameObject);
-
             _isMuteSound = PlayerPrefs.GetInt(KEY_MUTE_SOUND, 0) == 1;
             _isMuteBGM = PlayerPrefs.GetInt(KEY_MUTE_BGM, 0) == 1;
-
-            ////Debug.Log(string.Format("SoundManager:{0}:message = \"is enable sound {1} & is enable BGM {2}\"", "Awake", !_isMuteSound, !_isMuteBGM));
+            _instance.gameObject.AddComponent<Sound2DManager>();
+            OnInitializeDone?.Invoke();
         }
 
         /// <summary>
@@ -203,19 +119,29 @@ namespace Penguin.Sound
         /// Play BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void PlayBgm(string sound)
+        public void PlayBgm()
         {
-            var audio = GetUnuseAudio();
-            if (audio != null)
+            var sound = SoundConfig.BGM;
+            var playingAudio = GetPlayingAudio(sound);
+            if (playingAudio != null)
+            {
+                if (!playingAudio.isPlaying)
+                {
+                    playingAudio.UnPause();
+                }
+                return;
+            }
+            var unuseAudio = GetUnuseAudio();
+            if (unuseAudio != null)
             {
                 var clip = Resources.Load<AudioClip>(sound);
-                audio.clip = clip;
-                audio.gameObject.name = sound;
-                audio.loop = true;
-                audio.Play();
+                unuseAudio.clip = clip;
+                unuseAudio.gameObject.name = sound;
+                unuseAudio.loop = true;
+                unuseAudio.Play();
                 if (_isMuteBGM)
                 {
-                    audio.Pause();
+                    unuseAudio.Pause();
                     ////Debug.Log(string.Format("SoundManager:{0}:message = \"Cant play {1} since BGM had been muted\"", "PlayBgm", sound));
                     return;
                 }
@@ -226,12 +152,13 @@ namespace Penguin.Sound
         /// Stop BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void StopBgm(string sound)
+        public void StopBgm()
         {
-            var audio = GetPlayingAudio(sound);
-            if (audio != null)
+            var sound = SoundConfig.BGM;
+            var playingAudio = GetPlayingAudio(sound);
+            if (playingAudio != null)
             {
-                audio.Stop();
+                playingAudio.Stop();
             }
         }
 
@@ -239,12 +166,13 @@ namespace Penguin.Sound
         /// Pause BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void PauseBgm(string sound)
+        public void PauseBgm()
         {
-            var audio = GetPlayingAudio(sound);
-            if (audio != null)
+            var sound = SoundConfig.BGM;
+            var playingAudio = GetPlayingAudio(sound);
+            if (playingAudio != null)
             {
-                audio.Pause();
+                playingAudio.Pause();
             }
         }
 
@@ -252,14 +180,15 @@ namespace Penguin.Sound
         /// Resume BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void ResumeBgm(string sound)
+        public void ResumeBgm()
         {
             if (_isMuteBGM)
                 return;
-            var audio = GetPlayingAudio(sound);
-            if (audio != null)
+            var sound = SoundConfig.BGM;
+            var playingAudio = GetPlayingAudio(sound);
+            if (playingAudio != null)
             {
-                audio.UnPause();
+                playingAudio.UnPause();
             }
         }
 
@@ -275,10 +204,10 @@ namespace Penguin.Sound
                 return;
             }
 
-            var audio = transform.GetComponent<AudioSource>();
-            if (audio == null)
+            var audioSource = transform.GetComponent<AudioSource>();
+            if (audioSource == null)
             {
-                audio = transform.gameObject.AddComponent<AudioSource>();
+                audioSource = transform.gameObject.AddComponent<AudioSource>();
             }
             var clip = Resources.Load<AudioClip>(sound);
 
@@ -289,8 +218,8 @@ namespace Penguin.Sound
 
             //audio.clip = clip;
             //audio.loop = false;
-            audio.playOnAwake = false;
-            audio.PlayOneShot(clip);
+            audioSource.playOnAwake = false;
+            audioSource.PlayOneShot(clip);
         }
 
 		public void PlaySoundLoop(string sound)
@@ -331,7 +260,7 @@ namespace Penguin.Sound
         {
             var audio = GetActiveAudio(sound);
 
-            if (audio != null && audio.isPlaying)
+            if (audio != null)
             {
                 return audio;
             }
