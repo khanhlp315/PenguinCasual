@@ -4,12 +4,15 @@ using UnityEngine.Events;
 
 namespace Penguin.Utilities
 {
-    public abstract class MonoSingleton<T>: MonoBehaviour where T: MonoBehaviour
+    public abstract class MonoSingleton<T1, T2>: MonoBehaviour where T1: MonoBehaviour where T2: ScriptableObject
     {
-        protected static T _instance;
+        
+        protected static T1 _instance;
         private static object _lock = new object();
 
-        public static T Instance
+        protected T2 _config;
+
+        public static T1 Instance
         {
             get
             {
@@ -21,8 +24,8 @@ namespace Penguin.Utilities
                     }
 
                     var go = new GameObject();
-                    _instance = go.AddComponent<T>();
-                    _instance.gameObject.name = "[" + typeof(T) + "]";
+                    _instance = go.AddComponent<T1>();
+                    _instance.gameObject.name = "[" + typeof(T1) + "]";
                     return _instance;
                 }
             }
@@ -30,7 +33,8 @@ namespace Penguin.Utilities
 
         protected virtual void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            _config = Resources.Load<T2>($"Databases/{typeof(T2).Name}");
+            DontDestroyOnLoad(gameObject);
         }
 
         public UnityAction OnInitializeDone;

@@ -32,6 +32,7 @@ namespace Penguin.Analytics
         void LogScreen( string screen );
         void LogEvent (string eventName, params AnalyticsParameter[] parameters);
         void LogException (string exceptionDescription, bool isFatal);
+        void SetProperties(params AnalyticsParameter[] parameters);
     }
 
     /// <summary>
@@ -61,7 +62,14 @@ namespace Penguin.Analytics
                 item.Value.LogException (exceptionDescription, isFatal);
             }
         }
-        
+
+        public void SetProperties(params AnalyticsParameter[] parameters)
+        {
+            foreach (var item in _managedSystem) {
+                item.Value.SetProperties (parameters);
+            }
+        }
+
         public AnalyticsSystem Add<TValue>()  where TValue : IAnalyticSystem , new()
         {    
             var system = new TValue ();
@@ -93,6 +101,24 @@ namespace Penguin.Analytics
         }
     }
 
+    public static class StandardProperties
+    {
+        public static void SetDaysPlayed(int daysPlayed)
+        {
+            Analyzer.Analytics.SetProperties(new AnalyticsParameter("days_played", daysPlayed));
+        }
+        
+        public static void SetBestScore(int bestScore)
+        {
+            Analyzer.Analytics.SetProperties(new AnalyticsParameter("best_score", bestScore));
+        }
+        
+        public static void SetWatchAdsTimes(int watchAdsTimes)
+        {
+            Analyzer.Analytics.SetProperties(new AnalyticsParameter("watch_ads_times", watchAdsTimes));
+        }
+    }
+
     public static class StandardEvent
     {
         public static class App
@@ -105,21 +131,21 @@ namespace Penguin.Analytics
 
         public static class GameProgress
         {
-            public static void StartGame()
+            public static void StartGame(int backgroundId, int skinId)
             {
-                Analyzer.Analytics.LogEvent ("start_game");
+                Analyzer.Analytics.LogEvent ("start_game", new AnalyticsParameter("background", backgroundId),
+                    new AnalyticsParameter("skin", skinId));
             }
             
-            public static void Revive(string cause)
+            public static void Revive(int reviveTimes)
             {
-                Analyzer.Analytics.LogEvent ("revive", new AnalyticsParameter("cause", cause));
+                Analyzer.Analytics.LogEvent ("revive", new AnalyticsParameter("cause", reviveTimes));
             }
 
-            public static void BreakBestScore(int score)
+            public static void BestScore(int score)
             {
-                Analyzer.Analytics.LogEvent ("break_best_score", new AnalyticsParameter("score", score));
+                Analyzer.Analytics.LogEvent ("best_score", new AnalyticsParameter("score", score));
             }
-            
         }
     }
     

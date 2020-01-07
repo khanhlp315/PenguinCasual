@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Penguin;
+using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.UI;
@@ -9,7 +10,9 @@ using pingak9;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CharacterScene : MonoBehaviour
+namespace Penguin.Scenes
+{
+    public class CharacterScene : MonoBehaviour
 {
     [SerializeField]
     private SkinSetting _skinSetting;
@@ -119,10 +122,10 @@ public class CharacterScene : MonoBehaviour
             _loadingLayer.SetActive(false);
         }, () =>
         {
-            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
-                CallToNetwork,
-                () => { SceneManager.LoadScene("HomeScene"); });
-
+            NativeDialogManager.Instance.ShowConnectionErrorDialog(CallToNetwork, () =>
+            {
+                SceneManager.LoadScene("HomeScene"); 
+            });
         });
     }
 
@@ -151,15 +154,15 @@ public class CharacterScene : MonoBehaviour
             _characterInfoPanel.Hide();
         }, () =>
         {
-            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
-                () =>
-                {
-                    OnSkinTapped(skinId);
-                },
-                () =>
-                {
-                    
-                });
+            NativeDialogManager.Instance.ShowConnectionErrorDialog(() =>
+            {
+                OnSkinTapped(skinId);
+            }, () =>
+            {
+                
+            });
         });
     }
+}
+
 }

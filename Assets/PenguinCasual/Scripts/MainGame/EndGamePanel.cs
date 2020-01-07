@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Penguin.Ads;
+using Penguin.Analytics;
 using Penguin.Network;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;

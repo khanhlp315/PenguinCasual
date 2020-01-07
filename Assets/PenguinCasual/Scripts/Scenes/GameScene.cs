@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Penguin.Ads;
+using Penguin.Analytics;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
@@ -130,6 +131,8 @@ namespace Penguin
 
             PlayerPrefsHelper.CountCharacterPlayTimes(skinData.id);
             
+            StandardEvent.GameProgress.StartGame(skinData.id, backgroundData.id);
+
             _background = GameObject.Instantiate(backgroundData.prefabModel, _backgroundCanvas);
             _background.transform.localPosition = _backgroundPosition;
         }
@@ -332,7 +335,7 @@ namespace Penguin
             }
             else
             {
-                Sound2DManager.Instance.PlaySound(SoundConfig.FishMoveEndGame);
+                Sound2DManager.Instance.PlayFishMoveEndGameSound();
                 _endGameParticle.gameObject.SetActive(true);
                 _endGameParticle.Play(true);
             }
@@ -418,7 +421,7 @@ namespace Penguin
 
         private void ShowPedestalLayerDestroyEffect(EventPedestalLayerDestroy e)
         {
-            Sound2DManager.Instance.PlaySound(SoundConfig.BreakFloor);
+            Sound2DManager.Instance.PlayBreakFloorSound();
             Vector3 effectPosition = new Vector3(0f, e.layer.height - 0.5f, 0);
             _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
         }

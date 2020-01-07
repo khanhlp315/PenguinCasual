@@ -10,14 +10,14 @@ namespace Penguin.Analytics
             FirebaseAnalytics.SetCurrentScreen (screen, screen);
         }
 
-        public void LogEvent (string eventName, params AnalyticsParameter[] paremeters)
+        public void LogEvent (string eventName, params AnalyticsParameter[] parameters)
         {
-            if (paremeters == null) {
+            if (parameters == null) {
                 FirebaseAnalytics.LogEvent (eventName);
             } else {
-                var eventParams = new Parameter[paremeters.Length];
+                var eventParams = new Parameter[parameters.Length];
                 int index = 0;
-                foreach (var item in paremeters) {
+                foreach (var item in parameters) {
                     Parameter p = new Parameter (item.Name, item.Value);
                     eventParams [index] = p;
                     index += 1;
@@ -28,8 +28,16 @@ namespace Penguin.Analytics
         }
         public void LogException (string exceptionDescription, bool isFatal)
         {
-			
         }
+
+        public void SetProperties(params AnalyticsParameter[] parameters)
+        {
+            foreach (var item in parameters)
+            {
+                FirebaseAnalytics.SetUserProperty(item.Name, item.Value);
+            }
+        }
+
         #endregion
 		
     }	

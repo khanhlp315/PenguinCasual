@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.UI;
@@ -72,15 +73,23 @@ namespace Penguin.Scenes
                 NetworkCaller.Instance.ChangeName(_nameInputField.text, () =>
                 {
                     NativeDialog.OpenDialog("Success",
-                        "Name changes successfully", "Ok",
+                        "Name changed successfully", "Ok",
                         () => { });
                 }, (errorCode) =>
                 {
-                    NativeDialog.OpenDialog("Error",
-                        errorCode == 422
-                            ? "Cannot change into this name. Please select another name"
-                            : "Cannot connect to server", "Ok",
-                        () => { });
+                    if (errorCode == 422)
+                    {
+                        NativeDialog.OpenDialog("Error", "Cannot change into this name. Please select another name", "Ok",
+                            () => { });
+
+                    }
+                    else
+                    {
+                        NativeDialogManager.Instance.ShowConnectionErrorDialog(ChangeName, () =>
+                        {
+                            
+                        });
+                    }
                 });
             }
         }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d810c1d081224dd580a4a9284198fc61, type: 3}
+  m_Name: FontConfig
+  m_EditorClassIdentifier: 
+  AndroidFont: Noto sans CJK JP
+  IosFont: "\u30D2\u30E9\u30AE\u30CE\u89D2\u30B4 Pro N"
+  EditorFont: {fileID: 11400000, guid: b3139054b972042ecbfa78069cc20963, type: 2}
+  EnglishFont: {fileID: 11400000, guid: 6d05b74f713bb49cbbf7272cf75f4d25, type: 2}
+  CounterFont: {fileID: 11400000, guid: ab4281fd520b24bec92fdcb3f3f8f43f, type: 2}
+  RankingFont: {fileID: 11400000, guid: e26e3831f9ade4900945c7789f70909c, type: 2}
+  OthersFont: {fileID: 11400000, guid: 6474bbd8ba3ff432ab69c61dc3775e00, type: 2}

@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 namespace Penguin
 {
+#if !UNITY_EDITOR
     public static class TelegramCrashlytics
     {
         const string baseURL = "https://api.telegram.org/bot993980375:AAG1WqtVV0-0BHjlSb9-8ovJmv_Xhi083zM/sendMessage?chat_id=-357310364&text=";
@@ -34,4 +35,5 @@ namespace Penguin
             }
         }
     }
+#endif
 }

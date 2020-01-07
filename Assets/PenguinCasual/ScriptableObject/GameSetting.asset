@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundDuration: 60
   reviveRoundDuration: 30
-  squidBonusDuration: 5
+  squidBonusDuration: 3
   watchAdBonusDuration: 60
   powerUpBreakFloors: 6
   comboToBreakFloor: 2

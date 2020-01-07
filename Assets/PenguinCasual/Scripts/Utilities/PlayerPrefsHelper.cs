@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using Penguin.Analytics;
 using UnityEngine;
 
 namespace PenguinCasual.Scripts.Utilities
@@ -96,6 +97,9 @@ namespace PenguinCasual.Scripts.Utilities
             var currentDay = PlayerPrefs.GetString(PlayerPrefsKeys.CURRENT_DATE);
             if (today != currentDay)
             {
+                var watchAdsTimes = PlayerPrefs.GetInt(PlayerPrefsKeys.WATCH_ADS_TIMES_TODAY, 0);
+                StandardEvent.GameProgress.Revive(watchAdsTimes);
+                StandardEvent.GameProgress.BestScore(GetHighScore());
                 PlayerPrefs.SetString(PlayerPrefsKeys.CURRENT_DATE, today);
                 PlayerPrefs.SetInt(PlayerPrefsKeys.WATCH_ADS_TIMES_TODAY, 0);
                 var daysPlayed = PlayerPrefs.GetInt(PlayerPrefsKeys.DAYS_PLAYED, 0);

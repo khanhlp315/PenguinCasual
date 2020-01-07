@@ -1,29 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Penguin.Dialogues;
 using Penguin.Network.Data;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
-using pingak9;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace Penguin.Network
 {
-    public class NetworkCaller : MonoSingleton<NetworkCaller>
+    public class NetworkCaller : MonoSingleton<NetworkCaller, NetworkConfig>
     {
-        private const string _baseUrl = "http://18.179.159.55";
-        private const string _getTokenPath = "oauth/token";
-        private const string _currentPlayerPath = "api/get/player";
-        private const string _topPlayersPath = "api/get/player_top";
-        private const string _putPlayerPath = "api/put/player";
-        private const string _updateScorePath = "api/post/player_score";
-        private const string _getAllSkinsPath = "api/get/skin";
-        private const string _updateSkinPath = "api/put/player";
-        private const string _getAllUnlocksPath = "api/get/unlock";
-
-
 
         private PlayerData _playerData;
 
@@ -44,7 +33,7 @@ namespace Penguin.Network
             }
             else
             {
-                StartCoroutine(SendPostRequest(_getTokenPath, (json, responseCode) =>
+                StartCoroutine(SendPostRequest(_config.GetTokenPath, (json, responseCode) =>
                     {
                         if (responseCode == 200)
                         {
@@ -53,16 +42,14 @@ namespace Penguin.Network
                         }
                         else
                         {
-                            NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
-                                Initialize,
-                                Application.Quit);
+                            NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
                         }
                         Initialize();
                     }));
                 return;
             }
 
-            StartCoroutine(SendPostRequest(_currentPlayerPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.CurrentPlayerPath, (json, responseCode) =>
                 {
                     Debug.Log(responseCode);
                     if (responseCode == 200)
@@ -77,19 +64,17 @@ namespace Penguin.Network
                     }
                     else
                     {
-                        NativeDialog.OpenDialog("Cannot connect to server", "Do you want to retry?", "Yes", "No",
-                            Initialize,
-                            Application.Quit);
+                        NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
                     }
 
-                    OnInitializeDone();
+                    OnInitializeDone?.Invoke();
                 }));
         }
 
         private IEnumerator SendPostRequest(string path, UnityAction<string, long> onResponseReceived = null, string requestBody = null)
         {
             var downloadHandler = new DownloadHandlerBuffer();
-            var request = new UnityWebRequest($"{_baseUrl}/{path}", "POST")
+            var request = new UnityWebRequest($"{_config.BaseUrl}/{path}", "POST")
             {
                 downloadHandler = downloadHandler
             };
@@ -110,7 +95,7 @@ namespace Penguin.Network
 
         public void ChangeName(string nickname, UnityAction onDone = null, UnityAction<int> onError = null)
         {
-            StartCoroutine(SendPostRequest(_putPlayerPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.PutPlayerPath, (json, responseCode) =>
                 {
                     if (responseCode == 200)
                     {
@@ -129,7 +114,7 @@ namespace Penguin.Network
 
         public void GetTopPlayers(UnityAction<List<TopPlayerData>> onDone, UnityAction onError)
         {
-            StartCoroutine(SendPostRequest(_topPlayersPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.TopPlayersPath, (json, responseCode) =>
             {
                 if (responseCode == 200)
                 {
@@ -145,7 +130,7 @@ namespace Penguin.Network
 
         public void UpdateHighScore(int highScore, int totalScore, UnityAction onDone = null, UnityAction onError = null)
         {
-            StartCoroutine(SendPostRequest(_updateScorePath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.UpdateScorePath, (json, responseCode) =>
             {
                 if (responseCode == 200)
                 {
@@ -168,7 +153,7 @@ namespace Penguin.Network
         {
             List<SkinData> skinsData = null;
             List<UnlockData> unlocksData = null;
-            StartCoroutine(SendPostRequest(_getAllSkinsPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.GetAllSkinsPath, (json, responseCode) =>
             {
                 if (responseCode == 200)
                 {
@@ -186,7 +171,7 @@ namespace Penguin.Network
                 }
             }));
             
-            StartCoroutine(SendPostRequest(_getAllUnlocksPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.GetAllUnlocksPath, (json, responseCode) =>
             {
                 if (responseCode == 200)
                 {
@@ -206,7 +191,7 @@ namespace Penguin.Network
 
         public void SelectSkin(int skinId, UnityAction onDone, UnityAction onError)
         { 
-            StartCoroutine(SendPostRequest(_updateSkinPath, (json, responseCode) =>
+            StartCoroutine(SendPostRequest(_config.UpdateSkinPath, (json, responseCode) =>
             {
                 if (responseCode == 200)
                 {

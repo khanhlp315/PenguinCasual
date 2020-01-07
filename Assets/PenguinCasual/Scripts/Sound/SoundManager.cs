@@ -7,7 +7,7 @@ namespace Penguin.Sound
     /// <summary>
     /// Internal class for handling load and playing sounds.
     /// </summary>
-    class Sound2DManager : MonoSingleton<Sound2DManager>
+    class Sound2DManager : MonoSingleton<Sound2DManager, SoundConfig>
     {
         
         #region [ Constant ]
@@ -39,9 +39,7 @@ namespace Penguin.Sound
         /// Check if bgm is muted or not
         /// </summary>
         private bool _isMuteBGM = false;
-
-        private bool _isBGMPlaying;
-
+        
         #endregion
 
         #region [ Public Properties ]
@@ -50,25 +48,13 @@ namespace Penguin.Sound
         /// Gets a value indicating whether this <see cref="T:Assets.Scripts.Sound.Sound2DManager"/> is mute sound.
         /// </summary>
         /// <value><c>true</c> if is mute sound; otherwise, <c>false</c>.</value>
-        public bool IsMuteSound
-        {
-            get
-            {
-                return _isMuteSound;
-            }
-        }
+        public bool IsMuteSound => _isMuteSound;
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="T:Assets.Scripts.Sound.Sound2DManager"/> is mute bgm.
         /// </summary>
         /// <value><c>true</c> if is mute bgm; otherwise, <c>false</c>.</value>
-        public bool IsMuteBGM
-        {
-            get
-            {
-                return _isMuteBGM;
-            }
-        }
+        public bool IsMuteBGM => _isMuteBGM;
 
         #endregion
 
@@ -121,7 +107,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         public void PlayBgm()
         {
-            var sound = SoundConfig.BGM;
+            var sound = _config.BGM;
             var playingAudio = GetPlayingAudio(sound);
             if (playingAudio != null)
             {
@@ -154,7 +140,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         public void StopBgm()
         {
-            var sound = SoundConfig.BGM;
+            var sound = _config.BGM;
             var playingAudio = GetPlayingAudio(sound);
             if (playingAudio != null)
             {
@@ -166,9 +152,9 @@ namespace Penguin.Sound
         /// Pause BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void PauseBgm()
+        private void PauseBgm()
         {
-            var sound = SoundConfig.BGM;
+            var sound = _config.BGM;
             var playingAudio = GetPlayingAudio(sound);
             if (playingAudio != null)
             {
@@ -180,11 +166,11 @@ namespace Penguin.Sound
         /// Resume BGM
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void ResumeBgm()
+        private void ResumeBgm()
         {
             if (_isMuteBGM)
                 return;
-            var sound = SoundConfig.BGM;
+            var sound = _config.BGM;
             var playingAudio = GetPlayingAudio(sound);
             if (playingAudio != null)
             {
@@ -192,11 +178,31 @@ namespace Penguin.Sound
             }
         }
 
+        public void PlayJumpSound()
+        {
+            PlaySound(_config.Jump);
+        }
+
+        public void PlayPenguinHitAndDieSound()
+        {
+            PlaySound(_config.PenguinHitAndDie);
+        }
+
+        public void PlayBreakFloorSound()
+        {
+            PlaySound(_config.BreakFloor);
+        }
+        
+        public void PlayFishMoveEndGameSound()
+        {
+            PlaySound(_config.FishMoveEndGame);
+        }
+
         /// <summary>
         /// Play effect sound
         /// </summary>
         /// <param name="sound">Sound Name/Path</param>
-        public void PlaySound(string sound)
+        private void PlaySound(string sound)
         {
             if (_isMuteSound)
             {
@@ -222,23 +228,23 @@ namespace Penguin.Sound
             audioSource.PlayOneShot(clip);
         }
 
-		public void PlaySoundLoop(string sound)
+        private void PlaySoundLoop(string sound)
 		{
 			if (_isMuteSound || string.IsNullOrEmpty(sound))
 			{
 				return;
 			}
 
-			var audio = GetUnuseAudio();
+			var unuseAudio = GetUnuseAudio();
 			var clip = Resources.Load<AudioClip>(sound);
-			audio.gameObject.name = sound;
-			audio.playOnAwake = false;
-			audio.clip = clip;
-			audio.loop = true;
-			audio.Play();
+            unuseAudio.gameObject.name = sound;
+            unuseAudio.playOnAwake = false;
+            unuseAudio.clip = clip;
+            unuseAudio.loop = true;
+            unuseAudio.Play();
 		}
 
-		public void StopSound(string sound)
+		private void StopSound(string sound)
 		{
 			if (string.IsNullOrEmpty(sound))
 				return;
@@ -256,13 +262,13 @@ namespace Penguin.Sound
         /// </summary>
         /// <returns>The playing audio.</returns>
         /// <param name="sound">Sound.</param>
-        public AudioSource GetPlayingAudio(string sound)
+        private AudioSource GetPlayingAudio(string sound)
         {
-            var audio = GetActiveAudio(sound);
+            var activeAudio = GetActiveAudio(sound);
 
-            if (audio != null)
+            if (activeAudio != null)
             {
-                return audio;
+                return activeAudio;
             }
 
             return null;
@@ -273,7 +279,7 @@ namespace Penguin.Sound
         /// </summary>
         /// <returns>The active audio.</returns>
         /// <param name="sound">Sound.</param>
-        public AudioSource GetActiveAudio(string sound)
+        private AudioSource GetActiveAudio(string sound)
         {
             foreach (var item in _soundObjectPools)
             {
@@ -305,9 +311,9 @@ namespace Penguin.Sound
                 }
             }
 
-            var audio = CreateAudio();
-            audio.gameObject.SetActive(true);
-            return audio;
+            var unuseAudio = CreateAudio();
+            unuseAudio.gameObject.SetActive(true);
+            return unuseAudio;
         }
 
         /// <summary>
@@ -320,17 +326,17 @@ namespace Penguin.Sound
             go.transform.SetParent(this.transform);
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
-            var audio = go.GetComponent<AudioSource>();
-            if (audio == null)
+            var audioSource = go.GetComponent<AudioSource>();
+            if (audioSource == null)
             {
-                audio = go.AddComponent<AudioSource>();
+                audioSource = go.AddComponent<AudioSource>();
             }
             go.SetActive(false);
-            audio.playOnAwake = false;
+            audioSource.playOnAwake = false;
 
-            _soundObjectPools.Add(audio);
+            _soundObjectPools.Add(audioSource);
 
-            return audio;
+            return audioSource;
         }
         #endregion
     }

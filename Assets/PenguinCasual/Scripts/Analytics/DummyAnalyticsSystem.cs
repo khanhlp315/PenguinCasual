@@ -29,6 +29,19 @@ namespace Penguin.Analytics
             Debug.LogError ("[Analytic] - Log Exception - " + exceptionDescription);
         }
 
+        public void SetProperties(params AnalyticsParameter[] parameters)
+        {
+            string paramsString = "(";
+            if (parameters != null) {
+                foreach (var item in parameters) {
+                    paramsString += string.Format ("(\"{0}\" : {1}) ", item.Name, item.Value);
+                }
+                paramsString += ")";
+            }
+			
+            Debug.Log ("\"<color=green>[Analytic] - Change Property - " + paramsString + "</color>");
+        }
+
         #endregion
     }
 

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Penguin.Dialogues;
+using Penguin.Fonts;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
@@ -21,12 +23,18 @@ namespace Penguin.Scenes
             
             NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
             Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
+            FontManager.Instance.OnInitializeDone += OnSystemLoad;
+            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
+            _systemToLoad++;
+            _systemToLoad++;
             _systemToLoad++;
             _systemToLoad++;
 
             
             NetworkCaller.Instance.Initialize();
             Sound2DManager.Instance.Initialize();
+            FontManager.Instance.Initialize();
+            NativeDialogManager.Instance.Initialize();
         }
 
         private void OnSystemLoad()

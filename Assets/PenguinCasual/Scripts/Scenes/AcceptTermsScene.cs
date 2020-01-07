@@ -1,16 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Penguin.Ads;
+﻿using Penguin.Ads;
 using PenguinCasual.Scripts.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Penguin.Scenes
 {
     public class AcceptTermsScene : MonoBehaviour
     {
-        [SerializeField] private Text _text;
+        [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private string _androidTermsPath;
         [SerializeField] private string _iosTermsPath;
 
