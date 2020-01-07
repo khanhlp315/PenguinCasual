@@ -26,19 +26,6 @@ MonoBehaviour:
     adMeta:
       BannerAdPosition: 1
       AutoShowBanner: 0
-  - provider: Fluct
-    adId:
-      _iosNormalBannerAdId: 
-      _iosEndGameBannerAdId: 
-      _iosRewardTimeUpId: 1000085420_1000127865
-      _iosRewardDieId: 1000085420_1000127865
-      _androidNormalBannerAdId: 
-      _androidEndGameBannerAdId: 
-      _androidRewardTimeUpId: 1000090271_1000135434
-      _androidRewardDieId: 1000090271_1000135434
-    adMeta:
-      BannerAdPosition: 1
-      AutoShowBanner: 0
   listPlacement:
   - placementName: die
     frequency: 1

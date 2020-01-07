@@ -8,7 +8,6 @@ namespace Penguin.Ads
                 if (_advertisementSystem == null) {
                     _advertisementSystem = new AdvertisementSystem ();
                     _advertisementSystem.Add<AdmobAdvertisementSystem> ();
-                    _advertisementSystem.Add<FluctAdvertisementSystem> ();
 
                 }
                 return _advertisementSystem;

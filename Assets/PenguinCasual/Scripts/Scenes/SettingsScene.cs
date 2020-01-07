@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Penguin.Network;
 using Penguin.Sound;
+using Penguin.UI;
 using pingak9;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,12 +16,25 @@ namespace Penguin.Scenes
         [SerializeField]
         private InputField _nameInputField;
 
+        [SerializeField] private SwitchButtonGroup _switchButtonGroup;
+
         [SerializeField] private GameObject _termsDialog;
         [SerializeField] private GameObject _licenseDialog;
 
         private void Start()
         {
             _nameInputField.text = NetworkCaller.Instance.PlayerData.Nickname;
+            _switchButtonGroup.OnButtonSelected += (buttonName) =>
+            {
+                if (buttonName == "On")
+                {
+                    
+                }
+                else if (buttonName == "On")
+                {
+                    
+                }
+            };
         }
 
 
@@ -28,16 +42,6 @@ namespace Penguin.Scenes
         {
             SceneManager.LoadScene("HomeScene");
         }
-
-        public void TurnOnSound()
-        {
-            //TODO: Turn on sound
-        }
-        public void TurnOffSound()
-        {
-            //TODO: Turn off sound
-        }
-    
         public void OpenRequest()
         {
             Application.OpenURL("https://jp.research.net/r/L22BJJW");

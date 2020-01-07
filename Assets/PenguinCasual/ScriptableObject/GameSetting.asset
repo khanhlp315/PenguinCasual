@@ -19,7 +19,7 @@ MonoBehaviour:
   powerUpBreakFloors: 6
   comboToBreakFloor: 2
   distancePerPedestalLayer: 3
-  unitToAngleRotation: 400
+  unitToAngleRotation: 200
   pedestalStartPosition: -4
   characterStartPosition: -2.5
   cameraStartPosition: 3.2

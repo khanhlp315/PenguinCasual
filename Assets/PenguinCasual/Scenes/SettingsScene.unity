@@ -1012,8 +1012,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 525909743}
-        m_MethodName: TurnOffSound
+      - m_Target: {fileID: 661180994}
+        m_MethodName: OnTap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1300,8 +1300,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 525909743}
-        m_MethodName: TurnOnSound
+      - m_Target: {fileID: 771170502}
+        m_MethodName: OnTap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
