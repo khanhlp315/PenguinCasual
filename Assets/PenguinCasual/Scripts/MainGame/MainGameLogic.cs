@@ -109,6 +109,12 @@ namespace Penguin
                 EventHub.Emit(new EventGameTimeUpdate() {
                     time = _roundTime
                 });
+
+                EventHub.Emit(new EventGetBonusTime() {
+                    bonusTime = _gameSetting.squidBonusDuration,
+                    squid = pedestal
+                });
+                
                 return;
             }
             else if (HasPowerUp())

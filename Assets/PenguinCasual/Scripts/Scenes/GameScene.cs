@@ -32,6 +32,8 @@ namespace Penguin
         [Header("------------Character---------------")]
         [SerializeField]
         private Transform _camera;
+        [SerializeField]
+        private Canvas _mainCanvas;
 
         [Header("------------Character---------------")]
         [SerializeField]
@@ -63,10 +65,15 @@ namespace Penguin
         private GameObject _timeupImage;
         [SerializeField]
         private Image _countdownFillRing;
+
+        [Header("-------Effect----------")]
+
         [SerializeField]
         private List<FishEscapeEffect> _fishEscapeEffectPrefabs;
         [SerializeField]
         private DestroyPedestalLayerEffect _destroyPedestalLayerPrefab;
+        [SerializeField]
+        private BonusTimeEffect _bonusTimeEffectPrefab;
 
         [Header("-------Timeout----------")]
         [SerializeField]
@@ -209,6 +216,7 @@ namespace Penguin
             }
 
             _effectPool.RegisterPooledGO(_destroyPedestalLayerPrefab);
+            _effectPool.RegisterPooledGO(_bonusTimeEffectPrefab);
         }
 
         /// <summary>
@@ -221,6 +229,7 @@ namespace Penguin
             EventHub.Bind<EventEndGame>(OnEndGame);
             EventHub.Bind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
             EventHub.Bind<EventPedestalLayerDestroy>(ShowPedestalLayerDestroyEffect);
+            EventHub.Bind<EventGetBonusTime>(ShowBonusTimeEffect);
             EventHub.Bind<EventRevive>(OnRevive);
         }
 
@@ -234,6 +243,7 @@ namespace Penguin
             EventHub.Unbind<EventEndGame>(OnEndGame);
             EventHub.Unbind<EventCharacterPassLayer>(ShowFishesEscapeEffect);
             EventHub.Unbind<EventPedestalLayerDestroy>(ShowPedestalLayerDestroyEffect);
+            EventHub.Unbind<EventGetBonusTime>(ShowBonusTimeEffect);
             EventHub.Unbind<EventRevive>(OnRevive);
         }
 
@@ -422,6 +432,18 @@ namespace Penguin
             Sound2DManager.Instance.PlayBreakFloorSound();
             Vector3 effectPosition = new Vector3(0f, e.layer.height - 0.5f, 0);
             _effectPool.Instantiate(_destroyPedestalLayerPrefab.ID, effectPosition, 0);
+        }
+
+        private void ShowBonusTimeEffect(EventGetBonusTime e)
+        {
+            Vector3 effectPosition = new Vector3(e.squid.transform.position.x - 2, e.squid.transform.position.y, e.squid.transform.position.z);
+            var effect = _effectPool.Instantiate(_bonusTimeEffectPrefab.ID, Vector3.zero, 0);
+            var bonusTimeEffect = effect.GetComponent<BonusTimeEffect>();
+
+            bonusTimeEffect.SetTime(e.bonusTime);
+            bonusTimeEffect.transform.SetParent(_mainCanvas.transform);
+            bonusTimeEffect.transform.position = _bonusTimeEffectPrefab.transform.position;
+            bonusTimeEffect.transform.localScale = Vector3.one;
         }
 
         private SkinSetting.SkinData GetSkinById(int skinId)
