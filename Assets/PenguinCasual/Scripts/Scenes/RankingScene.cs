@@ -27,12 +27,14 @@ namespace Penguin.Scenes
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private TextMeshProUGUI _rankText;
+        [SerializeField] private Image _avatar;
 
         [SerializeField]
         private GameObject _loadingLayer;
 
         private void Start()
         {
+            Sound2DManager.Instance.StopBgm();
             var localHighscore = PlayerPrefsHelper.GetHighScore();
             var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
             var totalScore = PlayerPrefsHelper.GetTotalScore();
@@ -45,8 +47,9 @@ namespace Penguin.Scenes
             {
                 var playerData = NetworkCaller.Instance.PlayerData;
                 _nameText.text = playerData.Nickname;
-                _scoreText.text = $"{ScoreUtil.FormatScore(playerData.TotalScore)}匹";
+                _scoreText.text = $"{ScoreUtil.FormatScore(playerData.HighestScore)}匹";
                 _rankText.text = $"{ScoreUtil.FormatScore(playerData.Rank)}位";
+                _avatar.sprite = _skinSetting.GetSkinById(playerData.SkinId).skinAvatar;
                 UpdateTopPlayers();
             }
         }
@@ -78,7 +81,7 @@ namespace Penguin.Scenes
                 {
                     var playerItem = Instantiate(_topPlayerItem, _topPlayerList, false);
                     playerItem.Rank = ++rank;
-                    playerItem.Score = player.TotalScore;
+                    playerItem.Score = player.HighestScore;
                     playerItem.Name = player.Nickname;
                     playerItem.Avatar = _skinSetting.GetSkinById(player.SkinId).skinAvatar;
                 }

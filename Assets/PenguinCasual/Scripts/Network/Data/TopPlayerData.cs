@@ -13,12 +13,12 @@ namespace Penguin.Network.Data
         [SerializeField]
         private int skin_id;
         [SerializeField]
-        private int total_score;
+        private int highest_score;
 
         public int Id => id;
         public string Nickname => nickname;
         public int SkinId => skin_id;
-        public int TotalScore => total_score;
+        public int HighestScore => highest_score;
     }
 
     [Serializable]

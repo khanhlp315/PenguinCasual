@@ -50,6 +50,8 @@ namespace Penguin.Sound
         /// <value><c>true</c> if is mute bgm; otherwise, <c>false</c>.</value>
         public bool IsMuteBGM => _isMuteBGM;
 
+        private AudioSource _bgmSource;
+
         #endregion
 
         #region [ Public Methods ]
@@ -58,6 +60,10 @@ namespace Penguin.Sound
         {
             _isMuteSound = PlayerPrefs.GetInt(KEY_MUTE_SOUND, 0) == 1;
             _isMuteBGM = PlayerPrefs.GetInt(KEY_MUTE_BGM, 0) == 1;
+            _bgmSource = gameObject.AddComponent<AudioSource>();
+            _bgmSource.clip = Resources.Load<AudioClip>(_config.BGM);
+            _bgmSource.mute = _isMuteBGM;
+            _bgmSource.loop = true;
             OnInitializeDone?.Invoke();
         }
 
@@ -81,17 +87,7 @@ namespace Penguin.Sound
             _isMuteBGM = isMute;
             PlayerPrefs.SetInt(KEY_MUTE_BGM, _isMuteBGM ? 1 : 0);
             PlayerPrefs.Save();
-
-            foreach (var item in _soundObjectPools)
-            {
-                if (item.gameObject.activeInHierarchy)
-                {
-                    if (isMute)
-                        item.Pause();
-                    else
-                        item.UnPause();
-                }
-            }
+            _bgmSource.mute = _isMuteBGM;
         }
 
         /// <summary>
@@ -100,35 +96,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         public void PlayBgm()
         {
-
-            var sound = _config.BGM;
-            var playingAudio = GetPlayingAudio(sound);
-            if (playingAudio != null)
-            {
-                if (!playingAudio.isPlaying)
-                {
-                    if (!_isMuteBGM)
-                    {
-                        playingAudio.UnPause();
-                    }
-                }
-                return;
-            }
-            var unuseAudio = GetUnuseAudio();
-            if (unuseAudio != null)
-            {
-                var clip = Resources.Load<AudioClip>(sound);
-                unuseAudio.clip = clip;
-                unuseAudio.gameObject.name = sound;
-                unuseAudio.loop = true;
-                unuseAudio.Play();
-                if (_isMuteBGM)
-                {
-                    unuseAudio.Pause();
-                    ////Debug.Log(string.Format("SoundManager:{0}:message = \"Cant play {1} since BGM had been muted\"", "PlayBgm", sound));
-                    return;
-                }
-            }
+            _bgmSource.Play();
         }
 
         /// <summary>
@@ -137,12 +105,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         public void StopBgm()
         {
-            var sound = _config.BGM;
-            var playingAudio = GetPlayingAudio(sound);
-            if (playingAudio != null)
-            {
-                playingAudio.Stop();
-            }
+            _bgmSource.Stop();
         }
 
         /// <summary>
@@ -151,12 +114,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         private void PauseBgm()
         {
-            var sound = _config.BGM;
-            var playingAudio = GetPlayingAudio(sound);
-            if (playingAudio != null)
-            {
-                playingAudio.Pause();
-            }
+            _bgmSource.Pause();
         }
 
         /// <summary>
@@ -165,14 +123,7 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         private void ResumeBgm()
         {
-            if (_isMuteBGM)
-                return;
-            var sound = _config.BGM;
-            var playingAudio = GetPlayingAudio(sound);
-            if (playingAudio != null)
-            {
-                playingAudio.UnPause();
-            }
+            _bgmSource.UnPause();
         }
 
         public void PlayJumpSound()

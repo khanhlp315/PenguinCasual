@@ -2083,7 +2083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23d2e4ee90842aea0ce13204f972300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _labelScore: {fileID: 0}
+  _labelScore: {fileID: 2038264408}
   _animation: {fileID: 727122445}
 --- !u!111 &727122445
 Animation:
@@ -3493,6 +3493,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character
       objectReference: {fileID: 0}
+    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
+        type: 3}
+      propertyPath: _gameScene
+      value: 
+      objectReference: {fileID: 552050533}
+    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
+        type: 3}
+      propertyPath: _model
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7545640757774481473, guid: 01b3155e1f49142f787ef29e8e13c3b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3547,16 +3557,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
-        type: 3}
-      propertyPath: _gameScene
-      value: 
-      objectReference: {fileID: 552050533}
-    - target: {fileID: 7545640757774481472, guid: 01b3155e1f49142f787ef29e8e13c3b4,
-        type: 3}
-      propertyPath: _model
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01b3155e1f49142f787ef29e8e13c3b4, type: 3}

@@ -48,6 +48,7 @@ namespace Penguin.Scenes
 
     private void Start()
     {
+        Sound2DManager.Instance.StopBgm();
         _characterLayer.SetActive(true);
         _backgroundLayer.SetActive(false);
         _characterInfoPanel.OnCharacterSelect += OnSkinTapped;

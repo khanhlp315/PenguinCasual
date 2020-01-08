@@ -1820,6 +1820,7 @@ MonoBehaviour:
   _nameText: {fileID: 39173930}
   _scoreText: {fileID: 2090169249}
   _rankText: {fileID: 176916657}
+  _avatar: {fileID: 1922305713}
   _loadingLayer: {fileID: 752000757}
 --- !u!4 &980679405
 Transform:

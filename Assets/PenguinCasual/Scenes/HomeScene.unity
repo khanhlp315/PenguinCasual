@@ -504,8 +504,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5339"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6474bbd8ba3ff432ab69c61dc3775e00, type: 2}
-  m_sharedMaterial: {fileID: -6574742775964542590, guid: 6474bbd8ba3ff432ab69c61dc3775e00,
+  m_fontAsset: {fileID: 11400000, guid: d682c74be98ff4e89bb3b35cc490f376, type: 2}
+  m_sharedMaterial: {fileID: -4104254939854366, guid: d682c74be98ff4e89bb3b35cc490f376,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -574,7 +574,7 @@ MonoBehaviour:
     textComponent: {fileID: 80243855}
     characterCount: 1
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1

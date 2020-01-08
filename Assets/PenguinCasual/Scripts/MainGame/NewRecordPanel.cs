@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using Penguin.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ namespace Penguin
     public class NewRecordPanel: MonoBehaviour
     {
         [SerializeField]
-        private Text _labelScore;
+        private TextMeshProUGUI _labelScore;
         
         [SerializeField] private Animation _animation;
 

@@ -166,14 +166,14 @@ namespace Penguin
                 pedestal.Fall();
             }
 
-            if (turnPedestalToStone)
-            {
-                foreach (var pedestal in layer.pedestales)
-                {
-                    if (pedestal.CanBeTurnedToStone)
-                        pedestal.SetMaterial(_stoneMaterial);
-                }
-            }
+            // if (turnPedestalToStone)
+            // {
+            //     foreach (var pedestal in layer.pedestales)
+            //     {
+            //         if (pedestal.CanBeTurnedToStone)
+            //             pedestal.SetMaterial(_stoneMaterial);
+            //     }
+            // }
 
             EventHub.Emit(new EventPedestalLayerDestroy(layer));
         }

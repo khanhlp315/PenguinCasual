@@ -111,7 +111,7 @@ namespace Penguin.Network
                     {
                         Debug.Log(responseCode);
                         Debug.Log(json);
-                        onError?.Invoke((int)responseCode, ErrorInfo.FromJson(json).Message);
+                        onError?.Invoke((int)responseCode, responseCode ==0? null: ErrorInfo.FromJson(json).Message);
                     }
 
                 }, $"{{\"nickname\": \"{nickname}\" }}"));
