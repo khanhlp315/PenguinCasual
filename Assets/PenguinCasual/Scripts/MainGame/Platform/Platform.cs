@@ -56,7 +56,7 @@ namespace Penguin
 
         public void Setup(GameSetting gameSetting)
         {
-            EventHub.Bind<EventTouchMoved>(OnTouchMoved, true);
+            EventHub.Bind<EventTouchMoved>(OnTouchMoved);
             EventHub.Bind<EventPedestalDestroy>(OnPedestalDestroyed);
 
             _canInteract = false;
