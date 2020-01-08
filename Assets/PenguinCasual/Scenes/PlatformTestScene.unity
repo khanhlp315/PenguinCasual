@@ -3081,7 +3081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de942b50d3c346a68299c47330a614f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _labelScore: {fileID: 355919179}
+  _labelScore: {fileID: 430195962}
   _panelWatchAd: {fileID: 1489846729}
   _panelRestart: {fileID: 939692566}
   _buttonWatchAd: {fileID: 164377865}
