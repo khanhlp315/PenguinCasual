@@ -1017,8 +1017,8 @@ GameObject:
   m_Component:
   - component: {fileID: 590948005}
   - component: {fileID: 590948006}
-  - component: {fileID: 590948007}
   - component: {fileID: 590948009}
+  - component: {fileID: 590948007}
   m_Layer: 5
   m_Name: TopPlayersLayout
   m_TagString: Untagged
@@ -1063,9 +1063,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -1082,8 +1082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 1
-  m_VerticalFit: 2
+  m_HorizontalFit: 0
+  m_VerticalFit: 1
 --- !u!222 &590948009
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1202,8 +1202,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -108.5}
-  m_SizeDelta: {x: 0, y: -317}
+  m_AnchoredPosition: {x: -5.5, y: -120}
+  m_SizeDelta: {x: -77, y: -340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &701307980
 MonoBehaviour:
@@ -1376,7 +1376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &752000758
 RectTransform:
   m_ObjectHideFlags: 0

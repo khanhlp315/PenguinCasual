@@ -73,6 +73,11 @@ namespace Penguin.Scenes
             var backgroundItem = Instantiate(_backgroundItem, _backgroundList, false);
             backgroundItem.Avatar = background.skinAvatar;
             backgroundItem.IsLocked = !background.IsUnlocked();
+            backgroundItem._onBackgroundTapped += () =>
+            {
+                _missionPanel.SetMission(background.mission);
+                _missionPanel.Show();
+            };
         });
     }
 

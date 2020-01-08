@@ -52,7 +52,7 @@ namespace Penguin
         [SerializeField]
         private GameObject _hideGroup;
         [SerializeField]
-        private ShadowTextUGUI _labelScore;
+        private TextMeshProUGUI _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
         //[SerializeField]
@@ -75,11 +75,17 @@ namespace Penguin
         [SerializeField]
         private BonusTimeEffect _bonusTimeEffectPrefab;
 
-        [Header("-------Timeout----------")]
+        [Header("-------Timeout----------")] 
         [SerializeField]
         private Image _timeOutEffect;
         [SerializeField]
         private Transform _clockScaleAnchor;
+        [SerializeField]
+        private Image _clockImage;
+        [SerializeField]
+        private Color _clockNormalColor;
+        [SerializeField]
+        private Color _clockTimeoutColor;
 
         [Header("-----------UI Menu-----------")]
         [SerializeField]
@@ -188,6 +194,7 @@ namespace Penguin
                 _timeoutSeq.Append(_timeOutEffect.DOFade(0, 0.2f).SetEase(Ease.Linear));
                 _timeoutSeq.SetLoops(-1, LoopType.Restart);
                 _timeoutSeq.Play();
+                _clockImage.color = _clockTimeoutColor;
 
                 _clockScaleAnchor.DOScale(1.5f, 5f);
             }
@@ -204,6 +211,7 @@ namespace Penguin
                 {
                     _clockScaleAnchor.localScale = Vector3.one;
                 }
+                _clockImage.color = _clockNormalColor;
                 _timeOutEffect.gameObject.SetActive(false);
             }
         }
@@ -251,7 +259,7 @@ namespace Penguin
         {
             _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
-            _labelScore.text = "0<size=80>匹</size>";
+            _labelScore.text = "0";
 
             yield return new WaitForSeconds(2);
 
@@ -274,7 +282,7 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _currentScore = eventData.score;
-            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + "<size=14>匹</size>";
+            _labelScore.text = ScoreUtil.FormatScore(eventData.score);
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;

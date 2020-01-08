@@ -1,5 +1,6 @@
 using System;
 using Penguin.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ namespace Penguin.UI
         public Sprite Avatar; 
 
         [SerializeField]
-        private Text _rank;
+        private TextMeshProUGUI _rank;
         
         [SerializeField]
         private Text _name;
