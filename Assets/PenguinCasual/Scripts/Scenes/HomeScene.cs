@@ -3,6 +3,7 @@ using Penguin.Ads;
 using Penguin.Sound;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,11 +13,11 @@ namespace Penguin.Scenes
     public class HomeScene : MonoBehaviour
     {
         [SerializeField]
-        private Text _highscoreText;
+        private TextMeshProUGUI _highscoreText;
         private void Start()
         {
             Sound2DManager.Instance.PlayBgm();
-            _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefsHelper.GetHighScore()) + "<size=18>匹</size>";
+            _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefsHelper.GetHighScore());
             Advertiser.AdvertisementSystem.ShowNormalBanner();
         }
 

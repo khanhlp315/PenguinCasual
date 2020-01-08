@@ -16,12 +16,45 @@ namespace Penguin.Dialogues
         {
             #if UNITY_EDITOR
             Debug.Log("Show connection error dialog");
-            #else
+#else
             NativeDialog.OpenDialog(_config.ConnectionErrorTitle, _config.ConnectionErrorBody, _config.RetryText, _config.CancelText,
                 () => { onRetry?.Invoke(); },
                 () => { onCancel?.Invoke(); });
 #endif
         }
         
+        public void ShowScoreUpdateErrorDialog()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Show score update error dialog");
+#else
+                    NativeDialog.OpenDialog(_config.ScoreUpdateErrorTitle,
+                        _config.ScoreUpdateErrorBody, _config.OkText,
+                        () => { });
+
+#endif
+        }
+        
+        public void ShowChangeNameSuccessDialog()
+        {
+#if UNITY_EDITOR
+            Debug.Log("Show change name success dialog");
+#else
+                    NativeDialog.OpenDialog(_config.ChangeNameSuccessTitle,
+                        _config.ChangeNameSuccessBody, _config.OkText,
+                        () => { });
+#endif
+        }
+
+        public void ShowChangeNameValidationError(string message)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Show change name validation error dialog");
+#else
+                    NativeDialog.OpenDialog(_config.ChangeNameValidationErrorTitle,
+                        message, _config.OkText,
+                        () => { });
+#endif
+        }
     }
 }

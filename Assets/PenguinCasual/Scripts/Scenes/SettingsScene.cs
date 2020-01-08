@@ -68,30 +68,26 @@ namespace Penguin.Scenes
 
         public void ChangeName()
         {
-            if (_nameInputField.text != "" && _nameInputField.text.Length <= 6)
+            NetworkCaller.Instance.ChangeName(_nameInputField.text, () =>
             {
-                NetworkCaller.Instance.ChangeName(_nameInputField.text, () =>
+                NativeDialogManager.Instance.ShowChangeNameSuccessDialog();
+            }, (errorCode, message) =>
+            {
+                if (errorCode == 422)
                 {
-                    NativeDialog.OpenDialog("Success",
-                        "Name changed successfully", "Ok",
+                    NativeDialogManager.Instance.ShowChangeNameValidationError(message);
+                    NativeDialog.OpenDialog("Error", "Cannot change into this name. Please select another name", "Ok",
                         () => { });
-                }, (errorCode) =>
-                {
-                    if (errorCode == 422)
-                    {
-                        NativeDialog.OpenDialog("Error", "Cannot change into this name. Please select another name", "Ok",
-                            () => { });
 
-                    }
-                    else
+                }
+                else
+                {
+                    NativeDialogManager.Instance.ShowConnectionErrorDialog(ChangeName, () =>
                     {
-                        NativeDialogManager.Instance.ShowConnectionErrorDialog(ChangeName, () =>
-                        {
                             
-                        });
-                    }
-                });
-            }
+                    });
+                }
+            });
         }
     }    
 }

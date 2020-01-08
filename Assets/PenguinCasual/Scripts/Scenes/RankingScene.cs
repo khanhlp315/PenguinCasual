@@ -8,6 +8,7 @@ using Penguin.UI;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
 using pingak9;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,9 +24,9 @@ namespace Penguin.Scenes
         [SerializeField]
         private RectTransform _topPlayerList;
 
-        [SerializeField] private Text _nameText;
-        [SerializeField] private Text _scoreText;
-        [SerializeField] private Text _rankText;
+        [SerializeField] private TextMeshProUGUI _nameText;
+        [SerializeField] private TextMeshProUGUI _scoreText;
+        [SerializeField] private TextMeshProUGUI _rankText;
 
         [SerializeField]
         private GameObject _loadingLayer;

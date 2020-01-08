@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Penguin.Ads;
 using Penguin.Analytics;
+using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
@@ -353,10 +354,7 @@ namespace Penguin
                     
                 }, () =>
                 {
-                    NativeDialog.OpenDialog("Error",
-                        "Cannot connect to server. Score will be updated later", "Ok",
-                        () => { });
-
+                    NativeDialogManager.Instance.ShowScoreUpdateErrorDialog();
                 });
                 _newRecordPanel.SetScore(_currentScore);
                 _newRecordPanel.gameObject.SetActive(true);

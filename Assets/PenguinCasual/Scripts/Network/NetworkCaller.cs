@@ -43,6 +43,7 @@ namespace Penguin.Network
                         else
                         {
                             NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
+                            return;
                         }
                         Initialize();
                     }));
@@ -65,6 +66,7 @@ namespace Penguin.Network
                     else
                     {
                         NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
+                        return;
                     }
 
                     OnInitializeDone?.Invoke();
@@ -93,12 +95,13 @@ namespace Penguin.Network
             onResponseReceived?.Invoke(downloadHandler.text, request.responseCode);
         }
 
-        public void ChangeName(string nickname, UnityAction onDone = null, UnityAction<int> onError = null)
+        public void ChangeName(string nickname, UnityAction onDone = null, UnityAction<int, string> onError = null)
         {
             StartCoroutine(SendPostRequest(_config.PutPlayerPath, (json, responseCode) =>
                 {
                     if (responseCode == 200)
                     {
+                        Debug.Log("Change ok");
                         var playerData = PlayerDataResponse.FromJson(json).Get();
                         _playerData.Nickname = playerData.Nickname;
                         _playerData.SkinId = playerData.SkinId;
@@ -106,7 +109,9 @@ namespace Penguin.Network
                     }
                     else 
                     {
-                        onError?.Invoke((int)responseCode);
+                        Debug.Log(responseCode);
+                        Debug.Log(json);
+                        onError?.Invoke((int)responseCode, ErrorInfo.FromJson(json).Message);
                     }
 
                 }, $"{{\"nickname\": \"{nickname}\" }}"));

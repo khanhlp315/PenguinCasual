@@ -5,6 +5,7 @@ using DG.Tweening;
 using Penguin.Ads;
 using Penguin.Analytics;
 using Penguin.Network;
+using Penguin.Sound;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
 using TMPro;
@@ -17,7 +18,7 @@ namespace Penguin
     public class EndGamePanel : MonoBehaviour, IAdvertisementDelegate
     {
         [SerializeField]
-        private ShadowTextUGUI _labelScore;
+        private TextMeshProUGUI _labelScore;
 
         [SerializeField]
         private GameObject _panelWatchAd;
@@ -46,7 +47,7 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score) + "<size=18><color=#3F70D9>匹</color></size>";
+            _labelScore.text = ScoreUtil.FormatScore(score);
         }
 
         public void ShowAsNormal()
@@ -86,10 +87,12 @@ namespace Penguin
 #endif
             if (_isGameEndedByDie)
             {
+                Sound2DManager.Instance.SetMuteBGM(true);
                 Advertiser.AdvertisementSystem.ShowDieRewardAds("die");
             }
             else
             {
+                Sound2DManager.Instance.SetMuteBGM(true);
                 Advertiser.AdvertisementSystem.ShowTimeUpRewardAds("time_up");
             }
         }
@@ -164,6 +167,7 @@ namespace Penguin
 
         public void OnDieRewardDismiss()
         {
+            Sound2DManager.Instance.SetMuteBGM(false);
             if (_willReward)
             {
                 OnRevived();
@@ -195,6 +199,7 @@ namespace Penguin
 
         public void OnTimeUpRewardDismiss()
         {
+            Sound2DManager.Instance.SetMuteBGM(false);
             if (_willReward)
             {
                 OnRevived();

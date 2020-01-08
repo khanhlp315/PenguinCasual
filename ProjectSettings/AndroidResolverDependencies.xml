@@ -1,30 +1,13 @@
 <dependencies>
   <packages>
-    <package>com.adcolony:sdk:3.3.11</package>
-    <package>com.applovin:applovin-sdk:9.8.4</package>
     <package>com.crashlytics.sdk.android:crashlytics:2.9.9</package>
-    <package>com.glossom:glossom-ads-android:2.0.0</package>
     <package>com.google.ads.mediation:facebook:5.6.0.0</package>
     <package>com.google.android.gms:play-services-ads:18.2.0</package>
-    <package>com.google.android.gms:play-services-ads-identifier:16.0.0</package>
-    <package>com.google.android.gms:play-services-base:16.0.1</package>
     <package>com.google.firebase:firebase-analytics:17.2.1</package>
     <package>com.google.firebase:firebase-analytics-unity:6.8.0</package>
     <package>com.google.firebase:firebase-app-unity:6.8.0</package>
     <package>com.google.firebase:firebase-common:19.3.0</package>
     <package>com.google.firebase:firebase-crashlytics-unity:6.8.0</package>
-    <package>com.maio:android-sdk:1.1.10@aar</package>
-    <package>com.tapjoy:tapjoy-android-sdk:12.3.1@aar</package>
-    <package>com.unity3d.ads:unity-ads:3.2.0</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-adcolony:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-adcorsa:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-applovin:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-maio:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-nend:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-tapjoy:2.9.2</package>
-    <package>jp.fluct.mediation:rewardedvideo-mediation-unityads:2.9.2</package>
-    <package>jp.fluct:FluctSDK:5.9.2</package>
-    <package>net.nend.android:nend-sdk:5.1.1</package>
   </packages>
   <files>
     <file>Assets/Plugins/Android/androidx.annotation.annotation-1.1.0.jar</file>
@@ -33,8 +16,6 @@
     <file>Assets/Plugins/Android/androidx.asynclayoutinflater.asynclayoutinflater-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.browser.browser-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.collection.collection-1.0.0.jar</file>
-    <file>Assets/Plugins/Android/androidx.constraintlayout.constraintlayout-1.1.3.aar</file>
-    <file>Assets/Plugins/Android/androidx.constraintlayout.constraintlayout-solver-1.1.3.jar</file>
     <file>Assets/Plugins/Android/androidx.coordinatorlayout.coordinatorlayout-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.core.core-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.cursoradapter.cursoradapter-1.0.0.aar</file>
@@ -45,7 +26,6 @@
     <file>Assets/Plugins/Android/androidx.interpolator.interpolator-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-ui-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-utils-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/androidx.legacy.legacy-support-v4-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-common-2.0.0.jar</file>
     <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-livedata-2.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-livedata-core-2.0.0.aar</file>
@@ -53,26 +33,22 @@
     <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-viewmodel-2.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.loader.loader-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.localbroadcastmanager.localbroadcastmanager-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/androidx.media.media-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.print.print-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.slidingpanelayout.slidingpanelayout-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.swiperefreshlayout.swiperefreshlayout-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.adcolony.sdk-3.3.11.aar</file>
-    <file>Assets/Plugins/Android/com.applovin.applovin-sdk-9.8.4.aar</file>
     <file>Assets/Plugins/Android/com.crashlytics.sdk.android.answers-1.4.7.aar</file>
     <file>Assets/Plugins/Android/com.crashlytics.sdk.android.beta-1.2.10.aar</file>
     <file>Assets/Plugins/Android/com.crashlytics.sdk.android.crashlytics-2.9.9.aar</file>
     <file>Assets/Plugins/Android/com.crashlytics.sdk.android.crashlytics-core-2.6.8.aar</file>
     <file>Assets/Plugins/Android/com.facebook.android.audience-network-sdk-5.6.0.aar</file>
-    <file>Assets/Plugins/Android/com.glossom.glossom-ads-android-2.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.ads.mediation.facebook-5.6.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-18.3.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-18.3.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-18.3.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-base-17.1.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-base-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-gass-18.3.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-17.2.1.aar</file>
@@ -93,19 +69,7 @@
     <file>Assets/Plugins/Android/com.google.firebase.firebase-iid-19.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.firebase.firebase-iid-interop-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.firebase.firebase-measurement-connector-18.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.maio.android-sdk-1.1.10.aar</file>
-    <file>Assets/Plugins/Android/com.tapjoy.tapjoy-android-sdk-12.3.1.aar</file>
-    <file>Assets/Plugins/Android/com.unity3d.ads.unity-ads-3.2.0.aar</file>
     <file>Assets/Plugins/Android/io.fabric.sdk.android.fabric-1.4.8.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.FluctSDK-6.1.1.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-adcolony-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-adcorsa-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-applovin-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-maio-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-nend-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-tapjoy-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/jp.fluct.mediation.rewardedvideo-mediation-unityads-2.9.2.aar</file>
-    <file>Assets/Plugins/Android/net.nend.android.nend-sdk-5.4.0.aar</file>
   </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a" />

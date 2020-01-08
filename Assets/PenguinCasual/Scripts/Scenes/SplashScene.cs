@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Penguin.Dialogues;
-using Penguin.Fonts;
 using Penguin.Network;
 using Penguin.Sound;
 using Penguin.Utilities;
@@ -19,22 +18,18 @@ namespace Penguin.Scenes
         void Start()
         {
             PlayerPrefsHelper.CheckDate();
-            InitCrashlytics();
+            InitFirebase();
             
+            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
             NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
             Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
-            FontManager.Instance.OnInitializeDone += OnSystemLoad;
-            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
-            _systemToLoad++;
             _systemToLoad++;
             _systemToLoad++;
             _systemToLoad++;
 
-            
+            NativeDialogManager.Instance.Initialize();
             NetworkCaller.Instance.Initialize();
             Sound2DManager.Instance.Initialize();
-            FontManager.Instance.Initialize();
-            NativeDialogManager.Instance.Initialize();
         }
 
         private void OnSystemLoad()
@@ -46,7 +41,7 @@ namespace Penguin.Scenes
             }
         }
 
-        private void InitCrashlytics()
+        private void InitFirebase()
         {
             Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
                 var dependencyStatus = task.Result;

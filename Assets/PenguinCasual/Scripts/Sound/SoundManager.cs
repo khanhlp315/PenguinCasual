@@ -45,12 +45,6 @@ namespace Penguin.Sound
         #region [ Public Properties ]
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="T:Assets.Scripts.Sound.Sound2DManager"/> is mute sound.
-        /// </summary>
-        /// <value><c>true</c> if is mute sound; otherwise, <c>false</c>.</value>
-        public bool IsMuteSound => _isMuteSound;
-
-        /// <summary>
         /// Gets a value indicating whether this <see cref="T:Assets.Scripts.Sound.Sound2DManager"/> is mute bgm.
         /// </summary>
         /// <value><c>true</c> if is mute bgm; otherwise, <c>false</c>.</value>
@@ -64,7 +58,6 @@ namespace Penguin.Sound
         {
             _isMuteSound = PlayerPrefs.GetInt(KEY_MUTE_SOUND, 0) == 1;
             _isMuteBGM = PlayerPrefs.GetInt(KEY_MUTE_BGM, 0) == 1;
-            _instance.gameObject.AddComponent<Sound2DManager>();
             OnInitializeDone?.Invoke();
         }
 
@@ -107,13 +100,17 @@ namespace Penguin.Sound
         /// <param name="sound">Sound Name/Path</param>
         public void PlayBgm()
         {
+
             var sound = _config.BGM;
             var playingAudio = GetPlayingAudio(sound);
             if (playingAudio != null)
             {
                 if (!playingAudio.isPlaying)
                 {
-                    playingAudio.UnPause();
+                    if (!_isMuteBGM)
+                    {
+                        playingAudio.UnPause();
+                    }
                 }
                 return;
             }
