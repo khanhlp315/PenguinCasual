@@ -105,22 +105,21 @@ namespace Penguin
 			for (int i = 0; i < totalHitPedestal; i++)
 			{
 				Pedestal pedestal = _collidePedestalHits[i];
-				OnCollideWithPedestal?.Invoke(pedestal);
 
-				if (!pedestal.CanGoThrough)
-				{
-					if (_rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
-					{
-						position.y = _rayCastHits[i].point.y;
-					}
-					else if (_rayCastHits[i].distance <= 0)
-					{
-						stuckInPedestal = pedestal;
-					}
-				}
+                if (i == 0)
+                {
+                    OnCollideWithPedestal?.Invoke(pedestal);
 
-                // Should handle only one
-                break;
+                    if (!pedestal.CanGoThrough && _rayCastHits[i].distance <= 0)
+                    {
+                        stuckInPedestal = pedestal;
+                    }
+                }
+
+                if (!pedestal.CanGoThrough && _rayCastHits[i].distance > 0 && position.y < _rayCastHits[i].point.y)
+                {
+                    position.y = _rayCastHits[i].point.y;
+                }
             }
 
             transform.position = position;
