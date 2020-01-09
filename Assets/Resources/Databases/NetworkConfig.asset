@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b80be000b364f06ac40561710e59a91, type: 3}
   m_Name: NetworkConfig
   m_EditorClassIdentifier: 
-  BaseUrl: http://18.179.159.55
+  BaseUrl: http://18.177.83.212
   GetTokenPath: oauth/token
   CurrentPlayerPath: api/get/player
   TopPlayersPath: api/get/player_top
