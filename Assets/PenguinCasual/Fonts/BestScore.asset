@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: BestScore
   m_EditorClassIdentifier: 
-  hashCode: 220891248
+  hashCode: -1609122392
   material: {fileID: -6574742775964542590}
   materialHashCode: -1424394111
   m_Version: 1.1.0

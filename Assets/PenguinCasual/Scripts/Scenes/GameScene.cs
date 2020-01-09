@@ -52,7 +52,7 @@ namespace Penguin
         [SerializeField]
         private GameObject _hideGroup;
         [SerializeField]
-        private TextMeshProUGUI _labelScore;
+        private Text _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
         //[SerializeField]
@@ -259,7 +259,7 @@ namespace Penguin
         {
             _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
-            _labelScore.text = "0";
+            _labelScore.text = "0:";
 
             yield return new WaitForSeconds(2);
 
@@ -282,7 +282,7 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _currentScore = eventData.score;
-            _labelScore.text = ScoreUtil.FormatScore(eventData.score);
+            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + ":";
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;

@@ -10,7 +10,7 @@ namespace Penguin
     public class NewRecordPanel: MonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI _labelScore;
+        private Text _labelScore;
         
         [SerializeField] private Animation _animation;
 
