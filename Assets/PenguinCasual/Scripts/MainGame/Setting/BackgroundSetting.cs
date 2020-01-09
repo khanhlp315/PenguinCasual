@@ -15,6 +15,7 @@ namespace Penguin
             public int id;
             public GameObject prefabModel;
             public Sprite skinAvatar;
+            public string mission;
             public int characterIdToUnlock;
             public int characterPlayTimesToUnlock;
 

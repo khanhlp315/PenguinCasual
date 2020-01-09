@@ -19,10 +19,17 @@ namespace Penguin.UI
         [SerializeField] 
         private GameObject _lockLayer;
 
+        [HideInInspector] public UnityAction _onBackgroundTapped;
+
         private void Start()
         {
             _avatar.sprite = Avatar;
             _lockLayer.SetActive(IsLocked);
+        }
+
+        public void OnTap()
+        {
+            _onBackgroundTapped?.Invoke();
         }
     }
 }

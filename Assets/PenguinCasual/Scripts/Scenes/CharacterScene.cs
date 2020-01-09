@@ -48,6 +48,7 @@ namespace Penguin.Scenes
 
     private void Start()
     {
+        Sound2DManager.Instance.StopBgm();
         _characterLayer.SetActive(true);
         _backgroundLayer.SetActive(false);
         _characterInfoPanel.OnCharacterSelect += OnSkinTapped;
@@ -72,6 +73,11 @@ namespace Penguin.Scenes
             var backgroundItem = Instantiate(_backgroundItem, _backgroundList, false);
             backgroundItem.Avatar = background.skinAvatar;
             backgroundItem.IsLocked = !background.IsUnlocked();
+            backgroundItem._onBackgroundTapped += () =>
+            {
+                _missionPanel.SetMission(background.mission);
+                _missionPanel.Show();
+            };
         });
     }
 

@@ -24,24 +24,30 @@ namespace Penguin.UI
 
         [SerializeField]
         private Image _avatar;
+
+        [SerializeField] private GameObject _selectLayer;
+        [SerializeField] private GameObject _unSelectLayer;
+        [SerializeField] private GameObject _lockLayer;
         
-        [SerializeField]
-        private Image _background;
-
-        [SerializeField]
-        private Sprite _notSelectedBackground;
-
-        [SerializeField]
-        private Sprite _selectedBackground;
-
-        [SerializeField] 
-        private GameObject _lockLayer;
-
         private void Start()
         {
             Debug.Log(IsLocked);
             _avatar.sprite = Avatar;
-            _background.sprite = IsSelected ? _selectedBackground : _notSelectedBackground;
+            _lockLayer.SetActive(false);
+            _selectLayer.SetActive(false);
+            _unSelectLayer.SetActive(false);
+            if (IsLocked)
+            {
+                _lockLayer.SetActive(true);
+            }
+            else if (IsSelected)
+            {
+                _selectLayer.SetActive(true);
+            }
+            else
+            {
+                _unSelectLayer.SetActive(true);
+            }
             _lockLayer.SetActive(IsLocked);
         }
 
@@ -53,7 +59,21 @@ namespace Penguin.UI
         public void Reload()
         {
             _avatar.sprite = Avatar;
-            _background.sprite = IsSelected ? _selectedBackground : _notSelectedBackground;
+            _lockLayer.SetActive(false);
+            _selectLayer.SetActive(false);
+            _unSelectLayer.SetActive(false);
+            if (IsLocked)
+            {
+                _lockLayer.SetActive(true);
+            }
+            else if (IsSelected)
+            {
+                _selectLayer.SetActive(true);
+            }
+            else
+            {
+                _unSelectLayer.SetActive(true);
+            }            
             _lockLayer.SetActive(IsLocked);            
         }
     }

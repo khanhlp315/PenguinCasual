@@ -16,20 +16,20 @@ MonoBehaviour:
   - id: 1
     prefabModel: {fileID: -927199367670048503, guid: fc0f43d6fd9b6427aa9c73a9573161b7,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 71240db6d73b345cbbf8fb330741b0f5, type: 3}
   - id: 2
     prefabModel: {fileID: -927199367670048503, guid: 35d2ba9c1160edd498a843d2e714639c,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+    skinAvatar: {fileID: 21300000, guid: b119faf2e7ad043f19a6c87fe2efcee2, type: 3}
   - id: 3
     prefabModel: {fileID: -927199367670048503, guid: 50e875d5957e849528621fe4d1c9bb3b,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 8ea30573d2c574fb1ad24ea63b977173, type: 3}
   - id: 4
     prefabModel: {fileID: -927199367670048503, guid: 5287bdbecd54fe44f8a5de09ffc1d910,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+    skinAvatar: {fileID: 21300000, guid: ee14febe577054526b8dec13898ab7ac, type: 3}
   - id: 5
     prefabModel: {fileID: -927199367670048503, guid: 6ef1b8b66b5333042acce82b640fad97,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 21856214d38a6491d94c9859844039f1, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 28305af559d6f4acfbb24fa7a05839b1, type: 3}

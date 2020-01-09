@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using Penguin.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 

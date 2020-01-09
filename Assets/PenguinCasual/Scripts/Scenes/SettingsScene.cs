@@ -24,6 +24,7 @@ namespace Penguin.Scenes
 
         private void Start()
         {
+            Sound2DManager.Instance.StopBgm();
             _nameInputField.text = NetworkCaller.Instance.PlayerData.Nickname;
             _switchButtonGroup.SetButton(Sound2DManager.Instance.IsMuteBGM? "Off": "On");
             _switchButtonGroup.OnButtonSelected += (buttonName) =>

@@ -18,7 +18,7 @@ namespace Penguin
     public class EndGamePanel : MonoBehaviour, IAdvertisementDelegate
     {
         [SerializeField]
-        private TextMeshProUGUI _labelScore;
+        private Text _labelScore;
 
         [SerializeField]
         private GameObject _panelWatchAd;
@@ -47,11 +47,12 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score);
+            _labelScore.text = ScoreUtil.FormatScore(score) + ":";
         }
 
         public void ShowAsNormal()
         {
+            Sound2DManager.Instance.StopBgm();
             Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = true;
 
@@ -63,6 +64,7 @@ namespace Penguin
 
         public void ShowWithWatchAd()
         {
+            Sound2DManager.Instance.StopBgm();
             _willReward = false;
             Advertiser.AdvertisementSystem.ShowEndGameBanner();
             _isShowAsNormal = false;
@@ -99,6 +101,7 @@ namespace Penguin
 
         public void OnRevived()
         {
+            Sound2DManager.Instance.PlayBgm();
             PlayerPrefsHelper.CountWatchAdsTimes();
             Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.Emit(new EventRevive());
@@ -107,6 +110,7 @@ namespace Penguin
 
         public void OnRestart()
         {
+            Sound2DManager.Instance.PlayBgm();
             Advertiser.AdvertisementSystem.HideEndGameBanner();
             EventHub.ClearAll();
             SceneManager.LoadScene("PlatformTestScene");
