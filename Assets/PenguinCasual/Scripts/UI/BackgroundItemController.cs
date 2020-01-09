@@ -29,6 +29,10 @@ namespace Penguin.UI
 
         public void OnTap()
         {
+            if (!IsLocked)
+            {
+                return;
+            }    
             _onBackgroundTapped?.Invoke();
         }
     }

@@ -42,7 +42,7 @@ namespace Penguin.Network
                         }
                         else
                         {
-                            NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
+                            NativeDialogManager.Instance.ShowInitialConnectionErrorDialog(Initialize);
                             return;
                         }
                         Initialize();
@@ -65,7 +65,7 @@ namespace Penguin.Network
                     }
                     else
                     {
-                        NativeDialogManager.Instance.ShowConnectionErrorDialog(Initialize, Application.Quit);
+                        NativeDialogManager.Instance.ShowInitialConnectionErrorDialog(Initialize);
                         return;
                     }
 

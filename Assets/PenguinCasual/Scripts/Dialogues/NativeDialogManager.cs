@@ -23,6 +23,16 @@ namespace Penguin.Dialogues
 #endif
         }
         
+        public void ShowInitialConnectionErrorDialog(UnityAction onRetry)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Show connection error dialog");
+#else
+            NativeDialog.OpenDialog(_config.ConnectionErrorTitle, _config.ConnectionErrorBody, _config.RetryText,
+                () => { onRetry?.Invoke(); });
+#endif
+        }
+        
         public void ShowScoreUpdateErrorDialog()
         {
 #if UNITY_EDITOR

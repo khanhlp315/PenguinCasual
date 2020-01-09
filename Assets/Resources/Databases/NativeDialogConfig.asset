@@ -23,6 +23,5 @@ MonoBehaviour:
   ScoreUpdateErrorTitle: "\u8B66\u544A"
   ScoreUpdateErrorBody: "SCORE\u3092\u66F4\u65B0\u3067\u304D\u307E\u305B\u3093\u3002"
   ChangeNameSuccessTitle: 
-  ChangeNameSuccessBody: "\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u3092\u5909\u66F4\u3057\u307E\u3057\u305F\u3002
-    \  \u3002"
+  ChangeNameSuccessBody: "\u30CB\u30C3\u30AF\u30CD\u30FC\u30E0\u3092\u5909\u66F4\u3057\u307E\u3057\u305F\u3002"
   ChangeNameValidationErrorTitle: 

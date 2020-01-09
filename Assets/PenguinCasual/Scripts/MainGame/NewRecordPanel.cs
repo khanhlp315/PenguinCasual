@@ -18,7 +18,7 @@ namespace Penguin
         
         private void OnEnable()
         {
-            _labelScore.text = ScoreUtil.FormatScore(_score);
+            _labelScore.text = ScoreUtil.FormatScore(_score) + ":";
             _animation.Play();
         }
 

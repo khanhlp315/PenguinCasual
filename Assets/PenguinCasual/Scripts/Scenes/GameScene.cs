@@ -210,8 +210,8 @@ namespace Penguin
                 if (resetScale)
                 {
                     _clockScaleAnchor.localScale = Vector3.one;
+                    _clockImage.color = _clockNormalColor;
                 }
-                _clockImage.color = _clockNormalColor;
                 _timeOutEffect.gameObject.SetActive(false);
             }
         }
