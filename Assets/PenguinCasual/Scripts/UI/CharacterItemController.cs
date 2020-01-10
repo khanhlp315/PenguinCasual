@@ -38,6 +38,7 @@ namespace Penguin.UI
             _unSelectLayer.SetActive(false);
             if (IsLocked)
             {
+                _unSelectLayer.SetActive(true);
                 _lockLayer.SetActive(true);
             }
             else if (IsSelected)

@@ -26,4 +26,4 @@ MonoBehaviour:
   characterMaxDroppingVelocity: -15
   characterJumpVelocity: 7.5
   characterGravity: 20
-  characterOffsetWithCamera: 7.5
+  characterOffsetWithCamera: 8

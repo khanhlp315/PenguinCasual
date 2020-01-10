@@ -23,21 +23,21 @@ MonoBehaviour:
   - id: 2
     prefabModel: {fileID: 3769213146979470585, guid: f2ec52d3f0cf94155955e8d0694ecb8b,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 74b57514c8b8149dfac1c4445c4b3b8c, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 7f803a05ac41647529212cd22e300586, type: 3}
     mission: "\u30B3\u30A6\u30C6\u30A4\u30DA\u30F3\u30AE\u30F3\u3092\u4F7F\u3063\u30665\u56DE\u30B2\u30FC\u30E0\u30D7\u30EC\u30A4\u3067\u89E3\u653E"
     characterIdToUnlock: 1
     characterPlayTimesToUnlock: 5
   - id: 3
     prefabModel: {fileID: 7261502849670703666, guid: 29b49f3419e194fe8a57f161c5facc46,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 3c165dbe9b84b412b819d489afe64d03, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 74b57514c8b8149dfac1c4445c4b3b8c, type: 3}
     mission: "\u30B3\u30AC\u30BF\u30DA\u30F3\u30AE\u30F3\u3092\u4F7F\u3063\u306610\u56DE\u30B2\u30FC\u30E0\u30D7\u30EC\u30A4\u3067\u89E3\u653E"
     characterIdToUnlock: 2
     characterPlayTimesToUnlock: 10
   - id: 4
     prefabModel: {fileID: 2731377715709460275, guid: b830b460e30454bb2ad74afdc8b02f4e,
       type: 3}
-    skinAvatar: {fileID: 21300000, guid: 7f803a05ac41647529212cd22e300586, type: 3}
+    skinAvatar: {fileID: 21300000, guid: 3c165dbe9b84b412b819d489afe64d03, type: 3}
     mission: "\u30D2\u30B2\u30DA\u30F3\u30AE\u30F3\u3092\u4F7F\u3063\u306610\u56DE\u30B2\u30FC\u30E0\u30D7\u30EC\u30A4\u3067\u89E3\u653E"
     characterIdToUnlock: 3
     characterPlayTimesToUnlock: 10

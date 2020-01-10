@@ -47,7 +47,7 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score) + ":";
+            _labelScore.text = ScoreUtil.FormatScore(score) + ";";
         }
 
         public void ShowAsNormal()
@@ -89,12 +89,12 @@ namespace Penguin
 #endif
             if (_isGameEndedByDie)
             {
-                Sound2DManager.Instance.SetMuteBGM(true);
+                Sound2DManager.Instance.PlayBgm();
                 Advertiser.AdvertisementSystem.ShowDieRewardAds("die");
             }
             else
             {
-                Sound2DManager.Instance.SetMuteBGM(true);
+                Sound2DManager.Instance.PlayBgm();
                 Advertiser.AdvertisementSystem.ShowTimeUpRewardAds("time_up");
             }
         }
