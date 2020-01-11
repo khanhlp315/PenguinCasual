@@ -152,6 +152,7 @@ namespace Penguin
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
                 {
                     _character.Jump();
+                    EventHub.Emit(new EventReadyToStartGame());
                 }
                 else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
                 {

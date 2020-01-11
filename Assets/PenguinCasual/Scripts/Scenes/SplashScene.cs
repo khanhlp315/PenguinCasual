@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Penguin.AppConfigs;
 using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
@@ -15,30 +17,32 @@ namespace Penguin.Scenes
         private int _systemsLoaded = 0;
 
         private int _systemToLoad = 0;
+
+
+        private bool _isFirebaseInitializeDone = false;
         void Start()
         {
             PlayerPrefsHelper.CheckDate();
             InitFirebase();
-            
-            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
-            NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
-            Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
-            _systemToLoad++;
-            _systemToLoad++;
-            _systemToLoad++;
-
-            NativeDialogManager.Instance.Initialize();
-            NetworkCaller.Instance.Initialize();
-            Sound2DManager.Instance.Initialize();
+            StartCoroutine(InitSystems());
+            StartCoroutine(WaitToGoToHomeScene());
         }
 
         private void OnSystemLoad()
         {
             _systemsLoaded++;
-            if (_systemsLoaded >= _systemToLoad)
+        }
+
+        public IEnumerator WaitToGoToHomeScene()
+        {
+            yield return new WaitForSeconds(3.0f);
+            while (_systemsLoaded < _systemToLoad)
             {
-                StartCoroutine(GoToHomeScreen());
+                yield return null;
             }
+            var hasAcceptTerms = !PlayerPrefsHelper.IsFirstTimeUser();
+            SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : "AcceptTermsScene");
+            yield return null;
         }
 
         private void InitFirebase()
@@ -52,8 +56,7 @@ namespace Penguin.Scenes
                     // Crashlytics will use the DefaultInstance, as well;
                     // this ensures that Crashlytics is initialized.
                     Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-
-                    // Set a flag here for indicating that your project is ready to use Firebase.
+                    _isFirebaseInitializeDone = true;
                 }
                 else
                 {
@@ -63,12 +66,25 @@ namespace Penguin.Scenes
             });
         }
 
-        IEnumerator GoToHomeScreen()
+        private IEnumerator InitSystems()
         {
-            var hasAcceptTerms = !PlayerPrefsHelper.IsFirstTimeUser();
-            yield return new WaitForSeconds(3.0f);
-            SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : "AcceptTermsScene");
-            yield return null;
+            while (!_isFirebaseInitializeDone)
+            {
+                yield return null;
+            }
+            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
+            NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
+            AppConfigManager.Instance.OnInitializeDone += OnSystemLoad;
+            Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
+            _systemToLoad++;
+            _systemToLoad++;
+            _systemToLoad++;
+            _systemToLoad++;
+
+            NativeDialogManager.Instance.Initialize();
+            NetworkCaller.Instance.Initialize();
+            AppConfigManager.Instance.Initialize();
+            Sound2DManager.Instance.Initialize();
         }
     }
 }

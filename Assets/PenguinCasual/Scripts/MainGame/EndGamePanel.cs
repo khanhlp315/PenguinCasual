@@ -89,12 +89,12 @@ namespace Penguin
 #endif
             if (_isGameEndedByDie)
             {
-                Sound2DManager.Instance.PlayBgm();
+                Sound2DManager.Instance.StopBgm();
                 Advertiser.AdvertisementSystem.ShowDieRewardAds("die");
             }
             else
             {
-                Sound2DManager.Instance.PlayBgm();
+                Sound2DManager.Instance.StopBgm();
                 Advertiser.AdvertisementSystem.ShowTimeUpRewardAds("time_up");
             }
         }
@@ -171,7 +171,6 @@ namespace Penguin
 
         public void OnDieRewardDismiss()
         {
-            Sound2DManager.Instance.SetMuteBGM(false);
             if (_willReward)
             {
                 OnRevived();
@@ -203,7 +202,6 @@ namespace Penguin
 
         public void OnTimeUpRewardDismiss()
         {
-            Sound2DManager.Instance.SetMuteBGM(false);
             if (_willReward)
             {
                 OnRevived();

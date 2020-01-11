@@ -112,6 +112,8 @@ namespace Penguin
 
         private bool _hasAlreadyRevived;
 
+        private bool _isReadyToStartGame;
+
         private void Start()
         {
             Advertiser.AdvertisementSystem.HideNormalBanner();
@@ -139,8 +141,6 @@ namespace Penguin
             Debug.Log("Unlocked backgrounds: " + unlockedBackgrounds.Count);
             var unlockedBackgroundsCount = unlockedBackgrounds.Count;
             var backgroundData = unlockedBackgrounds[Random.Range(0, unlockedBackgroundsCount)];
-            Debug.Log(_mainCharacter);
-            Debug.Log(skinData);
             _mainCharacter.SetModel(skinData.prefabModel);
 
             PlayerPrefsHelper.CountCharacterPlayTimes(skinData.id);
@@ -255,6 +255,12 @@ namespace Penguin
             EventHub.Unbind<EventRevive>(OnRevive);
         }
 
+        private void OnReadyToStartGame(EventReadyToStartGame e)
+        {
+            _isReadyToStartGame = true;
+            EventHub.Unbind<EventReadyToStartGame>(OnReadyToStartGame);
+        }
+
         private IEnumerator WaitAndStartGame()
         {
             _readyImage.SetActive(true);
@@ -262,6 +268,15 @@ namespace Penguin
             _labelScore.text = "0:";
 
             yield return new WaitForSeconds(2);
+
+            _isReadyToStartGame = false;
+            
+            EventHub.Bind<EventReadyToStartGame>(OnReadyToStartGame);
+
+            while (!_isReadyToStartGame)
+            {
+                yield return null;
+            }
 
             _readyImage.SetActive(false);
             _goImage.SetActive(true);
