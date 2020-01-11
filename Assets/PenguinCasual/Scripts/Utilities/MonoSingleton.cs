@@ -1,10 +1,11 @@
 using System;
+using PenguinCasual.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Penguin.Utilities
 {
-    public abstract class MonoSingleton<T1, T2>: MonoBehaviour where T1: MonoBehaviour where T2: ScriptableObject
+    public abstract class MonoSingleton<T1, T2>: MonoBehaviour, ISystem where T1: MonoBehaviour where T2: ScriptableObject
     {
         
         protected static T1 _instance;
@@ -37,8 +38,9 @@ namespace Penguin.Utilities
             DontDestroyOnLoad(gameObject);
         }
 
-        public UnityAction OnInitializeDone;
+        
 
         public abstract void Initialize();
+        public UnityAction OnInitializeDone { get; set; }
     }
 }

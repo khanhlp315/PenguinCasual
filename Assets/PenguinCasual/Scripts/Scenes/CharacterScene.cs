@@ -48,6 +48,7 @@ namespace Penguin.Scenes
 
     private void Start()
     {
+        _loadingLayer.SetActive(true);
         Sound2DManager.Instance.StopBgm();
         _characterLayer.SetActive(true);
         _backgroundLayer.SetActive(false);

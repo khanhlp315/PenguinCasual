@@ -16,8 +16,15 @@ namespace Penguin.Scenes
     {
         private int _systemsLoaded = 0;
 
-        private int _systemToLoad = 0;
+        private readonly List<ISystem> _systems = new List<ISystem>();
 
+        private void Awake()
+        {
+            _systems.Add(NativeDialogManager.Instance);
+            _systems.Add(AppConfigManager.Instance);
+            _systems.Add(NetworkCaller.Instance);
+            _systems.Add(Sound2DManager.Instance);
+        }
 
         private bool _isFirebaseInitializeDone = false;
         void Start()
@@ -36,7 +43,7 @@ namespace Penguin.Scenes
         public IEnumerator WaitToGoToHomeScene()
         {
             yield return new WaitForSeconds(3.0f);
-            while (_systemsLoaded < _systemToLoad)
+            while (_systemsLoaded < _systems.Count)
             {
                 yield return null;
             }
@@ -72,19 +79,17 @@ namespace Penguin.Scenes
             {
                 yield return null;
             }
-            NativeDialogManager.Instance.OnInitializeDone += OnSystemLoad;
-            NetworkCaller.Instance.OnInitializeDone += OnSystemLoad;
-            AppConfigManager.Instance.OnInitializeDone += OnSystemLoad;
-            Sound2DManager.Instance.OnInitializeDone += OnSystemLoad;
-            _systemToLoad++;
-            _systemToLoad++;
-            _systemToLoad++;
-            _systemToLoad++;
-
-            NativeDialogManager.Instance.Initialize();
-            NetworkCaller.Instance.Initialize();
-            AppConfigManager.Instance.Initialize();
-            Sound2DManager.Instance.Initialize();
+            
+            for(int i = 0; i < _systems.Count; ++i)
+            {
+                var system = _systems[i];
+                system.OnInitializeDone += () => { _systemsLoaded++; };
+                system.Initialize();
+                while (_systemsLoaded <= i)
+                {
+                    yield return null;
+                }
+            }
         }
     }
 }

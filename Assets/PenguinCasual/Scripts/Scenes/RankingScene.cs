@@ -34,6 +34,7 @@ namespace Penguin.Scenes
 
         private void Start()
         {
+            _loadingLayer.SetActive(true);
             Sound2DManager.Instance.StopBgm();
             var localHighscore = PlayerPrefsHelper.GetHighScore();
             var serverHighscore = NetworkCaller.Instance.PlayerData.HighestScore;
