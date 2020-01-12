@@ -7,8 +7,13 @@ namespace Penguin.AppConfigs
     {
         public string IsMaintainingKeyForIOS;
         public string MaintenanceMessageKeyForIOS;
+        public string VersionKeyForIOS;
         public string IsMaintainingKeyForAndroid;
         public string MaintenanceMessageKeyForAndroid;
+        public string VersionKeyForAndroid;
+
+        public string IosAppId;
+        public string AndroidAppId;
 
     }
 }

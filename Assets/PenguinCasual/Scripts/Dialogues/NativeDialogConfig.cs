@@ -16,6 +16,6 @@ namespace Penguin.Dialogues
         public string ChangeNameSuccessTitle = "通知";
         public string ChangeNameSuccessBody = "ニックネームの変更が成功でした。";
         public string ChangeNameValidationErrorTitle = "警告";
-
+        public string UpdateRequestBody = "Please Update app to latest version";
     }
 }

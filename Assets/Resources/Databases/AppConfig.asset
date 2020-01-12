@@ -14,5 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMaintainingKeyForIOS: IsIOSMaintaining
   MaintenanceMessageKeyForIOS: IOSMaintainingMessage
+  VersionKeyForIOS: IOSRequiredVersion
   IsMaintainingKeyForAndroid: IsAndroidMaintaining
   MaintenanceMessageKeyForAndroid: AndroidMaintainingMessage
+  VersionKeyForAndroid: AndroidRequiredVersion
+  IosAppId: 
+  AndroidAppId: 

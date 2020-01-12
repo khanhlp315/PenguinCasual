@@ -32,6 +32,17 @@ namespace Penguin.Dialogues
                 () => { onOk?.Invoke(); });
 #endif
         }
+
+        public void ShowUpdateRequestDialog(UnityAction onOk)
+        {
+#if UNITY_EDITOR
+            Debug.Log("Show update request dialog: ");
+            onOk?.Invoke();
+#else
+            NativeDialog.OpenDialog("", _config.UpdateRequestBody, _config.OkText,
+                () => { onOk?.Invoke(); });
+#endif
+        }
         
         public void ShowInitialConnectionErrorDialog(UnityAction onRetry)
         {
