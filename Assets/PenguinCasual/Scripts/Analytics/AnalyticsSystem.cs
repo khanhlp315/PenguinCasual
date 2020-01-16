@@ -139,7 +139,7 @@ namespace Penguin.Analytics
             
             public static void Revive(int reviveTimes)
             {
-                Analyzer.Analytics.LogEvent ("revive", new AnalyticsParameter("cause", reviveTimes));
+                Analyzer.Analytics.LogEvent ("revive", new AnalyticsParameter("times", reviveTimes));
             }
 
             public static void BestScore(int score)

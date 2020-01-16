@@ -20,6 +20,7 @@ namespace Penguin.Scenes
 
         private void Awake()
         {
+            _systems.Add(MainThreadDispatcher.MainThreadDispatcher.Instance);
             _systems.Add(NativeDialogManager.Instance);
             _systems.Add(AppConfigManager.Instance);
             _systems.Add(NetworkCaller.Instance);
@@ -67,8 +68,7 @@ namespace Penguin.Scenes
                 }
                 else
                 {
-                    UnityEngine.Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
-                    // Firebase Unity SDK is not safe to use here.
+                    UnityEngine.Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}"); 
                 }
             });
         }

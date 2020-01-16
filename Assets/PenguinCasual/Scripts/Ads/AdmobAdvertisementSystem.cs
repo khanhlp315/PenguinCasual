@@ -39,6 +39,7 @@ namespace Penguin.Ads
             };
             _normalBannerAd.OnAdFailedToLoad += (sender, e) => {
                 _isNormalBannerAdLoaded = false;
+                LoadNormalBanner(adsId, pos);
                 Callback?.OnNormalBannerAdFailedToLoad();
             };
             _normalBannerAd.OnAdOpening += (sender, e) => {
@@ -83,6 +84,7 @@ namespace Penguin.Ads
             };
             _endGameBannerAd.OnAdFailedToLoad += (sender, e) => {
                 _isEndGameBannerAdLoaded = false;
+                LoadEndGameBanner(adsId, pos);
                 Callback?.OnEndGameBannerAdFailedToLoad();
             };
             _endGameBannerAd.OnAdOpening += (sender, e) => {
