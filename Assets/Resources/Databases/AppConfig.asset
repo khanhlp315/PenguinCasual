@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: AppConfig
   m_EditorClassIdentifier: 
   IsMaintainingKeyForIOS: IsIOSMaintaining
+  MaintenanceTitleKeyForIOS: IOSMaintainingTitle
   MaintenanceMessageKeyForIOS: IOSMaintainingMessage
   VersionKeyForIOS: IOSRequiredVersion
   IsMaintainingKeyForAndroid: IsAndroidMaintaining
+  MaintenanceTitleKeyForAndroid: AndroidMaintainingTitle
   MaintenanceMessageKeyForAndroid: AndroidMaintainingMessage
   VersionKeyForAndroid: AndroidRequiredVersion
   IosAppId: 

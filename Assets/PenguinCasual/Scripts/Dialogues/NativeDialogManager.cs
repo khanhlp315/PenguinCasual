@@ -16,6 +16,7 @@ namespace Penguin.Dialogues
         {
             #if UNITY_EDITOR
             Debug.Log("Show connection error dialog");
+            onRetry?.Invoke();
 #else
             NativeDialog.OpenDialog(_config.ConnectionErrorTitle, _config.ConnectionErrorBody, _config.RetryText, _config.CancelText,
                 () => { onRetry?.Invoke(); },
@@ -23,12 +24,12 @@ namespace Penguin.Dialogues
 #endif
         }
 
-        public void ShowMaintenanceDialog(string message, UnityAction onOk)
+        public void ShowMaintenanceDialog(string title, string message, UnityAction onOk)
         {
 #if UNITY_EDITOR
-            Debug.Log("Show maintenance dialog: " +message);
+            Debug.Log("Show maintenance dialog: " + title +message);
 #else
-            NativeDialog.OpenDialog("", message, _config.OkText,
+            NativeDialog.OpenDialog(title, message, _config.OkText,
                 () => { onOk?.Invoke(); });
 #endif
         }
@@ -39,7 +40,7 @@ namespace Penguin.Dialogues
             Debug.Log("Show update request dialog: ");
             onOk?.Invoke();
 #else
-            NativeDialog.OpenDialog("", _config.UpdateRequestBody, _config.OkText,
+            NativeDialog.OpenDialog(_config.UpdateRequestTitle, _config.UpdateRequestBody, _config.UpdateButton,
                 () => { onOk?.Invoke(); });
 #endif
         }
@@ -47,10 +48,10 @@ namespace Penguin.Dialogues
         public void ShowInitialConnectionErrorDialog(UnityAction onRetry)
         {
 #if UNITY_EDITOR
-
             Debug.Log("Show connection error dialog");
             Debug.Log(_config.ConnectionErrorTitle);
             Debug.Log(_config.ConnectionErrorBody);
+            onRetry?.Invoke();
 #else
             NativeDialog.OpenDialog(_config.ConnectionErrorTitle, _config.ConnectionErrorBody, _config.RetryText,
                 () => { onRetry?.Invoke(); });

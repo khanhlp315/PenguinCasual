@@ -77,8 +77,6 @@ namespace Penguin.Scenes
                 if (errorCode == 422)
                 {
                     NativeDialogManager.Instance.ShowChangeNameValidationError(message);
-                    NativeDialog.OpenDialog("Error", "Cannot change into this name. Please select another name", "Ok",
-                        () => { });
 
                 }
                 else

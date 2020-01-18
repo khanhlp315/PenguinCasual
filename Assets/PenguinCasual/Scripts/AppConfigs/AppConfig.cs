@@ -6,9 +6,11 @@ namespace Penguin.AppConfigs
     public class AppConfig: ScriptableObject
     {
         public string IsMaintainingKeyForIOS;
+        public string MaintenanceTitleKeyForIOS;
         public string MaintenanceMessageKeyForIOS;
         public string VersionKeyForIOS;
         public string IsMaintainingKeyForAndroid;
+        public string MaintenanceTitleKeyForAndroid;
         public string MaintenanceMessageKeyForAndroid;
         public string VersionKeyForAndroid;
 

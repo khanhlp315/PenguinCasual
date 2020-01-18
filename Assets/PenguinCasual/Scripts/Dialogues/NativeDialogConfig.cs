@@ -27,6 +27,11 @@ namespace Penguin.Dialogues
         [TextArea]
         public string ChangeNameValidationErrorTitle = "警告";
         [TextArea]
-        public string UpdateRequestBody = "Please Update app to latest version";
+        public string UpdateRequestTitle = "アップデートのお知らせ";
+        [TextArea]
+        public string UpdateRequestBody = "ペンギン落としの新パージョンをリリースしました。";
+        [TextArea]
+        public string UpdateButton = "ストアへ";
+
     }
 }

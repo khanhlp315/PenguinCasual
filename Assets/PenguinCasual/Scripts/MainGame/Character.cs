@@ -98,7 +98,7 @@ namespace Penguin
 				_collidePedestalHits[totalHitPedestal++] = pedestal;
             }
 
-            Array.Sort(_collidePedestalHits, 0, totalHit, Comparer<Pedestal>.Create((p1, p2) => {
+            Array.Sort(_collidePedestalHits, 0, totalHitPedestal, Comparer<Pedestal>.Create((p1, p2) => {
                 return GetPedestalHitPriority(p1) > GetPedestalHitPriority(p2) ? 1 : -1;
             }));
 
