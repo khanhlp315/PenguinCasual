@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SoundConfig
   m_EditorClassIdentifier: 
   BGM: Sounds/BGM
-  PenguinHitAndDie: "Sounds/OUT\u52A0\u5DE5\u6E08\u307F"
-  FishMoveEndGame: "Sounds/\u9B5A\u6F14\u51FA\u52A0\u5DE5\u6E08\u307F"
-  BreakFloor: "Sounds/\u53F0\u5EA7\u7834\u58CA\u97F3\u52A0\u5DE5\u6E08\u307F"
-  Jump: "Sounds/\u30DA\u30F3\u30AE\u30F3\u97F3\u52A0\u5DE5\u6E08\u307F"
+  PenguinHitAndDie: Sounds/DIE
+  FishMoveEndGame: Sounds/FISH
+  BreakFloor: Sounds/BREAKFLOOR
+  Jump: Sounds/JUMP

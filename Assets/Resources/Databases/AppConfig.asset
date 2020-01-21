@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9890c3b131ab48ceb27e0d8dd6274a5b, type: 3}
   m_Name: AppConfig
   m_EditorClassIdentifier: 
-  IsMaintainingKeyForIOS: IsIOSMaintaining
-  MaintenanceTitleKeyForIOS: IOSMaintainingTitle
-  MaintenanceMessageKeyForIOS: IOSMaintainingMessage
-  VersionKeyForIOS: IOSRequiredVersion
-  IsMaintainingKeyForAndroid: IsAndroidMaintaining
-  MaintenanceTitleKeyForAndroid: AndroidMaintainingTitle
-  MaintenanceMessageKeyForAndroid: AndroidMaintainingMessage
-  VersionKeyForAndroid: AndroidRequiredVersion
-  IosAppId: 
-  AndroidAppId: 
+  _isMaintainingKeyForIOS: IsIOSMaintaining
+  _maintenanceTitleKeyForIOS: IOSMaintainingTitle
+  _maintenanceMessageKeyForIOS: IOSMaintainingMessage
+  _versionKeyForIOS: IOSRequiredVersion
+  _isMaintainingKeyForAndroid: IsAndroidMaintaining
+  _maintenanceTitleKeyForAndroid: AndroidMaintainingTitle
+  _maintenanceMessageKeyForAndroid: AndroidMaintainingMessage
+  _versionKeyForAndroid: AndroidRequiredVersion
+  _iosAppId: 
+  _androidAppId: 

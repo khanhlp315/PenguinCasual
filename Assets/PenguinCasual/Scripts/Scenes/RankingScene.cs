@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Penguin;
+using Penguin.AppConfigs;
 using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
@@ -24,9 +25,9 @@ namespace Penguin.Scenes
         [SerializeField]
         private RectTransform _topPlayerList;
 
-        [SerializeField] private TextMeshProUGUI _nameText;
-        [SerializeField] private TextMeshProUGUI _scoreText;
-        [SerializeField] private TextMeshProUGUI _rankText;
+        [SerializeField] private Text _nameText;
+        [SerializeField] private Text _scoreText;
+        [SerializeField] private Text _rankText;
         [SerializeField] private Image _avatar;
 
         [SerializeField]
@@ -100,6 +101,14 @@ namespace Penguin.Scenes
         public void GoToHomeScene()
         {
             SceneManager.LoadScene("HomeScene");
+        }
+        
+        private void Update()
+        {
+            if (AppConfigManager.Instance.IsMaintaining || AppConfigManager.Instance.NeedsUpdate)
+            {
+                SceneManager.LoadScene("MaintenanceOrUpdateScene");
+            }
         }
 
         public void GoToSettingsScene()

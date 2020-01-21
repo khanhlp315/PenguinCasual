@@ -22,9 +22,9 @@ namespace Penguin.Scenes
         {
             _systems.Add(MainThreadDispatcher.MainThreadDispatcher.Instance);
             _systems.Add(NativeDialogManager.Instance);
-            _systems.Add(AppConfigManager.Instance);
             _systems.Add(NetworkCaller.Instance);
             _systems.Add(Sound2DManager.Instance);
+            _systems.Add(AppConfigManager.Instance);
         }
 
         private bool _isFirebaseInitializeDone = false;
@@ -48,8 +48,15 @@ namespace Penguin.Scenes
             {
                 yield return null;
             }
+
             var hasAcceptTerms = !PlayerPrefsHelper.IsFirstTimeUser();
-            SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : "AcceptTermsScene");
+            SceneManager.LoadScene(hasAcceptTerms ? "HomeScene" : 
+#if UNITY_IOS
+                "AcceptTermsSceneForIOS"
+#else
+                "AcceptTermsSceneForAndroid"
+#endif
+            );
             yield return null;
         }
 
@@ -82,6 +89,7 @@ namespace Penguin.Scenes
             
             for(int i = 0; i < _systems.Count; ++i)
             {
+                Debug.Log(i);
                 var system = _systems[i];
                 system.OnInitializeDone += () => { _systemsLoaded++; };
                 system.Initialize();

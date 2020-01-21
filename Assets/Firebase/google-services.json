@@ -1,77 +1,41 @@
 {
   "project_info": {
-    "project_number": "477049434517",
-    "firebase_url": "https://cybird-casual-app.firebaseio.com",
-    "project_id": "cybird-casual-app",
-    "storage_bucket": "cybird-casual-app.appspot.com"
+    "project_number": "19659560338",
+    "firebase_url": "https://penguin-adv.firebaseio.com",
+    "project_id": "penguin-adv",
+    "storage_bucket": "penguin-adv.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:477049434517:android:331202a0327983dfce469c",
+        "mobilesdk_app_id": "1:19659560338:android:795b97b0645c886b4edd4b",
         "android_client_info": {
-          "package_name": "com.cybird.penguinsengoku"
+          "package_name": "jp.co.cybird.android.penguin01"
         }
       },
       "oauth_client": [
         {
-          "client_id": "477049434517-gqoc3i9ikrmaiagl4uo0j6v5jfsqp2o6.apps.googleusercontent.com",
+          "client_id": "19659560338-25mo5tnocdepm4qd2lehcup1gj12nmn8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4uJVRmOF68rUzYT_yNRXecSzX1YVG3Is"
+          "current_key": "AIzaSyBmrs7ZAY2i66kO7wTcL5Y-D2kqNrtD7HQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "477049434517-gqoc3i9ikrmaiagl4uo0j6v5jfsqp2o6.apps.googleusercontent.com",
+              "client_id": "19659560338-25mo5tnocdepm4qd2lehcup1gj12nmn8.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "477049434517-n91sgv667lto9m2gdjbl97ig3g45o871.apps.googleusercontent.com",
+              "client_id": "19659560338-a23a1v9kkpfabe7ob5279qgipuk64n09.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.liongarden.penguincasual"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:477049434517:android:4e89d7f5aa97819dce469c",
-        "android_client_info": {
-          "package_name": "com.liongarden.penguincasual"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "477049434517-gqoc3i9ikrmaiagl4uo0j6v5jfsqp2o6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyB4uJVRmOF68rUzYT_yNRXecSzX1YVG3Is"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "477049434517-gqoc3i9ikrmaiagl4uo0j6v5jfsqp2o6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "477049434517-n91sgv667lto9m2gdjbl97ig3g45o871.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.liongarden.penguincasual"
+                "bundle_id": "jp.co.cybird.penguin01"
               }
             }
           ]

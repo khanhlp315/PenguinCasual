@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Penguin.AppConfigs;
 using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
@@ -65,6 +66,14 @@ namespace Penguin.Scenes
         public void OpenLicense()
         {
             _licenseDialog.gameObject.SetActive(true);
+        }
+        
+        private void Update()
+        {
+            if (AppConfigManager.Instance.IsMaintaining || AppConfigManager.Instance.NeedsUpdate)
+            {
+                SceneManager.LoadScene("MaintenanceOrUpdateScene");
+            }
         }
 
         public void ChangeName()

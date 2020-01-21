@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
-  <string name="firebase_database_url" translatable="false">https://cybird-casual-app.firebaseio.com</string>
-  <string name="gcm_defaultSenderId" translatable="false">477049434517</string>
-  <string name="google_storage_bucket" translatable="false">cybird-casual-app.appspot.com</string>
-  <string name="project_id" translatable="false">cybird-casual-app</string>
-  <string name="google_api_key" translatable="false">AIzaSyB4uJVRmOF68rUzYT_yNRXecSzX1YVG3Is</string>
-  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB4uJVRmOF68rUzYT_yNRXecSzX1YVG3Is</string>
-  <string name="google_app_id" translatable="false">1:477049434517:android:4e89d7f5aa97819dce469c</string>
-  <string name="default_web_client_id" translatable="false">477049434517-gqoc3i9ikrmaiagl4uo0j6v5jfsqp2o6.apps.googleusercontent.com</string>
+  <string name="firebase_database_url" translatable="false">https://penguin-adv.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">19659560338</string>
+  <string name="google_storage_bucket" translatable="false">penguin-adv.appspot.com</string>
+  <string name="project_id" translatable="false">penguin-adv</string>
+  <string name="google_api_key" translatable="false">AIzaSyBmrs7ZAY2i66kO7wTcL5Y-D2kqNrtD7HQ</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBmrs7ZAY2i66kO7wTcL5Y-D2kqNrtD7HQ</string>
+  <string name="google_app_id" translatable="false">1:19659560338:android:795b97b0645c886b4edd4b</string>
+  <string name="default_web_client_id" translatable="false">19659560338-25mo5tnocdepm4qd2lehcup1gj12nmn8.apps.googleusercontent.com</string>
 </resources>

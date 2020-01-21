@@ -18,7 +18,7 @@ namespace Penguin
     public class EndGamePanel : MonoBehaviour, IAdvertisementDelegate
     {
         [SerializeField]
-        private Text _labelScore;
+        private TextMeshProUGUI _labelScore;
 
         [SerializeField]
         private GameObject _panelWatchAd;
@@ -47,7 +47,7 @@ namespace Penguin
 
         public void SetScore(long score)
         {
-            _labelScore.text = ScoreUtil.FormatScore(score) + ";";
+            _labelScore.text = ScoreUtil.FormatScore(score);
         }
 
         public void ShowAsNormal()

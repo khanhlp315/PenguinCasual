@@ -26,7 +26,6 @@ namespace Penguin.Network
 
         public override void Initialize()
         {
-            Debug.Log(this.GetType());
             if (PlayerPrefsHelper.HasToken())
             {
                 _token = PlayerPrefsHelper.GetToken();
@@ -93,6 +92,23 @@ namespace Penguin.Network
             yield return request.SendWebRequest();
 
             onResponseReceived?.Invoke(downloadHandler.text, request.responseCode);
+        }
+
+        public void GetConfig(UnityAction<RemoteConfig> onDone = null, UnityAction<long> onError = null)
+        {
+            StartCoroutine(SendPostRequest(_config.GetConfigPath, (json, responseCode) =>
+            {
+                if (responseCode == 200)
+                {
+                    Debug.Log("Config get ok ");
+                    var remoteConfig = RemoteConfigResponse.FromJson(json).GetAll()[0];
+                    onDone?.Invoke(remoteConfig);
+                }
+                else
+                {
+                    onError?.Invoke(responseCode);
+                }
+            }));
         }
 
         public void ChangeName(string nickname, UnityAction onDone = null, UnityAction<int, string> onError = null)

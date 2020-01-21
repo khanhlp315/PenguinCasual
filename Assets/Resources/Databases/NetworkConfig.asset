@@ -21,3 +21,4 @@ MonoBehaviour:
   GetAllSkinsPath: api/get/skin
   UpdateSkinPath: api/put/player
   GetAllUnlocksPath: api/get/unlock
+  GetConfigPath: api/get/remote_config

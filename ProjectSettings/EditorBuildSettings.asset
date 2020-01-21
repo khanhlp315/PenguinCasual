@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/PenguinCasual/Scenes/SplashScene.unity
     guid: 87a0720d91de748c38940034949a9dda
   - enabled: 1
+    path: Assets/PenguinCasual/Scenes/MaintenanceOrUpdateScene.unity
+    guid: 9ca6e68f9d0a0427dad831c7f4c2f957
+  - enabled: 1
     path: Assets/PenguinCasual/Scenes/HomeScene.unity
     guid: 3c32239c0d4274be4a5d7f6f0c27e22d
   - enabled: 1
@@ -27,6 +30,9 @@ EditorBuildSettings:
     path: Assets/PenguinCasual/Scenes/PlatformTestScene.unity
     guid: cd3d074e5716a495e8278d4e21f5a8b7
   - enabled: 1
-    path: Assets/PenguinCasual/Scenes/AcceptTermsScene.unity
+    path: Assets/PenguinCasual/Scenes/AcceptTermsSceneForIOS.unity
     guid: 9136c8197b4b84bf492f0b57bb49edc5
+  - enabled: 1
+    path: Assets/PenguinCasual/Scenes/AcceptTermsSceneForAndroid.unity
+    guid: 65495d5da530248d2ac4c29f069809c9
   m_configObjects: {}

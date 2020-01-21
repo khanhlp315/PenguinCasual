@@ -117,10 +117,10 @@ MonoBehaviour:
   material: {fileID: -4104254939854366}
   materialHashCode: -2020709286
   m_Version: 1.1.0
-  m_SourceFontFileGUID: 79d3d5caf76aa4eb183c24423dc7889f
-  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 79d3d5caf76aa4eb183c24423dc7889f,
+  m_SourceFontFileGUID: 97988fcd3af5c4513af82cb6e7c1de44
+  m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 97988fcd3af5c4513af82cb6e7c1de44,
     type: 3}
-  m_SourceFontFile: {fileID: 12800000, guid: 79d3d5caf76aa4eb183c24423dc7889f, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: 97988fcd3af5c4513af82cb6e7c1de44, type: 3}
   m_AtlasPopulationMode: 1
   m_FaceInfo:
     m_FamilyName: Noto Sans CJK JP
@@ -3485,23 +3485,23 @@ MonoBehaviour:
   m_FontWeightTable:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 64b4b704b37b74c78bc827e18e4b2646, type: 2}
-    italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 9dd9a0e69625a4a5f9567e63e96f1c86, type: 2}
-    italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: b8a4dfdc63b1640ffab3c22081c449ae, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 62b7d8bb0f8834cabb636ad78cbd9337, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: bc2f958f95d7340fda44f36a01ac207f, type: 2}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 11400000, guid: 3fe92657290634e2f9b67809c3e06653, type: 2}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   fontWeights: []
   normalStyle: 0

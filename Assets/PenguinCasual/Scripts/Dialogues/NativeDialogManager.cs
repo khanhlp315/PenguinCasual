@@ -28,19 +28,20 @@ namespace Penguin.Dialogues
         {
 #if UNITY_EDITOR
             Debug.Log("Show maintenance dialog: " + title +message);
+            onOk?.Invoke();
 #else
             NativeDialog.OpenDialog(title, message, _config.OkText,
                 () => { onOk?.Invoke(); });
 #endif
         }
 
-        public void ShowUpdateRequestDialog(UnityAction onOk)
+        public void ShowUpdateRequestDialog(string title, string message, UnityAction onOk)
         {
 #if UNITY_EDITOR
             Debug.Log("Show update request dialog: ");
             onOk?.Invoke();
 #else
-            NativeDialog.OpenDialog(_config.UpdateRequestTitle, _config.UpdateRequestBody, _config.UpdateButton,
+            NativeDialog.OpenDialog(title, message, _config.UpdateButton,
                 () => { onOk?.Invoke(); });
 #endif
         }

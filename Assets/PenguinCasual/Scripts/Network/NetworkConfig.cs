@@ -14,5 +14,7 @@ namespace Penguin.Network
         public string GetAllSkinsPath = "api/get/skin";
         public string UpdateSkinPath = "api/put/player";
         public string GetAllUnlocksPath = "api/get/unlock";
+        public string GetConfigPath = "api/get/remote_config";
+
     }
 }

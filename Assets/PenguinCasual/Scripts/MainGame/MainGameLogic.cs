@@ -119,6 +119,12 @@ namespace Penguin
             }
             else if (HasPowerUp())
             {
+                if (pedestal.type == PedestalType.Pedestal_04_Powerup)
+                {
+                    _character.ActivePowerup();
+                    _character.SetBoostEffect(true);
+                    _remainPowerupBreakFloor = _gameSetting.powerUpBreakFloors;
+                }
                 UsePowerUp(pedestal);
                 _floorCombo = 0;
                 return;
@@ -152,7 +158,6 @@ namespace Penguin
                 pedestal.type == PedestalType.Pedestal_01_3_Fish)
                 {
                     _character.Jump();
-                    EventHub.Emit(new EventReadyToStartGame());
                 }
                 else if (pedestal.type == PedestalType.Pedestal_04_Powerup)
                 {

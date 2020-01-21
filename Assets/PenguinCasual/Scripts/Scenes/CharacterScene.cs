@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Penguin;
+using Penguin.AppConfigs;
 using Penguin.Dialogues;
 using Penguin.Network;
 using Penguin.Sound;
@@ -146,6 +147,14 @@ namespace Penguin.Scenes
     {
         SceneManager.LoadScene("SettingsScene");
 
+    }
+    
+    private void Update()
+    {
+        if (AppConfigManager.Instance.IsMaintaining || AppConfigManager.Instance.NeedsUpdate)
+        {
+            SceneManager.LoadScene("MaintenanceOrUpdateScene");
+        }
     }
 
     private void OnSkinTapped(int skinId)

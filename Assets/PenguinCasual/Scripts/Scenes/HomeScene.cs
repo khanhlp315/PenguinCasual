@@ -1,5 +1,6 @@
 ﻿
 using Penguin.Ads;
+using Penguin.AppConfigs;
 using Penguin.Sound;
 using Penguin.Utilities;
 using PenguinCasual.Scripts.Utilities;
@@ -19,6 +20,14 @@ namespace Penguin.Scenes
             Sound2DManager.Instance.PlayBgm();
             _highscoreText.text = ScoreUtil.FormatScore(PlayerPrefsHelper.GetHighScore());
             Advertiser.AdvertisementSystem.ShowNormalBanner();
+        }
+        
+        private void Update()
+        {
+            if (AppConfigManager.Instance.IsMaintaining || AppConfigManager.Instance.NeedsUpdate)
+            {
+                SceneManager.LoadScene("MaintenanceOrUpdateScene");
+            }
         }
 
         public void GoToGameScene()

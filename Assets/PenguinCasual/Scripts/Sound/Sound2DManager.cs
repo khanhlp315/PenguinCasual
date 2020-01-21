@@ -158,11 +158,9 @@ namespace Penguin.Sound
                 return;
             }
 
-            var audioSource = transform.GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = transform.gameObject.AddComponent<AudioSource>();
-            }
+            var audioSource = GetUnuseAudio();
+            audioSource.gameObject.name = sound;
+            audioSource.loop = false;
             var clip = Resources.Load<AudioClip>(sound);
 
             if (clip == null)
@@ -252,7 +250,7 @@ namespace Penguin.Sound
         {
             foreach (var item in _soundObjectPools)
             {
-                if (!item.isPlaying && !item.gameObject.activeInHierarchy)
+                if (!item.isPlaying)
                 {
                     item.gameObject.SetActive(true);
                     return item;

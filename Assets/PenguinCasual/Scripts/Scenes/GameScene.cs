@@ -52,7 +52,7 @@ namespace Penguin
         [SerializeField]
         private GameObject _hideGroup;
         [SerializeField]
-        private Text _labelScore;
+        private TextMeshProUGUI _labelScore;
         [SerializeField]
         private TextMeshProUGUI _labelCountdown;
         //[SerializeField]
@@ -111,9 +111,7 @@ namespace Penguin
         private Sequence _timeoutSeq;
 
         private bool _hasAlreadyRevived;
-
-        private bool _isReadyToStartGame;
-
+        
         private void Start()
         {
             Advertiser.AdvertisementSystem.HideNormalBanner();
@@ -255,28 +253,14 @@ namespace Penguin
             EventHub.Unbind<EventRevive>(OnRevive);
         }
 
-        private void OnReadyToStartGame(EventReadyToStartGame e)
-        {
-            _isReadyToStartGame = true;
-            EventHub.Unbind<EventReadyToStartGame>(OnReadyToStartGame);
-        }
-
         private IEnumerator WaitAndStartGame()
         {
             _readyImage.SetActive(true);
             _labelCountdown.text = _gameSetting.roundDuration.ToString();
-            _labelScore.text = "0:";
+            _labelScore.text = "0";
 
             yield return new WaitForSeconds(2);
-
-            _isReadyToStartGame = false;
             
-            EventHub.Bind<EventReadyToStartGame>(OnReadyToStartGame);
-
-            while (!_isReadyToStartGame)
-            {
-                yield return null;
-            }
 
             _readyImage.SetActive(false);
             _goImage.SetActive(true);
@@ -297,7 +281,7 @@ namespace Penguin
         private void OnScoreUpdate(EventUpdateScore eventData)
         {
             _currentScore = eventData.score;
-            _labelScore.text = ScoreUtil.FormatScore(eventData.score) + ":";
+            _labelScore.text = ScoreUtil.FormatScore(eventData.score);
 
             var spawnLabel = GameObject.Instantiate(_labelScoreIncrease, _labelScoreIncrease.transform.parent);
             spawnLabel.transform.localPosition = _labelScoreIncrease.transform.localPosition;

@@ -175,7 +175,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xA92019 CYBIRD"
+  m_text: "\xA92020 CYBIRD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d682c74be98ff4e89bb3b35cc490f376, type: 2}
   m_sharedMaterial: {fileID: -4104254939854366, guid: d682c74be98ff4e89bb3b35cc490f376,
