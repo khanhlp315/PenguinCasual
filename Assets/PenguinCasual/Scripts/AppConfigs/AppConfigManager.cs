@@ -63,7 +63,7 @@ namespace Penguin.AppConfigs
 
         public void ShowUpdateDialog(UnityAction onClose)
         {
-            NativeDialogManager.Instance.ShowUpdateRequestDialog(_remoteConfig.UpdateRequiredTitle, _remoteConfig.UpdateRequiredMessage,() =>
+            NativeDialogManager.Instance.ShowUpdateRequestDialog(Regex.Unescape(_remoteConfig.UpdateRequiredTitle), Regex.Unescape(_remoteConfig.UpdateRequiredMessage),() =>
             {
                 Application.OpenURL(_config.AppLink);
                 onClose?.Invoke();
@@ -73,7 +73,7 @@ namespace Penguin.AppConfigs
         
         public void ShowMaintenanceDialog(bool willQuit, UnityAction onClose)
         {
-            NativeDialogManager.Instance.ShowMaintenanceDialog(_remoteConfig.UpdateRequiredTitle, _remoteConfig.UpdateRequiredMessage,() =>
+            NativeDialogManager.Instance.ShowMaintenanceDialog(Regex.Unescape(_remoteConfig.MaintainingTitle), Regex.Unescape(_remoteConfig.MaintainingMessage),() =>
             {
                 onClose?.Invoke();
                 if (willQuit)
