@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35ab338ff4d384205bc568664e86745c
+guid: 04d74d3984c3b5946878e00ce9157af6
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pedestal07
-    second: {fileID: 2100000, guid: b2bcc76c4c23b4c32b52e95e8ff9bc0a, type: 2}
+    second: {fileID: 2100000, guid: 26f3e2d43fe7fd648a44f58c0dc3f391, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

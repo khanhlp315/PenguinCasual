@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3a4a6a01dc65047028af271deb40d76f
+guid: 501ca00620de75f40b2af4965366189a
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: mat_fish
-    second: {fileID: 2100000, guid: b1c34daecd60a456bba6ce2443379689, type: 2}
+    second: {fileID: 2100000, guid: 04cd627f0d8add340b049223096bd054, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pedestal05_alpha
-    second: {fileID: 2100000, guid: ad338265473a74211bf1963bd9ea18ad, type: 2}
+    second: {fileID: 2100000, guid: eda8c3b00a839dd49a6b85ab84ff4c45, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
