@@ -26,7 +26,7 @@ namespace Penguin
             if (type != LogType.Exception)
                 return;
             
-            string content = UnityWebRequest.EscapeURL(condition + "\n\n" + stackTrace);
+            string content = UnityWebRequest.EscapeURL(Application.version + ": " + condition + "\n\n" + stackTrace);
             int hashContent = content.GetHashCode();
             if (sentContents.Add(hashContent))
             {

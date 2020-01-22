@@ -20,7 +20,8 @@ namespace Penguin.Scenes
 
         [SerializeField] private SwitchButtonGroup _switchButtonGroup;
 
-        [SerializeField] private GameObject _termsDialog;
+        [SerializeField] private GameObject _androidTermsDialog;
+        [SerializeField] private GameObject _iosTermsDialog;
         [SerializeField] private GameObject _licenseDialog;
 
         private void Start()
@@ -55,7 +56,11 @@ namespace Penguin.Scenes
     
         public void OpenTerms()
         {
-            _termsDialog.gameObject.SetActive(true);
+            #if UNITY_IOS
+            _iosTermsDialog.gameObject.SetActive(true);
+            #elif UNITY_ANDROID
+            _androidTermsDialog.gameObject.SetActive(true);
+#endif
         }
     
         public void OpenPolicy()
@@ -96,6 +101,11 @@ namespace Penguin.Scenes
                     });
                 }
             });
+        }
+        
+        public void GoToLink(string link, Vector2 screenPoint)
+        {
+            Application.OpenURL(link);
         }
     }    
 }

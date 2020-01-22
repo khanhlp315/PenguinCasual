@@ -10,7 +10,7 @@ namespace Penguin.Network.Data
         const string PLAY = "プレイ回数";
         const string WATCH_ADS = "動画再⽣数";
         const string DAYS_PLAYED = "⽇数解放";
-        const string TOTAL_SCORE = "スコア獲得数";
+        const string HIGH_SCORE = "スコア獲得数";
         
         [SerializeField]
         private int id;
@@ -42,9 +42,9 @@ namespace Penguin.Network.Data
                 case DAYS_PLAYED:
                     var daysPlayed = PlayerPrefsHelper.GetDaysPlayed();
                     return daysPlayed >= Condition;
-                case TOTAL_SCORE:
-                    var totalScore = PlayerPrefsHelper.GetTotalScore();
-                    return totalScore >= Condition;
+                case HIGH_SCORE:
+                    var highScore = PlayerPrefsHelper.GetHighScore();
+                    return highScore >= Condition;
             }
 
             return false;
